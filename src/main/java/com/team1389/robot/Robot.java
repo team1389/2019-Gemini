@@ -22,7 +22,6 @@ public class Robot extends TimedRobot
 	@Override
 	public void robotInit()
 	{
-
 		robot = RobotSoftware.getInstance();
 		teleOperator = new TeleopMain(robot);
 	}
@@ -41,7 +40,7 @@ public class Robot extends TimedRobot
 	@Override
 	public void teleopInit()
 	{
-
+		teleOperator.init();
 	}
 
 	/**
@@ -50,6 +49,7 @@ public class Robot extends TimedRobot
 	@Override
 	public void teleopPeriodic()
 	{
+		teleOperator.periodic();
 	}
 
 	@Override
