@@ -1,5 +1,12 @@
 package com.team1389.robot;
 
+import com.team1389.hardware.registry.port_types.CAN;
+import com.team1389.hardware.registry.port_types.DIO;
+import com.team1389.hardware.registry.port_types.PCM;
+import com.team1389.hardware.registry.port_types.PWM;
+import com.team1389.hardware.registry.port_types.SPIPort;
+
+import edu.wpi.first.wpilibj.SPI;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking

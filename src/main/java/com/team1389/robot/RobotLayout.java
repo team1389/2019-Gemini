@@ -3,6 +3,7 @@ package com.team1389.robot;
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
+import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
 
@@ -16,19 +17,26 @@ import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
 public class RobotLayout extends RobotMap
 {
 	public Registry registry;
-	public CANTalonHardware armLiftA;
+	
 	public CANSparkMaxHardware leftDriveA;
 	public CANSparkMaxHardware leftDriveB;
 	public CANSparkMaxHardware leftDriveC;
 	public CANSparkMaxHardware rightDriveA;
 	public CANSparkMaxHardware rightDriveB;
 	public CANSparkMaxHardware rightDriveC;
+
+	public CANTalonHardware armLiftA;
+	public CANSparkMaxHardware armLiftB;
+	public VictorHardware armIntake;
+
 	public PDPHardware pdp;
+
 	public DoubleSolenoidHardware leftShooter;
 	public DoubleSolenoidHardware rightShooter;
 	public DoubleSolenoidHardware climbPiston;
 
-
-
-
+	public DoubleSolenoidHardware hatchPistonA;
+	public DoubleSolenoidHardware hatchPistonB;
+	public DoubleSolenoidHardware hatchPistonC;
+	public DoubleSolenoidHardware cargoPiston;
 }

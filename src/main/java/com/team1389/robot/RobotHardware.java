@@ -1,6 +1,14 @@
 package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
+import com.team1389.hardware.inputs.hardware.PDPHardware;
+import com.team1389.hardware.inputs.hardware.SpartanGyro;
+import com.team1389.hardware.inputs.hardware.SwitchHardware;
+import com.team1389.hardware.outputs.hardware.CANTalonHardware;
+import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
+import com.team1389.hardware.outputs.hardware.VictorHardware;
+import com.team1389.hardware.registry.Registry;
+import com.team1389.hardware.registry.port_types.CAN;
 
 /**
  * responsible for initializing and storing hardware objects defined in
@@ -20,9 +28,14 @@ public class RobotHardware extends RobotLayout
 	 */
 	protected RobotHardware()
 	{
-		registry = new Registry();
 		System.out.println("initializing hardware");
+		registry = new Registry();
+		pdp = new PDPHardware(new CAN(0), registry);
 
+	}
+
+	private void initDriveTrain() {
+		
 	}
 
 }
