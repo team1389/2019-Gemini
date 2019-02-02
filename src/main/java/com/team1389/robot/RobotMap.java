@@ -54,6 +54,12 @@ public class RobotMap
     protected final boolean inv_RIGHT_MOTOR_C = false;
     protected final boolean sinv_RIGHT_MOTOR_C = false;
 
+    //Shooter 
+    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(0);
+    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(6);
+    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(1);
+    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(7);
+
     //Arm
 	protected final CAN can_ARM_LIFT_MOTOR_A = new CAN(3);
     protected final boolean inv_ARM_LIFT_MOTOR_A = false;
@@ -65,17 +71,21 @@ public class RobotMap
 	protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(0);
     protected final boolean inv_ARM_INTAKE_MOTOR = false;
 
-    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(7);
-    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(7);
-    protected final PCM pcm_HATCH_OUTTAKE_C = new PCM(7);
+    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(2);
+    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(5);
 
-    protected final PCM pcm_CARGO_OUTTAKE = new PCM(7);
+    protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(3);
+    protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(4);
 
     //Climber
     protected final CAN can_CLIMB_MOTOR = new CAN(1);
     protected final boolean inv_CLIMB_MOTOR = false;
 
-    protected final PCM pcm_CLIMBER = new PCM(7);
+    protected final PCM pcm_CLIMBER_A = new PCM(7);
+    protected final PCM pcm_CLIMBER_B = new PCM(7);
 
-	protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
+    //Miscellaneous 
+    protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
+    protected final CAN can_PCM_1 = new CAN(8); 
+    protected final CAN can_PCM_2 = new CAN(8); 
 }
