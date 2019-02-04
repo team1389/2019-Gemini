@@ -25,10 +25,9 @@ public class TeleopMain
 		manager.init();
 	}
 
-	//private Subsystem setUpDrive() {
-		//DriveOut<Percent>
-		//return new CurvatureDriveStraightSystem()
-	//}
+	private Subsystem setUpDrive() {
+		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.xLeftDriveY(), controls.xDriveX(),controls.)
+	}
 
 	public void periodic()
 	{
