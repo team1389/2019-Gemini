@@ -33,7 +33,6 @@ public class RobotLayout extends RobotMap
 	public VictorHardware armIntake;
 
 	public PDPHardware pdp;
-
 	
 	public DoubleSolenoidHardware leftShooter;
 	public DoubleSolenoidHardware rightShooter;
