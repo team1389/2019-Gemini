@@ -6,6 +6,7 @@ import com.team1389.hardware.inputs.hardware.SpartanGyro;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
+import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.registry.Registry;
@@ -36,20 +37,24 @@ public class RobotHardware extends RobotLayout
 		registry = new Registry();
 		pdp = new PDPHardware(new CAN(0), registry);
 		initDriveTrain();
-		initArm();
-		initShooter();
-		initCLimber();
+		//initArm();
+		//initShooter();
+		//initCLimber();
 	}
 
 	private void initDriveTrain() {
-		Configuration config = new Configuration();
-		//leftDriveA = new CANSparkMaxHardware()
+		leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, sinv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A, registry);
+		leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, sinv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B, registry);
+		leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, sinv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C, registry);
+		rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, sinv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
+		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, sinv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
+		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, sinv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
 	}
 
 	private void initArm() {
 		armLiftA = new CANTalonHardware(inv_ARM_LIFT_MOTOR_A, sinv_ARM_LIFT_MOTOR_A, 
 			FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
-		//armLiftB = new CANVictorSPXHardware()
+		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
 		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
 		hatchPistonA = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
 		hatchPistonB = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);

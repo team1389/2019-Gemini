@@ -30,29 +30,29 @@ import edu.wpi.first.wpilibj.SPI;
 public class RobotMap
 {
     //Drive Train
-	protected final CAN can_LEFT_MOTOR_A = new CAN(3);
-    protected final boolean inv_LEFT_MOTOR_A = false;
-    protected final boolean sinv_LEFT_MOTOR_A = false;
+	protected final CAN can_LEFT_DRIVE_MOTOR_A = new CAN(3);
+    protected final boolean inv_LEFT_DRIVE_MOTOR_A = false;
+    protected final boolean sinv_LEFT_DRIVE_MOTOR_A = false;
 
-    protected final CAN can_LEFT_MOTOR_B = new CAN(5);
-    protected final boolean inv_LEFT_MOTOR_B = false;
-    protected final boolean sinv_LEFT_MOTOR_B = false;
+    protected final CAN can_LEFT_DRIVE_MOTOR_B = new CAN(5);
+    protected final boolean inv_LEFT_DRIVE_MOTOR_B = false;
+    protected final boolean sinv_LEFT_DRIVE_MOTOR_B = false;
 
-    protected final CAN can_LEFT_MOTOR_C = new CAN(5);
-    protected final boolean inv_LEFT_MOTOR_C = false;
-    protected final boolean sinv_LEFT_MOTOR_C = false;
+    protected final CAN can_LEFT_DRIVE_MOTOR_C = new CAN(5);
+    protected final boolean inv_LEFT_DRIVE_MOTOR_C = false;
+    protected final boolean sinv_LEFT_DRIVE_MOTOR_C = false;
 
-	protected final CAN can_RIGHT_MOTOR_A = new CAN(6);
-    protected final boolean inv_RIGHT_MOTOR_A = false;
-    protected final boolean sinv_RIGHT_MOTOR_A = false;
+	protected final CAN can_RIGHT_DRIVE_MOTOR_A = new CAN(6);
+    protected final boolean inv_RIGHT_DRIVE_MOTOR_A = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_A = false;
 
-	protected final CAN can_RIGHT_MOTOR_B = new CAN(4);
-    protected final boolean inv_RIGHT_MOTOR_B = false;
-    protected final boolean sinv_RIGHT_MOTOR_B = false;
+	protected final CAN can_RIGHT_DRIVE_MOTOR_B = new CAN(4);
+    protected final boolean inv_RIGHT_DRIVE_MOTOR_B = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_B = false;
 
-    protected final CAN can_RIGHT_MOTOR_C = new CAN(4);
-    protected final boolean inv_RIGHT_MOTOR_C = false;
-    protected final boolean sinv_RIGHT_MOTOR_C = false;
+    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(4);
+    protected final boolean inv_RIGHT_DRIVE_MOTOR_C = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = false;
 
     //Shooter 
     protected final PCM pcm_LEFT_SHOOTER_A = new PCM(0);
