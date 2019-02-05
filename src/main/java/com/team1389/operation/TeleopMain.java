@@ -4,6 +4,7 @@ import com.team1389.hardware.controls.ControlBoard;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
 import com.team1389.system.drive.CurvatureDriveSystem;
+import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 
 public class TeleopMain
@@ -20,14 +21,18 @@ public class TeleopMain
 	public void init()
 	{
 		controls = ControlBoard.getInstance();
-		Subsystem drive = setUpDrive(); 
+		Subsystem drive = setUpDrive();
 		manager = new SystemManager(drive);
+		Watcher watcher = new Watcher();
+		watcher.watch(manager.getSystemWatchables());
+		watcher.outputToDashboard();
 		manager.init();
 	}
 
-	private Subsystem setUpDrive() {
+	private Subsystem setUpDrive()
+	{
 		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.xLeftDriveY(), controls.xRightDriveX(),
-			controls.xRightBumper());
+				controls.xRightBumper());
 	}
 
 	public void periodic()
