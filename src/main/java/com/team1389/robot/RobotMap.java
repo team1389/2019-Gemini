@@ -30,27 +30,27 @@ import edu.wpi.first.wpilibj.SPI;
 public class RobotMap
 {
     //Drive Train
-	protected final CAN can_LEFT_DRIVE_MOTOR_A = new CAN(3);
+	protected final CAN can_LEFT_DRIVE_MOTOR_A = new CAN(6);
     protected final boolean inv_LEFT_DRIVE_MOTOR_A = false;
     protected final boolean sinv_LEFT_DRIVE_MOTOR_A = false;
 
-    protected final CAN can_LEFT_DRIVE_MOTOR_B = new CAN(5);
+    protected final CAN can_LEFT_DRIVE_MOTOR_B = new CAN(7);
     protected final boolean inv_LEFT_DRIVE_MOTOR_B = false;
     protected final boolean sinv_LEFT_DRIVE_MOTOR_B = false;
 
-    protected final CAN can_LEFT_DRIVE_MOTOR_C = new CAN(5);
+    protected final CAN can_LEFT_DRIVE_MOTOR_C = new CAN(8);
     protected final boolean inv_LEFT_DRIVE_MOTOR_C = false;
     protected final boolean sinv_LEFT_DRIVE_MOTOR_C = false;
 
-	protected final CAN can_RIGHT_DRIVE_MOTOR_A = new CAN(6);
+	protected final CAN can_RIGHT_DRIVE_MOTOR_A = new CAN(9);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_A = false;
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_A = false;
 
-	protected final CAN can_RIGHT_DRIVE_MOTOR_B = new CAN(4);
+	protected final CAN can_RIGHT_DRIVE_MOTOR_B = new CAN(10);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_B = false;
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_B = false;
 
-    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(4);
+    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(11);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_C = false;
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = false;
 
@@ -78,7 +78,7 @@ public class RobotMap
     protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(4);
 
     //Climber
-    protected final CAN can_CLIMB_MOTOR = new CAN(1);
+    protected final CAN can_CLIMB_MOTOR = new CAN(12);
     protected final boolean inv_CLIMB_MOTOR = false;
 
     protected final PCM pcm_CLIMBER_A = new PCM(7);
@@ -86,6 +86,6 @@ public class RobotMap
 
     //Miscellaneous 
     protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
-    protected final CAN can_PCM_1 = new CAN(8); 
-    protected final CAN can_PCM_2 = new CAN(8); 
+    protected final CAN can_PCM_1 = new CAN(1); 
+    protected final CAN can_PCM_2 = new CAN(2); 
 }
