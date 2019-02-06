@@ -1,6 +1,8 @@
 package com.team1389.robot;
 
 import com.team1389.operation.TeleopMain;
+import com.team1389.watch.Watcher;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
@@ -14,6 +16,7 @@ public class Robot extends TimedRobot
 {
 	RobotSoftware robot;
 	TeleopMain teleOperator;
+	Watcher watcher;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -24,6 +27,8 @@ public class Robot extends TimedRobot
 	{
 		robot = RobotSoftware.getInstance();
 		teleOperator = new TeleopMain(robot);
+		watcher = new Watcher();
+		watcher.outputToDashboard();
 	}
 
 	@Override
@@ -50,6 +55,7 @@ public class Robot extends TimedRobot
 	public void teleopPeriodic()
 	{
 		teleOperator.periodic();
+		Watcher.update();
 	}
 
 	@Override
