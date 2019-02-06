@@ -33,19 +33,19 @@ public class TeleopShooter extends Subsystem
      */
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
-        DigitalIn shootRightBtn, DigitalIn shootLeftB, DigitalIn hasCargo)
+        DigitalIn shootRightBtn, DigitalIn shootLeftBtn, DigitalIn hasCargo)
     {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
         this.hasCargo = hasCargo;
+        this.shootRightBtn = shootRightBtn;
+        this.shootLeftBtn = shootLeftBtn;
     }
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
-    DigitalIn shootRightButton, DigitalIn shootLeftButton) {
-        this.rightShooter = rightShooter;
-        this.leftShooter = leftShooter;
-        this.shootLeftBtn = shootLeftBtn;
-        this.shootRightBtn = shootLeftBtn;
+    DigitalIn shootRightBtn, DigitalIn shootLeftBtn) {
+        this(rightShooter, leftShooter, shootRightBtn, shootLeftBtn, null);
+        System.err.println("Teleop shooter initialized without cargo sensor - brace for a NullPointerException");
     }
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
