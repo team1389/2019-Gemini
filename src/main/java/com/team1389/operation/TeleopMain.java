@@ -5,6 +5,8 @@ import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
 import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.system.Subsystem;
+import com.team1389.systems.TeleopShooter;
+
 
 public class TeleopMain
 {
@@ -21,13 +23,18 @@ public class TeleopMain
 	{
 		controls = ControlBoard.getInstance();
 		Subsystem drive = setUpDrive(); 
-		manager = new SystemManager(drive);
+		Subsystem shooter = setUpShooter();
+		manager = new SystemManager(drive, shooter);
 		manager.init();
 	}
 
 	private Subsystem setUpDrive() {
 		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.xLeftDriveY(), controls.xRightDriveX(),
 			controls.xRightBumper());
+	}
+
+	private Subsystem setUpShooter() {
+		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.xLeftBumper(), controls.xRightBumper());
 	}
 
 	public void periodic()

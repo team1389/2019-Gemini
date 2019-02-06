@@ -33,11 +33,19 @@ public class TeleopShooter extends Subsystem
      */
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
-        DigitalIn shootRightButton, DigitalIn shootLeftButton, DigitalIn hasCargo)
+        DigitalIn shootRightBtn, DigitalIn shootLeftB, DigitalIn hasCargo)
     {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
         this.hasCargo = hasCargo;
+    }
+
+    public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
+    DigitalIn shootRightButton, DigitalIn shootLeftButton) {
+        this.rightShooter = rightShooter;
+        this.leftShooter = leftShooter;
+        this.shootLeftBtn = shootLeftBtn;
+        this.shootRightBtn = shootLeftBtn;
     }
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
@@ -53,14 +61,16 @@ public class TeleopShooter extends Subsystem
     }
     public void updateShooter()
     {
-        if (shootRightBtn.get())
+       /* if (shootRightBtn.get())
         {
-            shooter.shootRight();
+            shootRight();
         }
         if (shootLeftBtn.get())
         {
             shooter.shootLeft();
-        }
+        }*/
+        rightShooter.set(true);
+        leftShooter.set(true);
     }
     public void update()
     {

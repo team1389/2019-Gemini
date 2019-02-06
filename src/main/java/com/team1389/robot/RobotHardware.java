@@ -38,7 +38,7 @@ public class RobotHardware extends RobotLayout
 		pdp = new PDPHardware(new CAN(0), registry);
 		initDriveTrain();
 		//initArm();
-		//initShooter();
+		initShooter();
 		//initCLimber();
 	}
 
