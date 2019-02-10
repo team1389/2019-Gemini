@@ -10,20 +10,19 @@ import com.team1389.systems.Shooter;
 public class TeleopShooter extends Subsystem
 {
     //Controls
-    private DigitalIn shootRightBtn;
-    private DigitalIn shootLeftBtn;
+    private DigitalIn shootRightButton;
+    private DigitalIn shootLeftButton;
     //Output
     private DigitalOut rightShooter;
     private DigitalOut leftShooter;
-    //Sensors
-    private DigitalIn hasCargo;
     
     private Shooter shooter;
 
+
     /**
-     * @param shootRightBtn Input for shooting the ball to the right
+     * @param shootRightButton Input for shooting the ball to the right
      * 
-     * @param shootLeftBtn Input for shooting ball to the left
+     * @param shootLeftButton Input for shooting ball to the left
      * 
      * @param hasCargo Detects whether there is a ball in the shooter or not
      * 
@@ -32,20 +31,13 @@ public class TeleopShooter extends Subsystem
      * @param leftShooter Controller for shooting ball to the left
      */
 
-    public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
-        DigitalIn shootRightBtn, DigitalIn shootLeftB, DigitalIn hasCargo)
-    {
-        this.rightShooter = rightShooter;
-        this.leftShooter = leftShooter;
-        this.hasCargo = hasCargo;
-    }
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
     DigitalIn shootRightButton, DigitalIn shootLeftButton) {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
-        this.shootLeftBtn = shootLeftBtn;
-        this.shootRightBtn = shootLeftBtn;
+        this.shootLeftButton = shootLeftButton;
+        this.shootRightButton = shootRightButton;
     }
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
@@ -57,21 +49,21 @@ public class TeleopShooter extends Subsystem
     }
     public void init()
     {
-        shooter = new Shooter(rightShooter, leftShooter, hasCargo);
+        shooter = new Shooter(rightShooter, leftShooter);
     }
     public void updateShooter()
     {
-       /* if (shootRightBtn.get())
+       if (shootRightButton.get())
         {
-            shootRight();
+            shooter.shootRight();
         }
-        if (shootLeftBtn.get())
+        if (shootLeftButton.get())
         {
             shooter.shootLeft();
-        }*/
-        rightShooter.set(true);
-        leftShooter.set(true);
+        }
+
     }
+    @Override
     public void update()
     {
         scheduler.update();

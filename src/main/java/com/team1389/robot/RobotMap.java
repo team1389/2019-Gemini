@@ -52,7 +52,7 @@ public class RobotMap
 
     protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(11);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_C = true;
-    protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = true;
 
     //Shooter 
     protected final PCM pcm_LEFT_SHOOTER_A = new PCM(0);
@@ -81,7 +81,7 @@ public class RobotMap
     protected final CAN can_CLIMB_MOTOR = new CAN(12);
     protected final boolean inv_CLIMB_MOTOR = false;
 
-    protected final PCM pcm_CLIMBER_A = new PCM(7);
+    protected final PCM pcm_CLIMBER_A = new PCM(0);
     protected final PCM pcm_CLIMBER_B = new PCM(7);
 
     //Miscellaneous 

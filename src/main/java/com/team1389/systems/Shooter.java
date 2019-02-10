@@ -15,8 +15,6 @@ public class Shooter extends Subsystem
     //Output
     private DigitalOut leftShooter;
     private DigitalOut rightShooter;
-    //Sensors
-    private DigitalIn hasCargo;
     //Constants
     private final int WAIT_UNTIL_EXTENDED = 1;
 
@@ -25,20 +23,17 @@ public class Shooter extends Subsystem
      * 
      * @param leftShooter Piston for shooting ball to the left
      * 
-     * @param hasCargo Beam break checking whether there is a ball in the shooter or not
      */
-
     
-    public Shooter(DigitalOut rightShooter, DigitalOut leftShooter, DigitalIn hasCargo)
+    public Shooter(DigitalOut rightShooter, DigitalOut leftShooter)
     {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
-        this.hasCargo = hasCargo;
     }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
-        return stem.put(scheduler, hasCargo.getWatchable("hasCargo"));
+        return stem.put(scheduler);
     }
 
     @Override
@@ -59,14 +54,7 @@ public class Shooter extends Subsystem
 
     private void shootRightPiston()
     {
-        if(hasCargo())
-        {
-            rightShooter.set(true);
-        }
-    }
-
-    private boolean hasCargo() {
-        return hasCargo.get();
+        rightShooter.set(true);
     }
 
     private Command shootRightCommand()
@@ -76,10 +64,7 @@ public class Shooter extends Subsystem
 
     private void shootLeftPiston()
     {
-        if(hasCargo())
-        {
-            leftShooter.set(true);
-        }
+        leftShooter.set(true);
     }
 
     private Command shootLeftCommand()
@@ -101,8 +86,8 @@ public class Shooter extends Subsystem
 
     private Command shootRightReset()
     {
-        return CommandUtil.combineSequential(shootRightCommand(), new WaitTimeCommand(WAIT_UNTIL_EXTENDED), resetShootersCommand());
-        
+        return CommandUtil.combineSequential(shootRightCommand(), new WaitTimeCommand(WAIT_UNTIL_EXTENDED),
+            resetShootersCommand());
     }
 
     public void shootRight()
@@ -112,7 +97,8 @@ public class Shooter extends Subsystem
 
     private Command shootLeftReset()
     {
-        return CommandUtil.combineSequential(shootLeftCommand(), new WaitTimeCommand(WAIT_UNTIL_EXTENDED), resetShootersCommand());
+        return CommandUtil.combineSequential(shootLeftCommand(), new WaitTimeCommand(WAIT_UNTIL_EXTENDED),
+            resetShootersCommand());
     }
 
     public void shootLeft()

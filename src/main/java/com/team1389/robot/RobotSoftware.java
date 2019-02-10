@@ -16,6 +16,8 @@ public class RobotSoftware extends RobotHardware {
 	public SixDriveOut<Percent> drive;
 	public DigitalOut rightShoot;
 	public DigitalOut leftShoot;
+	public DigitalOut climber;
+
 	
 	public static RobotSoftware getInstance() {
 		return INSTANCE;
@@ -27,6 +29,8 @@ public class RobotSoftware extends RobotHardware {
 
 	rightShoot = rightShooter.getDigitalOut();
 	leftShoot = leftShooter.getDigitalOut();
+	//climber = climbPiston.getDigitalOut();
+
 	}
 	
 

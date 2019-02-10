@@ -38,6 +38,9 @@ public class Climber extends Subsystem
         this.bumpSwitch = bumpSwitch;
         this.toggleLift = toggleLift;
     }
+    public Climber(DigitalOut liftPiston) {
+        this.liftPiston = liftPiston;
+    }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
@@ -57,7 +60,7 @@ public class Climber extends Subsystem
 
     public void update()
     {
-        scheduler.update();
+       /* scheduler.update();
 
         if(toggleLift.get() == true && liftPiston.getAsBoolean() == false)
         {
@@ -67,7 +70,7 @@ public class Climber extends Subsystem
         {
             retract();
         }
-        autoRetract();
+        autoRetract();*/
     }
 
     public void climbPiston()

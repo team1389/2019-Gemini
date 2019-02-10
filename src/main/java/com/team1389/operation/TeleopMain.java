@@ -7,6 +7,7 @@ import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
+import com.team1389.systems.Climber;
 
 
 public class TeleopMain
@@ -25,10 +26,11 @@ public class TeleopMain
 		controls = ControlBoard.getInstance();
 		Subsystem drive = setUpDrive(); 
 		Subsystem shooter = setUpShooter();
-		manager = new SystemManager(drive, shooter);
-		Watcher watcher = new Watcher();
+		Subsystem climb = setUpClimber();
+		manager = new SystemManager(drive, shooter, climb);
+		/*IWatcher watcher = new Watcher();
 		watcher.watch(manager.getSystemWatchables());
-		watcher.outputToDashboard();
+		watcher.outputToDashboard();*/
 		manager.init();
 	}
 
@@ -40,6 +42,10 @@ public class TeleopMain
 
 	private Subsystem setUpShooter() {
 		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.xLeftBumper(), controls.xRightBumper());
+	}
+
+	private Subsystem setUpClimber() {
+		return new Climber(robot.climber);
 	}
 
 	public void periodic()

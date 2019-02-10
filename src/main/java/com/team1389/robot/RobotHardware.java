@@ -39,7 +39,7 @@ public class RobotHardware extends RobotLayout
 		initDriveTrain();
 		//initArm();
 		initShooter();
-		//initCLimber();
+		initCLimber();
 	}
 
 	private void initDriveTrain() {
