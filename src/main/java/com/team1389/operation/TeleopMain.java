@@ -28,9 +28,9 @@ public class TeleopMain
 		Subsystem shooter = setUpShooter();
 		Subsystem climb = setUpClimber();
 		manager = new SystemManager(drive, shooter, climb);
-		/*IWatcher watcher = new Watcher();
+		Watcher watcher = new Watcher();
 		watcher.watch(manager.getSystemWatchables());
-		watcher.outputToDashboard();*/
+		watcher.outputToDashboard();
 		manager.init();
 	}
 

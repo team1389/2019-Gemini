@@ -60,17 +60,17 @@ public class Climber extends Subsystem
 
     public void update()
     {
-       /* scheduler.update();
+       scheduler.update();
 
-        if(toggleLift.get() == true && liftPiston.getAsBoolean() == false)
+        if(toggleLift.get() && !liftPiston.getAsBoolean())
         {
             climb();
         }
-        else if(toggleLift.get() == true && liftPiston.getAsBoolean() == true)
+        else if(toggleLift.get() && liftPiston.getAsBoolean())
         {
             retract();
         }
-        autoRetract();*/
+        autoRetract();
     }
 
     public void climbPiston()
