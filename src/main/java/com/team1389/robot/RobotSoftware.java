@@ -27,7 +27,7 @@ public class RobotSoftware extends RobotHardware {
 	drive = new SixDriveOut<>(leftDriveA.getVoltageController(), rightDriveA.getVoltageController(), leftDriveB.getVoltageController(), 
 		rightDriveB.getVoltageController(), leftDriveC.getVoltageController(), rightDriveC.getVoltageController());
 
-	rightShoot = rightShooter.getDigitalOut();
+	rightShoot = rightShooter.getDigitalOut().getInverted();
 	leftShoot = leftShooter.getDigitalOut();
 	//climber = climbPiston.getDigitalOut();
 

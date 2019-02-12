@@ -39,7 +39,7 @@ public class RobotHardware extends RobotLayout
 		initDriveTrain();
 		//initArm();
 		initShooter();
-		initCLimber();
+		//initCLimber();
 	}
 
 	private void initDriveTrain() {
@@ -63,8 +63,8 @@ public class RobotHardware extends RobotLayout
 	}
 
 	private void initShooter() {
-		leftShooter = new DoubleSolenoidHardware(can_PCM_1, pcm_LEFT_SHOOTER_A, pcm_LEFT_SHOOTER_B, registry);
-		rightShooter = new DoubleSolenoidHardware(can_PCM_1, pcm_RIGHT_SHOOTER_A, pcm_RIGHT_SHOOTER_B, registry);
+		leftShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_LEFT_SHOOTER_A, pcm_LEFT_SHOOTER_B, registry);
+		rightShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_RIGHT_SHOOTER_A, pcm_RIGHT_SHOOTER_B, registry);
 	}
 
 	private void initCLimber() {

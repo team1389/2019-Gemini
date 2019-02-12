@@ -6,6 +6,7 @@ import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 import com.team1389.systems.Shooter;
+import com.team1389.command_framework.CommandScheduler;
 
 public class TeleopShooter extends Subsystem
 {
@@ -56,17 +57,19 @@ public class TeleopShooter extends Subsystem
        if (shootRightButton.get())
         {
             shooter.shootRight();
+            System.out.println("Trying to shoot right");
         }
         if (shootLeftButton.get())
         {
+           // shooter.scheduler.cancelAll();
             shooter.shootLeft();
         }
+        shooter.update();
 
     }
     @Override
     public void update()
     {
-        scheduler.update();
         updateShooter();
     }
    

@@ -44,7 +44,7 @@ public class Shooter extends Subsystem
 
     public void init()
     {
-
+        
     }
 
     public void update()
@@ -54,12 +54,13 @@ public class Shooter extends Subsystem
 
     private void shootRightPiston()
     {
+        System.out.println("Gets to shootrightpiston");
         rightShooter.set(true);
     }
 
     private Command shootRightCommand()
     {
-        return CommandUtil.createCommand(this::shootRightPiston);
+        return CommandUtil.createCommand(() -> rightShooter.set(true));
     }
 
     private void shootLeftPiston()
@@ -70,7 +71,6 @@ public class Shooter extends Subsystem
     private Command shootLeftCommand()
     {
         return CommandUtil.createCommand(this::shootLeftPiston);
-        
     }
 
     private void resetShooters()
@@ -92,7 +92,8 @@ public class Shooter extends Subsystem
 
     public void shootRight()
     {
-        scheduler.schedule(shootRightReset());
+        scheduler.cancelAll();
+        scheduler.schedule(shootRightCommand());
     }
 
     private Command shootLeftReset()

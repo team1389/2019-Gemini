@@ -26,11 +26,10 @@ public class TeleopMain
 		controls = ControlBoard.getInstance();
 		Subsystem drive = setUpDrive(); 
 		Subsystem shooter = setUpShooter();
-		Subsystem climb = setUpClimber();
-		manager = new SystemManager(drive, shooter, climb);
-		Watcher watcher = new Watcher();
-		watcher.watch(manager.getSystemWatchables());
-		watcher.outputToDashboard();
+		manager = new SystemManager(drive, shooter);
+		//Watcher watcher = new Watcher();
+		//watcher.watch(manager.getSystemWatchables());
+		//watcher.outputToDashboard();
 		manager.init();
 	}
 
@@ -41,7 +40,7 @@ public class TeleopMain
 	}
 
 	private Subsystem setUpShooter() {
-		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.xLeftBumper(), controls.xRightBumper());
+		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.leftBumper(), controls.rightBumper());
 	}
 
 	private Subsystem setUpClimber() {
