@@ -27,10 +27,10 @@ public class TeleopMain
 		Subsystem drive = setUpDrive(); 
 		Subsystem shooter = setUpShooter();
 		manager = new SystemManager(drive, shooter);
-		//Watcher watcher = new Watcher();
-		//watcher.watch(manager.getSystemWatchables());
-		//watcher.outputToDashboard();
 		manager.init();
+		Watcher watcher = new Watcher();
+		watcher.watch(manager.getSystemWatchables());
+		watcher.outputToDashboard();
 	}
 
 	private Subsystem setUpDrive()
