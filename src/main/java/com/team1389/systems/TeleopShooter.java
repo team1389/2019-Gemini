@@ -11,8 +11,10 @@ import com.team1389.command_framework.CommandScheduler;
 public class TeleopShooter extends Subsystem
 {
     //Controls
-    private DigitalIn shootRightButton;
-    private DigitalIn shootLeftButton;
+    private DigitalIn shootRightCloseButton;
+    private DigitalIn shootRightFarButton;
+    private DigitalIn shootLeftCloseButton;
+    private DigitalIn shootLeftFarButton;
     //Output
     private DigitalOut rightShooter;
     private DigitalOut leftShooter;
@@ -34,11 +36,13 @@ public class TeleopShooter extends Subsystem
 
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
-    DigitalIn shootRightButton, DigitalIn shootLeftButton) {
+    DigitalIn shootRightCloseButton, DigitalIn shootLeftCloseButton) {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
-        this.shootLeftButton = shootLeftButton;
-        this.shootRightButton = shootRightButton;
+        this.shootLeftCloseButton = shootLeftCloseButton;
+        this.shootLeftFarButton = shootLeftFarButton;
+        this.shootRightCloseButton = shootRightCloseButton;
+        this.shootRightFarButton = shootRightFarButton;
     }
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
@@ -54,15 +58,21 @@ public class TeleopShooter extends Subsystem
     }
     public void updateShooter()
     {
-       if (shootRightButton.get())
+       if (shootRightCloseButton.get())
         {
-            shooter.shootRight();
-            System.out.println("Trying to shoot right");
+            shooter.shootRightClose();
         }
-        if (shootLeftButton.get())
+        if (shootRightFarButton.get()) 
         {
-           // shooter.scheduler.cancelAll();
-            shooter.shootLeft();
+            shooter.shootRightFar();
+        }
+        if (shootLeftCloseButton.get())
+        {
+            shooter.shootLeftClose();
+        }
+        if (shootLeftFarButton.get())
+        {
+            shooter.shootLeftFar();
         }
         shooter.update();
 

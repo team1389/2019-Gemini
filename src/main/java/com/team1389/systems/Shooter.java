@@ -16,7 +16,8 @@ public class Shooter extends Subsystem
     private DigitalOut leftShooter;
     private DigitalOut rightShooter;
     //Constants
-    private final int WAIT_UNTIL_EXTENDED = 1;
+    private final double SHORT_SHOT_WAIT_TIME = .001;
+    private final double LONG_SHOT_WAIT_TIME = .01;
 
     /**
      * @param rightShooter Piston for shooting ball to the right
@@ -52,58 +53,51 @@ public class Shooter extends Subsystem
         scheduler.update();
     }
 
-    private void shootRightPiston()
+    private Command shootRightCloseCommand()
     {
-        System.out.println("Gets to shootrightpiston");
-        rightShooter.set(true);
+        return CommandUtil.createCommand(() -> {rightShooter.set(true); new WaitTimeCommand(SHORT_SHOT_WAIT_TIME); 
+            rightShooter.set(false);});
     }
 
-    private Command shootRightCommand()
+    private Command shootRightFarCommand()
     {
-        return CommandUtil.createCommand(() -> rightShooter.set(true));
+        return CommandUtil.createCommand(() -> {rightShooter.set(true); new WaitTimeCommand(LONG_SHOT_WAIT_TIME);
+            rightShooter.set(false);});
     }
 
-    private void shootLeftPiston()
+    private Command shootLeftCloseCommand()
     {
-        leftShooter.set(true);
+        return CommandUtil.createCommand(() -> {leftShooter.set(true); new WaitTimeCommand(SHORT_SHOT_WAIT_TIME);
+            leftShooter.set(false);});
     }
 
-    private Command shootLeftCommand()
+    private Command shootLeftFarCommand()
     {
-        return CommandUtil.createCommand(this::shootLeftPiston);
+        return CommandUtil.createCommand(() -> {leftShooter.set(true); new WaitTimeCommand(LONG_SHOT_WAIT_TIME);
+            leftShooter.set(false);});
     }
 
-    private void resetShooters()
-    {
-        leftShooter.set(false);
-        rightShooter.set(false);
-    }
-
-    private Command resetShootersCommand()
-    {
-        return CommandUtil.createCommand(this::resetShooters);
-    }  
-
-    private Command shootRightReset()
-    {
-        return CommandUtil.combineSequential(shootRightCommand(), new WaitTimeCommand(WAIT_UNTIL_EXTENDED),
-            resetShootersCommand());
-    }
-
-    public void shootRight()
+    public void shootRightClose()
     {
         scheduler.cancelAll();
-        scheduler.schedule(shootRightCommand());
+        scheduler.schedule(shootRightCloseCommand());
     }
 
-    private Command shootLeftReset()
+    public void shootRightFar() 
     {
-        return CommandUtil.combineSequential(shootLeftCommand(), new WaitTimeCommand(WAIT_UNTIL_EXTENDED),
-            resetShootersCommand());
+        scheduler.cancelAll();
+        scheduler.schedule(shootRightFarCommand());
     }
 
-    public void shootLeft()
+    public void shootLeftClose()
     {
-        scheduler.schedule(shootLeftReset());
+        scheduler.cancelAll();
+        scheduler.schedule(shootLeftCloseCommand());
+    }
+
+    public void shootLeftFar() 
+    {
+    scheduler.cancelAll();
+    scheduler.schedule(shootLeftFarCommand());
     }
 }
