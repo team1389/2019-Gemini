@@ -3,11 +3,10 @@ package com.team1389.robot;
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
-import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware ;
+import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
-
 
 /**
  * contains a list of declared hardware objects for this robot. Separated from
@@ -18,8 +17,8 @@ import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
 public class RobotLayout extends RobotMap
 {
 	public Registry registry;
-	
-	//DriveTrain
+
+	// DriveTrain
 	public CANSparkMaxHardware leftDriveA;
 	public CANSparkMaxHardware leftDriveB;
 	public CANSparkMaxHardware leftDriveC;
@@ -27,19 +26,18 @@ public class RobotLayout extends RobotMap
 	public CANSparkMaxHardware rightDriveB;
 	public CANSparkMaxHardware rightDriveC;
 
-	//Arm
+	// Arm
 	public CANTalonHardware armLiftA;
 	public CANVictorSPXHardware armLiftB;
 	public VictorHardware armIntake;
 
 	public PDPHardware pdp;
-	
+
 	public DoubleSolenoidHardware leftShooter;
 	public DoubleSolenoidHardware rightShooter;
 	public DoubleSolenoidHardware climbPiston;
+	public CANVictorSPXHardware climbMotor;
 
-	public DoubleSolenoidHardware hatchPistonA;
-	public DoubleSolenoidHardware hatchPistonB;
-	public DoubleSolenoidHardware hatchPistonC;
+	public DoubleSolenoidHardware hatchPiston;
 	public DoubleSolenoidHardware cargoPiston;
 }

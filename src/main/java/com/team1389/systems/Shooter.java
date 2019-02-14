@@ -3,7 +3,6 @@ package com.team1389.systems;
 import com.team1389.auto.command.WaitTimeCommand;
 import com.team1389.command_framework.CommandUtil;
 import com.team1389.command_framework.command_base.Command;
-import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
 import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
@@ -11,21 +10,23 @@ import com.team1389.watch.Watchable;
 
 public class Shooter extends Subsystem
 {
-   
-    //Output
+
+    // Output
     private DigitalOut leftShooter;
     private DigitalOut rightShooter;
-    //Constants
-    private final double SHORT_SHOT_WAIT_TIME = .001;
-    private final double LONG_SHOT_WAIT_TIME = .01;
+    // Constants
+    private final double SHORT_SHOT_WAIT_TIME = .015;
+    private final double LONG_SHOT_WAIT_TIME = 1;
 
     /**
-     * @param rightShooter Piston for shooting ball to the right
+     * @param rightShooter
+     *                         Piston for shooting ball to the right
      * 
-     * @param leftShooter Piston for shooting ball to the left
+     * @param leftShooter
+     *                         Piston for shooting ball to the left
      * 
      */
-    
+
     public Shooter(DigitalOut rightShooter, DigitalOut leftShooter)
     {
         this.rightShooter = rightShooter;
@@ -45,7 +46,7 @@ public class Shooter extends Subsystem
 
     public void init()
     {
-        
+
     }
 
     public void update()
@@ -55,26 +56,46 @@ public class Shooter extends Subsystem
 
     private Command shootRightCloseCommand()
     {
-        return CommandUtil.createCommand(() -> {rightShooter.set(true); new WaitTimeCommand(SHORT_SHOT_WAIT_TIME); 
-            rightShooter.set(false);});
+        return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
+        {
+            rightShooter.set(false);
+        }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
+        {
+            rightShooter.set(true);
+        }));
     }
 
     private Command shootRightFarCommand()
     {
-        return CommandUtil.createCommand(() -> {rightShooter.set(true); new WaitTimeCommand(LONG_SHOT_WAIT_TIME);
-            rightShooter.set(false);});
+        return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
+        {
+            rightShooter.set(false);
+        }), new WaitTimeCommand(LONG_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
+        {
+            rightShooter.set(true);
+        }));
     }
 
     private Command shootLeftCloseCommand()
     {
-        return CommandUtil.createCommand(() -> {leftShooter.set(true); new WaitTimeCommand(SHORT_SHOT_WAIT_TIME);
-            leftShooter.set(false);});
+        return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
+        {
+            leftShooter.set(false);
+        }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
+        {
+            leftShooter.set(true);
+        }));
     }
 
     private Command shootLeftFarCommand()
     {
-        return CommandUtil.createCommand(() -> {leftShooter.set(true); new WaitTimeCommand(LONG_SHOT_WAIT_TIME);
-            leftShooter.set(false);});
+        return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
+        {
+            leftShooter.set(false);
+        }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
+        {
+            leftShooter.set(true);
+        }));
     }
 
     public void shootRightClose()
@@ -83,7 +104,7 @@ public class Shooter extends Subsystem
         scheduler.schedule(shootRightCloseCommand());
     }
 
-    public void shootRightFar() 
+    public void shootRightFar()
     {
         scheduler.cancelAll();
         scheduler.schedule(shootRightFarCommand());
@@ -95,9 +116,9 @@ public class Shooter extends Subsystem
         scheduler.schedule(shootLeftCloseCommand());
     }
 
-    public void shootLeftFar() 
+    public void shootLeftFar()
     {
-    scheduler.cancelAll();
-    scheduler.schedule(shootLeftFarCommand());
+        scheduler.cancelAll();
+        scheduler.schedule(shootLeftFarCommand());
     }
 }

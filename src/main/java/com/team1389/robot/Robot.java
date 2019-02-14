@@ -27,8 +27,8 @@ public class Robot extends TimedRobot
 	{
 		robot = RobotSoftware.getInstance();
 		teleOperator = new TeleopMain(robot);
-		//watcher = new Watcher();
-		//watcher.outputToDashboard();
+		// watcher = new Watcher();
+		// watcher.outputToDashboard();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class Robot extends TimedRobot
 	public void teleopPeriodic()
 	{
 		teleOperator.periodic();
-		//Watcher.update();
+		// Watcher.update();
 	}
 
 	@Override

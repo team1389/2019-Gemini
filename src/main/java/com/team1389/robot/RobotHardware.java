@@ -37,9 +37,9 @@ public class RobotHardware extends RobotLayout
 		registry = new Registry();
 		pdp = new PDPHardware(new CAN(0), registry);
 		initDriveTrain();
-		//initArm();
+		initArm();
 		initShooter();
-		//initCLimber();
+		initCLimber();
 	}
 
 	private void initDriveTrain() {
@@ -56,9 +56,7 @@ public class RobotHardware extends RobotLayout
 			FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
 		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
 		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
-		hatchPistonA = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
-		hatchPistonB = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
-		hatchPistonC = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
+		hatchPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
 		cargoPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry);
 	}
 
@@ -68,7 +66,8 @@ public class RobotHardware extends RobotLayout
 	}
 
 	private void initCLimber() {
-		climbPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
+		climbPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
+		climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
 	}
 
 }

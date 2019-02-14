@@ -1,8 +1,10 @@
 package com.team1389.systems;
 
 import com.team1389.hardware.inputs.software.DigitalIn;
+import com.team1389.hardware.inputs.software.PercentIn;
 import com.team1389.hardware.inputs.software.RangeIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
+import com.team1389.hardware.outputs.software.PercentOut;
 import com.team1389.hardware.outputs.software.RangeOut;
 import com.team1389.hardware.value_types.Percent;
 import com.team1389.system.Subsystem;
@@ -89,9 +91,9 @@ public class ManualArm extends Subsystem
     }
 
     @Override
-    public AddList<Watchable> getSubWatchables(AddList<Watchable> arg0)
+    public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
-        return arg0.put(cargoLauncher.getWatchable("launch piston manual"),
+        return stem.put(cargoLauncher.getWatchable("launch piston manual"),
                 cargoIntakeBeamBreak.getWatchable("cargo intaken"), hatchOuttake.getWatchable("hatch outtake pistons"),
                 cargoIntake.getWatchable("cargo intake wheels"));
     }
@@ -100,15 +102,12 @@ public class ManualArm extends Subsystem
     public void update()
     {
         arm.set(armAxis.get());
-        updateHatch();
-        if (useBeamBreak)
-        {
-            updateCargoWithBeamBreak();
-        }
-        else
-        {
-            updateCargoWithoutBeamBreak();
-        }
+        // updateHatch();
+        /*
+         * if (useBeamBreak) { updateCargoWithBeamBreak(); } else {
+         */
+        updateCargoWithoutBeamBreak();
+        // }
     }
 
     public void reset()
@@ -159,7 +158,7 @@ public class ManualArm extends Subsystem
         // This might have trouble with piston retracting too slow
         if (intakeCargoBtn.get())
         {
-            cargoLauncher.set(false);
+            // cargoLauncher.set(false);
             cargoIntake.set(1);
         }
         else if (outtakeCargoBtn.get())

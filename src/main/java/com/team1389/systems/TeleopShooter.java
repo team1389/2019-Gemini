@@ -10,33 +10,49 @@ import com.team1389.command_framework.CommandScheduler;
 
 public class TeleopShooter extends Subsystem
 {
-    //Controls
+    // Controls
     private DigitalIn shootRightCloseButton;
     private DigitalIn shootRightFarButton;
     private DigitalIn shootLeftCloseButton;
     private DigitalIn shootLeftFarButton;
-    //Output
+    // Output
     private DigitalOut rightShooter;
     private DigitalOut leftShooter;
-    
+
     private Shooter shooter;
 
-
     /**
-     * @param shootRightButton Input for shooting the ball to the right
+     * @param shootRightCloseButton
+     *                                  Input for shooting the ball to the
+     *                                  closer target on the right
      * 
-     * @param shootLeftButton Input for shooting ball to the left
+     * @param shootRightFarButton
+     *                                  Input for shooting the ball to the
+     *                                  farther target on the right
      * 
-     * @param hasCargo Detects whether there is a ball in the shooter or not
+     * @param shootLeftCloseButton
+     *                                  Input for shooting the ball to the
+     *                                  closer target on the left
      * 
-     * @param rightShooter Controller for shooting ball to the right
+     * @param shootLeftFarButton
+     *                                  Input for shooting the ball to the
+     *                                  farther target on the left
      * 
-     * @param leftShooter Controller for shooting ball to the left
+     * @param hasCargo
+     *                                  Detects whether there is a ball in the
+     *                                  shooter or not
+     * 
+     * @param rightShooter
+     *                                  Controller for shooting ball to the
+     *                                  right
+     * 
+     * @param leftShooter
+     *                                  Controller for shooting ball to the left
      */
 
-
-    public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, 
-    DigitalIn shootRightCloseButton, DigitalIn shootLeftCloseButton) {
+    public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, DigitalIn shootRightCloseButton,
+            DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton)
+    {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
         this.shootLeftCloseButton = shootLeftCloseButton;
@@ -44,25 +60,29 @@ public class TeleopShooter extends Subsystem
         this.shootRightCloseButton = shootRightCloseButton;
         this.shootRightFarButton = shootRightFarButton;
     }
+
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
         return stem.put(shooter);
     }
+
     public String getName()
     {
         return "Teleop Shooter";
     }
+
     public void init()
     {
         shooter = new Shooter(rightShooter, leftShooter);
     }
+
     public void updateShooter()
     {
-       if (shootRightCloseButton.get())
+        if (shootRightCloseButton.get())
         {
             shooter.shootRightClose();
         }
-        if (shootRightFarButton.get()) 
+        if (shootRightFarButton.get())
         {
             shooter.shootRightFar();
         }
@@ -74,13 +94,15 @@ public class TeleopShooter extends Subsystem
         {
             shooter.shootLeftFar();
         }
+
         shooter.update();
 
     }
+
     @Override
     public void update()
     {
         updateShooter();
     }
-   
+
 }
