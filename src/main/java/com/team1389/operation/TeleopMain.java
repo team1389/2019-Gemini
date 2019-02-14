@@ -31,10 +31,10 @@ public class TeleopMain
 		Subsystem drive = setUpDrive();
 		Subsystem shooter = setUpShooter();
 		Subsystem arm = setUpArm();
-		manager = new SystemManager(shooter);
+		manager = new SystemManager();
 		manager.init();
 		Watcher watcher = new Watcher();
-		watcher.watch(shooter);
+		watcher.watch();
 		watcher.outputToDashboard();
 	}
 

@@ -54,7 +54,8 @@ public class Robot extends TimedRobot
 	@Override
 	public void teleopPeriodic()
 	{
-		teleOperator.periodic();
+		System.out.println("----------");
+		// teleOperator.periodic();
 		// Watcher.update();
 	}
 

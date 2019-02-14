@@ -68,7 +68,7 @@ public class RobotMap
     protected final CAN can_ARM_LIFT_MOTOR_B = new CAN(1);
     protected final boolean inv_ARM_LIFT_MOTOR_B = false;
 
-    protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(9);
+    protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(8);
     protected final boolean inv_ARM_INTAKE_MOTOR = false;
 
     protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(2);

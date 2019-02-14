@@ -42,7 +42,7 @@ public class RobotSoftware extends RobotHardware
 		cargoLauncher = cargoPiston.getDigitalOut();
 		hatchOuttake = hatchPiston.getDigitalOut();
 		climber = climbPiston.getDigitalOut();
-		cargoIntake = armIntake.getVoltageController();
+		cargoIntake = armIntake.getVoltageController().getInverted();
 
 	}
 

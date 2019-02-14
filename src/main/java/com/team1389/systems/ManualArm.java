@@ -81,7 +81,7 @@ public class ManualArm extends Subsystem
     @Override
     public void init()
     {
-        outtakeHatchBtn = outtakeHatchBtn.getToggled();
+        // outtakeHatchBtn = outtakeHatchBtn.getToggled();
     }
 
     @Override
@@ -155,18 +155,19 @@ public class ManualArm extends Subsystem
 
     private void updateCargoWithoutBeamBreak()
     {
-        // This might have trouble with piston retracting too slow
         if (intakeCargoBtn.get())
         {
             // cargoLauncher.set(false);
-            cargoIntake.set(1);
+            // cargoIntake.set(1);
+            System.out.println("Test");
         }
-        else if (outtakeCargoBtn.get())
+        /*
+         * else if (outtakeCargoBtn.get()) { // extend piston
+         * cargoLauncher.set(true); cargoIntake.set(-1); }
+         */
+        else
         {
-            // extend piston
-            cargoLauncher.set(true);
-            cargoIntake.set(-1);
+            cargoIntake.set(0);
         }
-        cargoIntake.set(0);
     }
 }
