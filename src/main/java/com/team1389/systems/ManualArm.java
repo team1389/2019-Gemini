@@ -1,10 +1,8 @@
 package com.team1389.systems;
 
 import com.team1389.hardware.inputs.software.DigitalIn;
-import com.team1389.hardware.inputs.software.PercentIn;
 import com.team1389.hardware.inputs.software.RangeIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
-import com.team1389.hardware.outputs.software.PercentOut;
 import com.team1389.hardware.outputs.software.RangeOut;
 import com.team1389.hardware.value_types.Percent;
 import com.team1389.system.Subsystem;

@@ -1,7 +1,6 @@
 package com.team1389.robot;
 
 import com.team1389.hardware.registry.port_types.CAN;
-import com.team1389.hardware.registry.port_types.DIO;
 import com.team1389.hardware.registry.port_types.PCM;
 import com.team1389.hardware.registry.port_types.PWM;
 import com.team1389.hardware.registry.port_types.SPIPort;

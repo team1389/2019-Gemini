@@ -1,8 +1,5 @@
 package com.team1389.systems;
 
-import com.team1389.auto.command.WaitTimeCommand;
-import com.team1389.command_framework.CommandUtil;
-import com.team1389.command_framework.command_base.Command;
 import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.inputs.software.PercentIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
@@ -10,7 +7,6 @@ import com.team1389.hardware.outputs.software.PercentOut;
 import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
-import com.team1389.watch.info.BooleanInfo;
 
 public class C extends Subsystem
 {
