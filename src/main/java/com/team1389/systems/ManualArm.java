@@ -33,8 +33,9 @@ public class ManualArm extends Subsystem
     private DigitalIn intakeCargoBtn;
     private DigitalIn outtakeCargoBtn;
 
-    private boolean useBeamBreak = true;
-    private boolean intaking = false;
+    private boolean useBeamBreak;
+    private boolean intaking;
+    private boolean outtaking;
 
     /**
      * 
@@ -83,6 +84,9 @@ public class ManualArm extends Subsystem
     public void init()
     {
         // outtakeHatchBtn = outtakeHatchBtn.getToggled();
+        useBeamBreak = false;
+        intaking = false;
+        outtaking = false;
     }
 
     @Override
@@ -156,14 +160,14 @@ public class ManualArm extends Subsystem
 
     private void updateCargoWithoutBeamBreak()
     {
-        if (intakeCargoBtn.get())
+        intaking = intakeCargoBtn.get() ^ intaking;
+        outtaking = outtakeCargoBtn.get() ^ outtaking;
+        if (intaking)
         {
-            intaking = true;
             // cargoLauncher.set(false);
             cargoIntake.set(.3);
-            System.out.println("intaking");
         }
-        else if (outtakeCargoBtn.get())
+        if (outtaking)
         {
             cargoIntake.set(-.2);
         }

@@ -10,9 +10,9 @@ import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
-import com.team1389.systems.C;
 import com.team1389.systems.Climber;
 import com.team1389.systems.ManualArm;
+import com.team1389.systems.SimpleClimber;
 
 public class TeleopMain
 {
@@ -56,7 +56,7 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new C(robot.climber, robot.climbWheel, controls.xButton(), controls.leftStickYAxis());
+		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.leftStickYAxis());
 	}
 
 	private Subsystem setUpArm()

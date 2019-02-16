@@ -58,10 +58,10 @@ public class Shooter extends Subsystem
     {
         return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
         {
-            rightShooter.set(false);
+            rightShooter.set(true);
         }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
         {
-            rightShooter.set(true);
+            rightShooter.set(false);
         }));
     }
 
@@ -69,10 +69,10 @@ public class Shooter extends Subsystem
     {
         return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
         {
-            rightShooter.set(false);
+            rightShooter.set(true);
         }), new WaitTimeCommand(LONG_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
         {
-            rightShooter.set(true);
+            rightShooter.set(false);
         }));
     }
 
@@ -80,10 +80,10 @@ public class Shooter extends Subsystem
     {
         return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
         {
-            leftShooter.set(false);
+            leftShooter.set(true);
         }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
         {
-            leftShooter.set(true);
+            leftShooter.set(false);
         }));
     }
 
@@ -91,10 +91,10 @@ public class Shooter extends Subsystem
     {
         return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
         {
-            leftShooter.set(false);
+            leftShooter.set(true);
         }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
         {
-            leftShooter.set(true);
+            leftShooter.set(false);
         }));
     }
 

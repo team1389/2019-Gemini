@@ -35,8 +35,8 @@ public class RobotSoftware extends RobotHardware
 				leftDriveB.getVoltageController(), rightDriveB.getVoltageController(),
 				leftDriveC.getVoltageController(), rightDriveC.getVoltageController());
 
-		rightShoot = rightShooter.getDigitalOut().getInverted();
-		leftShoot = leftShooter.getDigitalOut();
+		rightShoot = rightShooter.getDigitalOut();
+		leftShoot = leftShooter.getDigitalOut().getInverted();
 		climbWheel = climbMotor.getVoltageController();
 		arm = armLiftA.getVoltageController().getWithAddedFollowers(armLiftB.getVoltageController());
 		cargoLauncher = cargoPiston.getDigitalOut();
