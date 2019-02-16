@@ -78,7 +78,7 @@ public class RobotMap
     protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(4);
 
     // Climber
-    protected final CAN can_CLIMB_MOTOR = new CAN(12);
+    protected final CAN can_CLIMB_MOTOR = new CAN(4);
     protected final boolean inv_CLIMB_MOTOR = false;
 
     protected final PCM pcm_CLIMBER_A = new PCM(1);

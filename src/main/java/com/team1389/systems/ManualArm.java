@@ -34,6 +34,7 @@ public class ManualArm extends Subsystem
     private DigitalIn outtakeCargoBtn;
 
     private boolean useBeamBreak = true;
+    private boolean intaking = false;
 
     /**
      * 
@@ -157,17 +158,33 @@ public class ManualArm extends Subsystem
     {
         if (intakeCargoBtn.get())
         {
+            intaking = true;
             // cargoLauncher.set(false);
-            // cargoIntake.set(1);
-            System.out.println("Test");
+            cargoIntake.set(.3);
+            System.out.println("intaking");
         }
-        /*
-         * else if (outtakeCargoBtn.get()) { // extend piston
-         * cargoLauncher.set(true); cargoIntake.set(-1); }
-         */
+        else if (outtakeCargoBtn.get())
+        {
+            cargoIntake.set(-.2);
+        }
         else
         {
             cargoIntake.set(0);
         }
+
+        // else if (outtakeCargoBtn.get())
+        // { // extend piston
+        // // cargoLauncher.set(true);
+        // cargoIntake.set(-1);
+        // }
+        // if (intakeCargoBtn.get() && intaking)
+        // {
+        // cargoIntake.set(0);
+        // intaking = false;
+        // System.out.println("stop intaking");
+        // }
+        System.out.println(intaking + "intake state");
+        System.out.println(intakeCargoBtn.get() + "button state");
+
     }
 }

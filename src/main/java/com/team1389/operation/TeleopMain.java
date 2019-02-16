@@ -31,7 +31,8 @@ public class TeleopMain
 		Subsystem drive = setUpDrive();
 		Subsystem shooter = setUpShooter();
 		Subsystem arm = setUpArm();
-		manager = new SystemManager();
+		Subsystem climber = setUpClimber();
+		manager = new SystemManager(shooter, drive, arm);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
@@ -55,14 +56,14 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new C(robot.climber, robot.climbWheel, controls.yButton(), controls.leftStickYAxis());
+		return new C(robot.climber, robot.climbWheel, controls.xButton(), controls.leftStickYAxis());
 	}
 
 	private Subsystem setUpArm()
 	{
 		return new ManualArm(robot.hatchOuttake, robot.cargoLauncher, robot.cargoIntake, robot.arm,
 				new DigitalIn((Supplier<Boolean>) () -> false), controls.rightStickYAxis(), controls.bButton(),
-				controls.aButton(), controls.xButton(), false);
+				controls.aButton(), controls.yButton(), false);
 	}
 	// (DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent>
 	// cargoIntake,

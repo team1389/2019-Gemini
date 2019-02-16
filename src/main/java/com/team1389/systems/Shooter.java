@@ -15,8 +15,8 @@ public class Shooter extends Subsystem
     private DigitalOut leftShooter;
     private DigitalOut rightShooter;
     // Constants
-    private final double SHORT_SHOT_WAIT_TIME = .015;
-    private final double LONG_SHOT_WAIT_TIME = 1;
+    private final double SHORT_SHOT_WAIT_TIME = .5;
+    private final double LONG_SHOT_WAIT_TIME = 10;
 
     /**
      * @param rightShooter
