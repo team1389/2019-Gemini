@@ -2,17 +2,13 @@ package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
-import com.team1389.hardware.inputs.hardware.SpartanGyro;
-import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
-import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.registry.port_types.CAN;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
 
 
 /**

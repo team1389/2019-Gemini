@@ -6,7 +6,6 @@ import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 import com.team1389.systems.Shooter;
-import com.team1389.command_framework.CommandScheduler;
 
 public class TeleopShooter extends Subsystem
 {

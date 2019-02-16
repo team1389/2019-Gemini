@@ -1,8 +1,16 @@
 package com.team1389.robot;
 
-import com.team1389.operation.TeleopMain;
+import com.team1389.controllers.SynchronousPIDController;
+import com.team1389.hardware.inputs.software.RangeIn;
+import com.team1389.hardware.outputs.software.RangeOut;
+import com.team1389.hardware.registry.Registry;
+import com.team1389.hardware.value_types.Percent;
+import com.team1389.hardware.value_types.Position;
 import com.team1389.watch.Watcher;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
@@ -15,8 +23,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot
 {
 	RobotSoftware robot;
-	TeleopMain teleOperator;
 	Watcher watcher;
+	Registry registry;
+	private final int center = 320;
+	SynchronousPIDController<Percent, Position> pidController;
+	NetworkTableEntry xEntry;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -26,9 +38,20 @@ public class Robot extends TimedRobot
 	public void robotInit()
 	{
 		robot = RobotSoftware.getInstance();
-		teleOperator = new TeleopMain(robot);
-		// watcher = new Watcher();
-		// watcher.outputToDashboard();
+		registry = new Registry();
+		robot = RobotSoftware.getInstance();
+
+		NetworkTableInstance inst = NetworkTableInstance.getDefault();
+		NetworkTable table = inst.getTable("vision");
+		xEntry = table.getEntry("X");
+		robot = RobotSoftware.getInstance();
+		RangeIn<Position> diff = new RangeIn<Position>(Position.class, () -> xEntry.getDouble(center) - center, 0, 640);
+		RangeOut<Percent> driveTrain = robot.rightDriveA.getVoltageController().getWithAddedFollowers(robot.rightDriveB.getVoltageController()).
+			getWithAddedFollowers(robot.rightDriveC.getVoltageController()).getWithAddedFollowers(robot.leftDriveA.getVoltageController()).
+			getWithAddedFollowers(robot.leftDriveB.getVoltageController()).getWithAddedFollowers(robot.leftDriveC.getVoltageController());
+		pidController = new SynchronousPIDController<>(0.001, 0, 0, 0, diff, driveTrain);
+		pidController.enable();
+
 	}
 
 	@Override
@@ -45,7 +68,6 @@ public class Robot extends TimedRobot
 	@Override
 	public void teleopInit()
 	{
-		teleOperator.init();
 	}
 
 	/**
@@ -54,7 +76,8 @@ public class Robot extends TimedRobot
 	@Override
 	public void teleopPeriodic()
 	{
-		teleOperator.periodic();
+		System.out.println(xEntry.getDouble(center));
+		pidController.update();
 		// Watcher.update();
 	}
 
