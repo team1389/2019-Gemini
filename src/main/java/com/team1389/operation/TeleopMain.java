@@ -1,16 +1,12 @@
 package com.team1389.operation;
 
-import java.util.function.Supplier;
-
 import com.team1389.hardware.controls.ControlBoard;
-import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
 import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
-import com.team1389.systems.Climber;
 import com.team1389.systems.ManualArm;
 import com.team1389.systems.SimpleClimber;
 
