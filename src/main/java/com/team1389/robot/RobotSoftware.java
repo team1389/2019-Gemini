@@ -1,6 +1,7 @@
 package com.team1389.robot;
 
 import com.team1389.hardware.inputs.software.AngleIn;
+import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.inputs.software.RangeIn;
 import com.team1389.hardware.outputs.software.RangeOut;
 import com.team1389.hardware.outputs.software.DigitalOut;
@@ -23,6 +24,7 @@ public class RobotSoftware extends RobotHardware
 	public DigitalOut cargoLauncher;
 	public RangeOut<Percent> arm;
 	public RangeOut<Percent> cargoIntake;
+	public DigitalIn haveBall;
 
 	public static RobotSoftware getInstance()
 	{
@@ -35,7 +37,7 @@ public class RobotSoftware extends RobotHardware
 				leftDriveB.getVoltageController(), rightDriveB.getVoltageController(),
 				leftDriveC.getVoltageController(), rightDriveC.getVoltageController());
 
-		rightShoot = rightShooter.getDigitalOut();
+		rightShoot = rightShooter.getDigitalOut().getInverted();
 		leftShoot = leftShooter.getDigitalOut().getInverted();
 		climbWheel = climbMotor.getVoltageController();
 		arm = armLiftA.getVoltageController().getWithAddedFollowers(armLiftB.getVoltageController());
@@ -43,6 +45,7 @@ public class RobotSoftware extends RobotHardware
 		hatchOuttake = hatchPiston.getDigitalOut();
 		climber = climbPiston.getDigitalOut();
 		cargoIntake = armIntake.getVoltageController().getInverted();
+		haveBall = beamBreak.getSwitchInput();
 
 	}
 

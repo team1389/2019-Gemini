@@ -71,11 +71,13 @@ public class RobotMap
     protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(8);
     protected final boolean inv_ARM_INTAKE_MOTOR = false;
 
-    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(2);
-    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(5);
+    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(3);
+    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(4);
 
-    protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(3);
-    protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(4);
+    protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(2);
+    protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(5);
+
+    protected final DIO dio_BEAM_BREAK = new DIO(9);
 
     // Climber
     protected final CAN can_CLIMB_MOTOR = new CAN(4);

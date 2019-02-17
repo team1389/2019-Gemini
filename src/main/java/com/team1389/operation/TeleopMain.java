@@ -56,14 +56,14 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.leftStickYAxis());
+		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.rightStickYAxis());
 	}
 
 	private Subsystem setUpArm()
 	{
-		return new ManualArm(robot.hatchOuttake, robot.cargoLauncher, robot.cargoIntake, robot.arm,
-				new DigitalIn((Supplier<Boolean>) () -> false), controls.rightStickYAxis(), controls.bButton(),
-				controls.aButton(), controls.yButton(), false);
+		return new ManualArm(robot.hatchOuttake, robot.cargoLauncher, robot.cargoIntake, robot.arm, robot.haveBall,
+				controls.leftStickYAxis(), controls.bButton(), controls.aButton(), controls.yButton(),
+				controls.xButton(), true);
 	}
 	// (DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent>
 	// cargoIntake,
