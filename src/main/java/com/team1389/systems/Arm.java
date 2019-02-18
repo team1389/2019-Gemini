@@ -238,5 +238,4 @@ public class Arm extends Subsystem
             }
         }.setName("outtake cargo");
     }
-
 }

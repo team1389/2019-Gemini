@@ -108,6 +108,7 @@ public class ManualArm extends Subsystem
     @Override
     public void update()
     {
+        System.out.println("beambreak " + cargoIntakeBeamBreak.get());
         arm.set(armAxis.get());
         intakingCargo = intakeCargoBtn.get() ^ intakingCargo;
         cargoToRocket = cargoToRocketBtn.get() ^ cargoToRocket;
@@ -149,7 +150,7 @@ public class ManualArm extends Subsystem
         if (!cargoIntakeBeamBreak.get() && intakingCargo)
         {
             cargoLauncher.set(true);
-            cargoIntake.set(1);
+            cargoIntake.set(.5);
         }
         else if (cargoIntakeBeamBreak.get() && cargoToRocket)
         {
@@ -158,6 +159,7 @@ public class ManualArm extends Subsystem
         else if (cargoIntakeBeamBreak.get() && cargoToShooter)
         {
             cargoLauncher.set(false);
+            cargoIntake.set(.2);
         }
         else
         {

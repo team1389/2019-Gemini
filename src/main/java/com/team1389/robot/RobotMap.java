@@ -31,8 +31,8 @@ import edu.wpi.first.wpilibj.SPI;
 public class RobotMap
 {
     // Drive Train
-    protected final CAN can_LEFT_DRIVE_MOTOR_A = new CAN(6);
-    protected final boolean inv_LEFT_DRIVE_MOTOR_A = true;
+    protected final CAN can_LEFT_DRIVE_MOTOR_A = new CAN(11);
+    protected final boolean inv_LEFT_DRIVE_MOTOR_A = false;
     protected final boolean sinv_LEFT_DRIVE_MOTOR_A = false;
 
     protected final CAN can_LEFT_DRIVE_MOTOR_B = new CAN(7);
@@ -45,21 +45,21 @@ public class RobotMap
 
     protected final CAN can_RIGHT_DRIVE_MOTOR_A = new CAN(9);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_A = true;
-    protected final boolean sinv_RIGHT_DRIVE_MOTOR_A = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_A = true;
 
     protected final CAN can_RIGHT_DRIVE_MOTOR_B = new CAN(10);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_B = true;
-    protected final boolean sinv_RIGHT_DRIVE_MOTOR_B = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_B = true;
 
-    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(11);
+    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(6);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_C = false;
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = false;
 
     // Shooter
-    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(0);
-    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(7);
-    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(1);
-    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(6);
+    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(1);
+    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(6);
+    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(0);
+    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(7);
     // Arm
     protected final CAN can_ARM_LIFT_MOTOR_A = new CAN(3);
     protected final boolean inv_ARM_LIFT_MOTOR_A = false;

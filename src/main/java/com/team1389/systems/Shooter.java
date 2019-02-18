@@ -92,7 +92,7 @@ public class Shooter extends Subsystem
         return CommandUtil.combineSequential(CommandUtil.createCommand(() ->
         {
             leftShooter.set(true);
-        }), new WaitTimeCommand(SHORT_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
+        }), new WaitTimeCommand(LONG_SHOT_WAIT_TIME), CommandUtil.createCommand(() ->
         {
             leftShooter.set(false);
         }));
