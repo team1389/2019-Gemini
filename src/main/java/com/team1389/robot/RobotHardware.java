@@ -2,6 +2,7 @@ package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
+import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
@@ -50,8 +51,10 @@ public class RobotHardware extends RobotLayout
 				can_RIGHT_DRIVE_MOTOR_A, registry);
 		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, sinv_RIGHT_DRIVE_MOTOR_B,
 				can_RIGHT_DRIVE_MOTOR_B, registry);
-		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, sinv_RIGHT_DRIVE_MOTOR_C,
-				can_RIGHT_DRIVE_MOTOR_C, registry);
+		// rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C,
+		// sinv_RIGHT_DRIVE_MOTOR_C,
+		// can_RIGHT_DRIVE_MOTOR_C, registry);
+		// TODO: uncomment this out
 	}
 
 	private void initArm()

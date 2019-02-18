@@ -49,8 +49,6 @@ public class Robot extends TimedRobot
 		RangeIn<Position> diff = new RangeIn<Position>(Position.class, () -> xEntry.getDouble(center) - center, 0, 640);
 		RangeOut<Percent> driveTrain = robot.rightDriveA.getVoltageController()
 				.getWithAddedFollowers(robot.rightDriveB.getVoltageController())
-				.getWithAddedFollowers(robot.rightDriveC.getVoltageController())
-				.getWithAddedFollowers(robot.leftDriveA.getVoltageController())
 				.getWithAddedFollowers(robot.leftDriveB.getVoltageController())
 				.getWithAddedFollowers(robot.leftDriveC.getVoltageController());
 		pidController = new SynchronousPIDController<>(0.001, 0, 0, 0, diff, driveTrain);
@@ -75,6 +73,7 @@ public class Robot extends TimedRobot
 	@Override
 	public void teleopInit()
 	{
+		teleOperator.init();
 	}
 
 	/**
