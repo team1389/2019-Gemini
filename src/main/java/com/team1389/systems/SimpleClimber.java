@@ -8,28 +8,33 @@ import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 
-public class C extends Subsystem
+public class SimpleClimber extends Subsystem
 {
-    //Output
+    // Output
     private PercentOut wheelVoltage;
     private DigitalOut liftPiston;
-    //Sensors
-    //Controls
+    // Sensors
+    // Controls
     private DigitalIn liftBtn;
     private PercentIn forwardPwr;
 
     /**
-     * @param liftPiston Lifts robot off the ground
+     * @param liftPiston
+     *                         Lifts robot off the ground
      * 
-     * @param wheelVoltage Sets voltage of wheel on the climber
+     * @param wheelVoltage
+     *                         Sets voltage of wheel on the climber
      * 
-     * @param bumpSwitch Detects if robot is in back and climber should be retracted
+     * @param bumpSwitch
+     *                         Detects if robot is in back and climber should be
+     *                         retracted
      * 
-     * @param toggleLift Extends and retracts piston
+     * @param toggleLift
+     *                         Extends and retracts piston
      */
 
-    
-    public C(DigitalOut liftPiston, PercentOut wheelVoltage, DigitalIn liftBtn, PercentIn forwardPwr) {
+    public SimpleClimber(DigitalOut liftPiston, PercentOut wheelVoltage, DigitalIn liftBtn, PercentIn forwardPwr)
+    {
         this.liftPiston = liftPiston;
         this.wheelVoltage = wheelVoltage;
         this.forwardPwr = forwardPwr;
@@ -55,14 +60,17 @@ public class C extends Subsystem
     public void update()
     {
         climb();
-       scheduler.update();
+        scheduler.update();
     }
 
-    public void climb() {
-        if (liftBtn.get()) {
+    public void climb()
+    {
+        if (liftBtn.get())
+        {
             liftPiston.set(true);
         }
-        if (forwardPwr.get() != 0) {
+        if (forwardPwr.get() != 0)
+        {
             wheelVoltage.set(forwardPwr.get());
         }
     }

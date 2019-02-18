@@ -19,8 +19,6 @@ public class TeleopShooter extends Subsystem
     private DigitalOut leftShooter;
 
     private Shooter shooter;
-    // private int stepsToShoot = 5000000;
-    // private int count = 0;
 
     /**
      * @param shootRightCloseButton

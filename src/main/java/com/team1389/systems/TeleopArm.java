@@ -113,8 +113,10 @@ public class TeleopArm extends Subsystem
     public void init()
     {
         armSystem = new Arm(hatchOuttake, cargoLauncher, cargoIntake, arm, cargoIntakeBeamBreak, armAngle);
-        manualArmSystem = new ManualArm(hatchOuttake, cargoLauncher, cargoIntake, arm, cargoIntakeBeamBreak, armAxis,
-                outtakeHatchBtn, intakeCargoBtn, outtakeCargoBtn, useBeamBreakInManual);
+        // manualArmSystem = new ManualArm(hatchOuttake, cargoLauncher,
+        // cargoIntake, arm, cargoIntakeBeamBreak, armAxis,
+        // outtakeHatchBtn, intakeCargoBtn, outtakeCargoBtn,
+        // useBeamBreakInManual);
 
         // stop all output when switching between modes
         currentlyInManual = new DigitalIn(() -> USE_MANUAL || toggleManualModeBtn.get()).addChangeListener((changed) ->

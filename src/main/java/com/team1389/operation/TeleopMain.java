@@ -1,18 +1,16 @@
 package com.team1389.operation;
 
-import java.util.function.Supplier;
-
 import com.team1389.hardware.controls.ControlBoard;
-import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
+import com.team1389.system.drive.CheesyDriveSystem;
 import com.team1389.system.drive.CurvatureDriveSystem;
+import com.team1389.system.drive.TankDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
-import com.team1389.systems.C;
-import com.team1389.systems.Climber;
 import com.team1389.systems.ManualArm;
+import com.team1389.systems.SimpleClimber;
 
 public class TeleopMain
 {
@@ -56,29 +54,24 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new C(robot.climber, robot.climbWheel, controls.xButton(), controls.leftStickYAxis());
+		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.rightStickYAxis());
 	}
 
 	private Subsystem setUpArm()
 	{
-		return new ManualArm(robot.hatchOuttake, robot.cargoLauncher, robot.cargoIntake, robot.arm,
-				new DigitalIn((Supplier<Boolean>) () -> false), controls.rightStickYAxis(), controls.bButton(),
-				controls.aButton(), controls.yButton(), false);
+		return new ManualArm(robot.hatchOuttake, robot.cargoLauncher, robot.cargoIntake, robot.arm, robot.haveBall,
+				controls.leftStickYAxis(), controls.bButton(), controls.aButton(), controls.yButton(),
+				controls.xButton(), true);
 	}
-	// (DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent>
-	// cargoIntake,
+	// public ManualArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher,
+	// RangeOut<Percent> cargoIntake,
 	// RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Percent>
 	// armAxis, DigitalIn outtakeHatchBtn,
-	// DigitalIn intakeCargoBtn, DigitalIn outtakeCargoBtn, boolean
-	// useBeamBreak)
+	// DigitalIn intakeCargoBtn, DigitalIn cargoToRocketBtn, DigitalIn
+	// cargoToShooterBtn, boolean useBeamBreak)
 
 	public void periodic()
 	{
 		manager.update();
 	}
 }
-// ManualArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher,
-// RangeOut<Percent> cargoIntake,
-// RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Percent>
-// armAxis, DigitalIn outtakeHatchBtn,
-// DigitalIn intakeCargoBtn, DigitalIn outtakeCargoBtn, boolean useBeamBreak)

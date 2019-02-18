@@ -29,10 +29,14 @@ public class ManualArm extends Subsystem
     private RangeIn<Percent> armAxis;
     private DigitalIn outtakeHatchBtn;
     private DigitalIn intakeCargoBtn;
-    private DigitalIn outtakeCargoBtn;
+    private DigitalIn cargoToRocketBtn;
+    private DigitalIn cargoToShooterBtn;
 
-    private boolean useBeamBreak = true;
-    private boolean intaking = false;
+    private boolean useBeamBreak;
+    private boolean intakingCargo;
+    private boolean cargoToRocket;
+    private boolean cargoToShooter;
+    private boolean outtakeHatch;
 
     /**
      * 
@@ -63,7 +67,7 @@ public class ManualArm extends Subsystem
      */
     public ManualArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake,
             RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Percent> armAxis, DigitalIn outtakeHatchBtn,
-            DigitalIn intakeCargoBtn, DigitalIn outtakeCargoBtn, boolean useBeamBreak)
+            DigitalIn intakeCargoBtn, DigitalIn cargoToRocketBtn, DigitalIn cargoToShooterBtn, boolean useBeamBreak)
     {
         this.hatchOuttake = hatchOuttake;
         this.cargoLauncher = cargoLauncher;
@@ -73,14 +77,18 @@ public class ManualArm extends Subsystem
         this.armAxis = armAxis;
         this.outtakeHatchBtn = outtakeHatchBtn;
         this.intakeCargoBtn = intakeCargoBtn;
-        this.outtakeCargoBtn = outtakeCargoBtn;
+        this.cargoToRocketBtn = cargoToRocketBtn;
+        this.cargoToShooterBtn = cargoToShooterBtn;
         this.useBeamBreak = useBeamBreak;
     }
 
     @Override
     public void init()
     {
-        // outtakeHatchBtn = outtakeHatchBtn.getToggled();
+        intakingCargo = false;
+        cargoToRocket = false;
+        cargoToShooter = false;
+        outtakeHatch = false;
     }
 
     @Override
@@ -100,13 +108,21 @@ public class ManualArm extends Subsystem
     @Override
     public void update()
     {
+        System.out.println("beambreak " + cargoIntakeBeamBreak.get());
         arm.set(armAxis.get());
-        // updateHatch();
-        /*
-         * if (useBeamBreak) { updateCargoWithBeamBreak(); } else {
-         */
-        updateCargoWithoutBeamBreak();
-        // }
+        intakingCargo = intakeCargoBtn.get() ^ intakingCargo;
+        cargoToRocket = cargoToRocketBtn.get() ^ cargoToRocket;
+        cargoToShooter = cargoToShooterBtn.get() ^ cargoToShooter;
+        updateHatch();
+
+        if (useBeamBreak)
+        {
+            updateCargoWithBeamBreak();
+        }
+        else
+        {
+            updateCargoWithoutBeamBreak();
+        }
     }
 
     public void reset()
@@ -120,14 +136,7 @@ public class ManualArm extends Subsystem
      */
     private void updateHatch()
     {
-        if (outtakeHatchBtn.get())
-        {
-            hatchOuttake.set(true);
-        }
-        else
-        {
-            hatchOuttake.set(false);
-        }
+        hatchOuttake.set(outtakeHatch);
     }
 
     /**
@@ -138,51 +147,45 @@ public class ManualArm extends Subsystem
     {
 
         // This might have trouble with piston retracting too slow
-        if (!cargoIntakeBeamBreak.get() && intakeCargoBtn.get())
+        if (!cargoIntakeBeamBreak.get() && intakingCargo)
         {
-            cargoLauncher.set(false);
-            cargoIntake.set(1);
-        }
-        else if (cargoIntakeBeamBreak.get() && outtakeCargoBtn.get())
-        {
-            // extend piston
             cargoLauncher.set(true);
+            cargoIntake.set(.5);
+        }
+        else if (cargoIntakeBeamBreak.get() && cargoToRocket)
+        {
             cargoIntake.set(-1);
         }
-        cargoIntake.set(0);
-    }
-
-    private void updateCargoWithoutBeamBreak()
-    {
-        if (intakeCargoBtn.get())
+        else if (cargoIntakeBeamBreak.get() && cargoToShooter)
         {
-            intaking = true;
-            // cargoLauncher.set(false);
-            cargoIntake.set(.3);
-            System.out.println("intaking");
-        }
-        else if (outtakeCargoBtn.get())
-        {
-            cargoIntake.set(-.2);
+            cargoLauncher.set(false);
+            cargoIntake.set(.2);
         }
         else
         {
             cargoIntake.set(0);
         }
+    }
 
-        // else if (outtakeCargoBtn.get())
-        // { // extend piston
-        // // cargoLauncher.set(true);
-        // cargoIntake.set(-1);
-        // }
-        // if (intakeCargoBtn.get() && intaking)
-        // {
-        // cargoIntake.set(0);
-        // intaking = false;
-        // System.out.println("stop intaking");
-        // }
-        System.out.println(intaking + "intake state");
-        System.out.println(intakeCargoBtn.get() + "button state");
+    private void updateCargoWithoutBeamBreak()
+    {
 
+        if (intakingCargo)
+        {
+            cargoLauncher.set(true);
+            cargoIntake.set(1);
+        }
+        else if (cargoToRocket)
+        {
+            cargoIntake.set(-.5);
+        }
+        else if (cargoToShooter)
+        {
+            cargoLauncher.set(false);
+        }
+        else
+        {
+            cargoIntake.set(0);
+        }
     }
 }

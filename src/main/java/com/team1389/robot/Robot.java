@@ -6,6 +6,7 @@ import com.team1389.hardware.outputs.software.RangeOut;
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.value_types.Percent;
 import com.team1389.hardware.value_types.Position;
+import com.team1389.operation.TeleopMain;
 import com.team1389.watch.Watcher;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -25,10 +26,10 @@ public class Robot extends TimedRobot
 	RobotSoftware robot;
 	Watcher watcher;
 	Registry registry;
+	TeleopMain teleOperator;
 	private final int center = 320;
 	SynchronousPIDController<Percent, Position> pidController;
 	NetworkTableEntry xEntry;
-
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -46,12 +47,18 @@ public class Robot extends TimedRobot
 		xEntry = table.getEntry("X");
 		robot = RobotSoftware.getInstance();
 		RangeIn<Position> diff = new RangeIn<Position>(Position.class, () -> xEntry.getDouble(center) - center, 0, 640);
-		RangeOut<Percent> driveTrain = robot.rightDriveA.getVoltageController().getWithAddedFollowers(robot.rightDriveB.getVoltageController()).
-			getWithAddedFollowers(robot.rightDriveC.getVoltageController()).getWithAddedFollowers(robot.leftDriveA.getVoltageController()).
-			getWithAddedFollowers(robot.leftDriveB.getVoltageController()).getWithAddedFollowers(robot.leftDriveC.getVoltageController());
+		RangeOut<Percent> driveTrain = robot.rightDriveA.getVoltageController()
+				.getWithAddedFollowers(robot.rightDriveB.getVoltageController())
+				.getWithAddedFollowers(robot.rightDriveC.getVoltageController())
+				.getWithAddedFollowers(robot.leftDriveA.getVoltageController())
+				.getWithAddedFollowers(robot.leftDriveB.getVoltageController())
+				.getWithAddedFollowers(robot.leftDriveC.getVoltageController());
 		pidController = new SynchronousPIDController<>(0.001, 0, 0, 0, diff, driveTrain);
 		pidController.enable();
 
+		teleOperator = new TeleopMain(robot);
+		watcher = new Watcher();
+		watcher.outputToDashboard();
 	}
 
 	@Override
@@ -78,17 +85,16 @@ public class Robot extends TimedRobot
 	{
 		System.out.println(xEntry.getDouble(center));
 		pidController.update();
-		// Watcher.update();
+		teleOperator.periodic();
+		Watcher.update();
 	}
 
 	@Override
-
 	public void disabledInit()
 	{
 	}
 
 	@Override
-
 	public void disabledPeriodic()
 	{
 
