@@ -29,6 +29,7 @@ public class Robot extends TimedRobot
 		teleOperator = new TeleopMain(robot);
 		watcher = new Watcher();
 		watcher.outputToDashboard();
+		robot.zeroRobotAngleOnStartup();
 	}
 
 	@Override

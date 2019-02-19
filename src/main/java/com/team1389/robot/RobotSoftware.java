@@ -26,6 +26,7 @@ public class RobotSoftware extends RobotHardware
 	public RangeOut<Percent> arm;
 	public RangeOut<Percent> cargoIntake;
 	public DigitalIn haveBall;
+	public AngleIn<Position> robotAngle;
 
 	public static RobotSoftware getInstance()
 	{
@@ -53,6 +54,21 @@ public class RobotSoftware extends RobotHardware
 		cargoIntake = armIntake.getVoltageController().getInverted();
 		haveBall = beamBreak.getSwitchInput();
 
+		robotAngle = imu.getYawInput().getWithSetRange(0, 360).getWrapped();
+
 	}
 
+	/**
+	 * Note: This method will not zero the robot angle referenced inside of a
+	 * subsystem or other object
+	 */
+	public void zeroRobotAngleOnStartup()
+	{
+		double offset = -robotAngle.get();
+		double origMin = robotAngle.min();
+		double origMax = robotAngle.max();
+		double newMin = origMin + offset;
+		double newMax = origMax + offset;
+		robotAngle = (AngleIn<Position>) robotAngle.getOffset(offset).getWithSetRange(newMin, newMax);
+	}
 }

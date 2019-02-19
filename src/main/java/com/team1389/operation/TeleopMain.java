@@ -39,14 +39,15 @@ public class TeleopMain
 
 	private Subsystem setUpDrive()
 	{
-		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.xLeftDriveY(), controls.xRightDriveX(),
-				controls.xRightBumper());
+		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
+				controls.driveRightBumper());
 	}
 
 	private Subsystem setUpShooter()
 	{
-		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
-				controls.driveAButton(), controls.driveXButton());
+		return new TeleopShooter(robot.rightShoot, robot.leftShoot, robot.drive.getAsTank(), robot.robotAngle,
+				controls.driveBButton(), controls.driveYButton(), controls.driveAButton(), controls.driveXButton(),
+				controls.driveLeftBumper(), controls.driveRightBumper(), controls.driveBackButton());
 	}
 	// (DigitalOut rightShooter, DigitalOut leftShooter,
 	// DigitalIn shootRightCloseButton, DigitalIn shootRightFarButton,

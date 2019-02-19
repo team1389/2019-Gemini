@@ -2,6 +2,7 @@ package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
+import com.team1389.hardware.inputs.hardware.PigeonIMUHardware;
 import com.team1389.hardware.inputs.hardware.SpartanGyro;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
@@ -38,6 +39,7 @@ public class RobotHardware extends RobotLayout
 		initArm();
 		initShooter();
 		initCLimber();
+		initIMU();
 	}
 
 	private void initDriveTrain()
@@ -77,6 +79,11 @@ public class RobotHardware extends RobotLayout
 	{
 		climbPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
 		climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
+	}
+
+	private void initIMU()
+	{
+		imu = new PigeonIMUHardware(can_CLIMB_MOTOR, registry);
 	}
 
 }

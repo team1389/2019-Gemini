@@ -87,7 +87,7 @@ public class RobotMap
     protected final PCM pcm_CLIMBER_B = new PCM(6);
 
     // Miscellaneous
-    protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
+    protected final CAN can_IMU_Port = new CAN(7);
     protected final CAN can_PCM_1 = new CAN(1);
     protected final CAN can_PCM_2 = new CAN(2);
 }
