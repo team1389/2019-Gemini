@@ -48,9 +48,6 @@ public class TeleopMain
 		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
 				controls.driveAButton(), controls.driveXButton());
 	}
-	// (DigitalOut rightShooter, DigitalOut leftShooter,
-	// DigitalIn shootRightCloseButton, DigitalIn shootRightFarButton,
-	// DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton)
 
 	private Subsystem setUpClimber()
 	{
@@ -63,12 +60,6 @@ public class TeleopMain
 				controls.leftStickYAxis(), controls.bButton(), controls.aButton(), controls.yButton(),
 				controls.xButton(), true);
 	}
-	// public ManualArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher,
-	// RangeOut<Percent> cargoIntake,
-	// RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Percent>
-	// armAxis, DigitalIn outtakeHatchBtn,
-	// DigitalIn intakeCargoBtn, DigitalIn cargoToRocketBtn, DigitalIn
-	// cargoToShooterBtn, boolean useBeamBreak)
 
 	public void periodic()
 	{
