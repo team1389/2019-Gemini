@@ -15,7 +15,7 @@ public class Shooter extends Subsystem
     private DigitalOut leftShooter;
     private DigitalOut rightShooter;
     // Constants
-    private final double SHORT_SHOT_WAIT_TIME = .5;
+    private final double SHORT_SHOT_WAIT_TIME = .5; // TODO: tune these
     private final double LONG_SHOT_WAIT_TIME = 2;
 
     /**

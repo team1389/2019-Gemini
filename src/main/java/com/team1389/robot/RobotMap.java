@@ -52,7 +52,7 @@ public class RobotMap
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_B = true;
 
     protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(6);
-    protected final boolean inv_RIGHT_DRIVE_MOTOR_C = false;
+    protected final boolean inv_RIGHT_DRIVE_MOTOR_C = true;
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = false;
 
     // Shooter

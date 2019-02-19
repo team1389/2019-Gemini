@@ -56,6 +56,7 @@ public class Robot extends TimedRobot
 	{
 		teleOperator.periodic();
 		Watcher.update();
+
 	}
 
 	@Override
