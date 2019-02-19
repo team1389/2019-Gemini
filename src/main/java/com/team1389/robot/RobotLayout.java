@@ -8,6 +8,7 @@ import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
+import com.team1389.hardware.outputs.hardware.SolenoidHardware;
 
 /**
  * contains a list of declared hardware objects for this robot. Separated from
@@ -34,6 +35,7 @@ public class RobotLayout extends RobotMap
 
 	public PDPHardware pdp;
 
+	public SolenoidHardware ringLight;
 	public DoubleSolenoidHardware leftShooter;
 	public DoubleSolenoidHardware rightShooter;
 	public DoubleSolenoidHardware climbPiston;

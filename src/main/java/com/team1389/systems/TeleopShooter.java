@@ -2,10 +2,15 @@ package com.team1389.systems;
 
 import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
+import com.team1389.hardware.outputs.software.RangeOut;
+import com.team1389.hardware.value_types.Percent;
 import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
-import com.team1389.systems.Shooter;
+
+import edu.wpi.first.networktables.NetworkTable;
+
+import com.team1389.systems.VisionShooter;
 
 public class TeleopShooter extends Subsystem
 {
@@ -17,8 +22,10 @@ public class TeleopShooter extends Subsystem
     // Output
     private DigitalOut rightShooter;
     private DigitalOut leftShooter;
+    private RangeOut<Percent> drive;
+    private NetworkTable table;
 
-    private Shooter shooter;
+    private VisionShooter shooter;
 
     /**
      * @param shootRightCloseButton
@@ -49,8 +56,9 @@ public class TeleopShooter extends Subsystem
      *                                  Controller for shooting ball to the left
      */
 
-    public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, DigitalIn shootRightCloseButton,
-            DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton)
+    public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, RangeOut<Percent> drive, NetworkTable table,
+            DigitalIn shootRightCloseButton, DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton,
+            DigitalIn shootLeftFarButton)
     {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
@@ -58,6 +66,8 @@ public class TeleopShooter extends Subsystem
         this.shootLeftFarButton = shootLeftFarButton;
         this.shootRightCloseButton = shootRightCloseButton;
         this.shootRightFarButton = shootRightFarButton;
+        this.drive = drive;
+        this.table = table;
     }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
@@ -72,7 +82,7 @@ public class TeleopShooter extends Subsystem
 
     public void init()
     {
-        shooter = new Shooter(rightShooter, leftShooter);
+        shooter = new VisionShooter(rightShooter, leftShooter, drive, table);
     }
 
     public void updateShooter()

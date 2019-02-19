@@ -7,6 +7,7 @@ import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
+import com.team1389.hardware.outputs.hardware.SolenoidHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.registry.port_types.CAN;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -51,10 +52,8 @@ public class RobotHardware extends RobotLayout
 				can_RIGHT_DRIVE_MOTOR_A, registry);
 		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, sinv_RIGHT_DRIVE_MOTOR_B,
 				can_RIGHT_DRIVE_MOTOR_B, registry);
-		// rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C,
-		// sinv_RIGHT_DRIVE_MOTOR_C,
-		// can_RIGHT_DRIVE_MOTOR_C, registry);
-		// TODO: uncomment this out
+		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, sinv_RIGHT_DRIVE_MOTOR_C,
+				can_RIGHT_DRIVE_MOTOR_C, registry);
 	}
 
 	private void initArm()
@@ -72,6 +71,7 @@ public class RobotHardware extends RobotLayout
 	{
 		leftShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_LEFT_SHOOTER_A, pcm_LEFT_SHOOTER_B, registry);
 		rightShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_RIGHT_SHOOTER_A, pcm_RIGHT_SHOOTER_B, registry);
+		ringLight = new SolenoidHardware(can_PCM_1, pcm_RING_LIGHT, registry);
 	}
 
 	private void initCLimber()

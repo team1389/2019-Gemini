@@ -1,11 +1,10 @@
 package com.team1389.operation;
 
+import com.team1389.auto.command.TurnAngleCommand;
 import com.team1389.hardware.controls.ControlBoard;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
-import com.team1389.system.drive.CheesyDriveSystem;
 import com.team1389.system.drive.CurvatureDriveSystem;
-import com.team1389.system.drive.TankDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
@@ -35,6 +34,7 @@ public class TeleopMain
 		Watcher watcher = new Watcher();
 		watcher.watch();
 		watcher.outputToDashboard();
+		robot.ringLight.getDigitalOut().set(true); // turn on ring light
 	}
 
 	private Subsystem setUpDrive()
@@ -45,12 +45,10 @@ public class TeleopMain
 
 	private Subsystem setUpShooter()
 	{
-		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
-				controls.driveAButton(), controls.driveXButton());
+		return new TeleopShooter(robot.rightShoot, robot.leftShoot,
+				TurnAngleCommand.createTurnController(robot.drive.getAsTank()), robot.visionTable,
+				controls.driveBButton(), controls.driveYButton(), controls.driveAButton(), controls.driveXButton());
 	}
-	// (DigitalOut rightShooter, DigitalOut leftShooter,
-	// DigitalIn shootRightCloseButton, DigitalIn shootRightFarButton,
-	// DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton)
 
 	private Subsystem setUpClimber()
 	{
@@ -63,12 +61,6 @@ public class TeleopMain
 				controls.leftStickYAxis(), controls.bButton(), controls.aButton(), controls.yButton(),
 				controls.xButton(), true);
 	}
-	// public ManualArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher,
-	// RangeOut<Percent> cargoIntake,
-	// RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Percent>
-	// armAxis, DigitalIn outtakeHatchBtn,
-	// DigitalIn intakeCargoBtn, DigitalIn cargoToRocketBtn, DigitalIn
-	// cargoToShooterBtn, boolean useBeamBreak)
 
 	public void periodic()
 	{
