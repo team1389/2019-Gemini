@@ -10,14 +10,12 @@ import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 
 /**
- * Allows for manual control of arm, cargo intake, & hatch intake with or
- * without beam break
+ * Allows for manual control of arm without beam break
  */
 public class ManualArm extends Subsystem
 {
 
     // output
-    private DigitalOut hatchOuttake;
     private DigitalOut cargoLauncher;
     private RangeOut<Percent> cargoIntake;
     private RangeOut<Percent> arm;
@@ -27,7 +25,6 @@ public class ManualArm extends Subsystem
 
     // control
     private RangeIn<Percent> armAxis;
-    private DigitalIn outtakeHatchBtn;
     private DigitalIn intakeCargoBtn;
     private DigitalIn cargoToRocketBtn;
     private DigitalIn cargoToShooterBtn;
@@ -36,12 +33,9 @@ public class ManualArm extends Subsystem
     private boolean intakingCargo;
     private boolean cargoToRocket;
     private boolean cargoToShooter;
-    private boolean outtakeHatch;
 
     /**
      * 
-     * @param hatchOuttake
-     *                                 controller for hatch detach mechanism
      * @param cargoLauncher
      *                                 controller for piston that hits ball into
      *                                 intake
@@ -55,8 +49,6 @@ public class ManualArm extends Subsystem
      *                                 it detects)
      * @param armAxis
      *                                 input for controlling arm
-     * @param outtakeHatchBtn
-     *                                 input for triggering outtaking hatch
      * @param intakeCargoBtn
      *                                 input for triggering cargo intake
      * @param outtakeCargoBtn
@@ -65,17 +57,15 @@ public class ManualArm extends Subsystem
      *                                 toggle for whether or not to use the beam
      *                                 break
      */
-    public ManualArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake,
-            RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Percent> armAxis, DigitalIn outtakeHatchBtn,
-            DigitalIn intakeCargoBtn, DigitalIn cargoToRocketBtn, DigitalIn cargoToShooterBtn, boolean useBeamBreak)
+    public ManualArm(DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake, RangeOut<Percent> arm,
+            DigitalIn cargoIntakeBeamBreak, RangeIn<Percent> armAxis, DigitalIn intakeCargoBtn,
+            DigitalIn cargoToRocketBtn, DigitalIn cargoToShooterBtn, boolean useBeamBreak)
     {
-        this.hatchOuttake = hatchOuttake;
         this.cargoLauncher = cargoLauncher;
         this.cargoIntake = cargoIntake;
         this.arm = arm;
         this.cargoIntakeBeamBreak = cargoIntakeBeamBreak;
         this.armAxis = armAxis;
-        this.outtakeHatchBtn = outtakeHatchBtn;
         this.intakeCargoBtn = intakeCargoBtn;
         this.cargoToRocketBtn = cargoToRocketBtn;
         this.cargoToShooterBtn = cargoToShooterBtn;
@@ -88,7 +78,6 @@ public class ManualArm extends Subsystem
         intakingCargo = false;
         cargoToRocket = false;
         cargoToShooter = false;
-        outtakeHatch = false;
     }
 
     @Override
@@ -101,8 +90,7 @@ public class ManualArm extends Subsystem
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
         return stem.put(cargoLauncher.getWatchable("launch piston manual"),
-                cargoIntakeBeamBreak.getWatchable("cargo intaken"), hatchOuttake.getWatchable("hatch outtake pistons"),
-                cargoIntake.getWatchable("cargo intake wheels"));
+                cargoIntakeBeamBreak.getWatchable("cargo intaken"), cargoIntake.getWatchable("cargo intake wheels"));
     }
 
     @Override
