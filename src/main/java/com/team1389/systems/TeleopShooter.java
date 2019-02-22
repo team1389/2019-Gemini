@@ -75,7 +75,8 @@ public class TeleopShooter extends Subsystem
         shooter = new Shooter(rightShooter, leftShooter);
     }
 
-    public void updateShooter()
+    @Override
+    public void update()
     {
         if (shootRightCloseButton.get())
         {
@@ -95,13 +96,6 @@ public class TeleopShooter extends Subsystem
         }
 
         shooter.update();
-
-    }
-
-    @Override
-    public void update()
-    {
-        updateShooter();
     }
 
 }

@@ -9,6 +9,7 @@ import com.team1389.hardware.inputs.hardware.PDPHardware;
 import com.team1389.hardware.inputs.hardware.PigeonIMUHardware;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
+import com.team1389.hardware.outputs.hardware.SolenoidHardware;
 
 /**
  * contains a list of declared hardware objects for this robot. Separated from
@@ -27,22 +28,26 @@ public class RobotLayout extends RobotMap
 	public CANSparkMaxHardware rightDriveA;
 	public CANSparkMaxHardware rightDriveB;
 	public CANSparkMaxHardware rightDriveC;
+	public PigeonIMUHardware imu;
 
 	// Arm
 	public CANTalonHardware armLiftA;
 	public CANVictorSPXHardware armLiftB;
 	public VictorHardware armIntake;
+	public DoubleSolenoidHardware cargoPiston;
+	public SwitchHardware beamBreak;
 
-	public PDPHardware pdp;
-
+	// Shooter
 	public DoubleSolenoidHardware leftShooter;
 	public DoubleSolenoidHardware rightShooter;
+
+	// Climber
 	public DoubleSolenoidHardware climbPiston;
 	public CANVictorSPXHardware climbMotor;
 
-	public DoubleSolenoidHardware hatchPiston;
-	public DoubleSolenoidHardware cargoPiston;
+	// Hatch
+	public SolenoidHardware hatchPiston;
 
-	public SwitchHardware beamBreak;
-	public PigeonIMUHardware imu;
+	// Miscallenous
+	public PDPHardware pdp;
 }

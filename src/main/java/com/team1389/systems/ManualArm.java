@@ -101,8 +101,6 @@ public class ManualArm extends Subsystem
         intakingCargo = intakeCargoBtn.get() ^ intakingCargo;
         cargoToRocket = cargoToRocketBtn.get() ^ cargoToRocket;
         cargoToShooter = cargoToShooterBtn.get() ^ cargoToShooter;
-        updateHatch();
-
         if (useBeamBreak)
         {
             updateCargoWithBeamBreak();
@@ -117,14 +115,6 @@ public class ManualArm extends Subsystem
     {
         cargoIntake.set(0);
         arm.set(0);
-    }
-
-    /**
-     * assumes outtakeHatchBtn is toggled
-     */
-    private void updateHatch()
-    {
-        hatchOuttake.set(outtakeHatch);
     }
 
     /**

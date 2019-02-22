@@ -8,6 +8,7 @@ import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
+import com.team1389.hardware.outputs.hardware.SolenoidHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.registry.port_types.CAN;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -56,7 +57,6 @@ public class RobotHardware extends RobotLayout
 				FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
 		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
 		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
-		hatchPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
 		cargoPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry);
 		beamBreak = new SwitchHardware(dio_BEAM_BREAK, registry);
 	}
@@ -71,6 +71,11 @@ public class RobotHardware extends RobotLayout
 	{
 		climbPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
 		climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
+	}
+
+	private void initHatch()
+	{
+		hatchPiston = new SolenoidHardware(can_PCM_1, pcm_HATCH, registry);
 	}
 
 }
