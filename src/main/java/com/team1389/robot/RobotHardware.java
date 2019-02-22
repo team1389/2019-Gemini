@@ -2,6 +2,7 @@ package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
+import com.team1389.hardware.inputs.hardware.PigeonIMUHardware;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
@@ -40,18 +41,13 @@ public class RobotHardware extends RobotLayout
 
 	private void initDriveTrain()
 	{
-		leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, sinv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A,
-				registry);
-		leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, sinv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B,
-				registry);
-		leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, sinv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C,
-				registry);
-		rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, sinv_RIGHT_DRIVE_MOTOR_A,
-				can_RIGHT_DRIVE_MOTOR_A, registry);
-		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, sinv_RIGHT_DRIVE_MOTOR_B,
-				can_RIGHT_DRIVE_MOTOR_B, registry);
-		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, sinv_RIGHT_DRIVE_MOTOR_C,
-				can_RIGHT_DRIVE_MOTOR_C, registry);
+		leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A, registry);
+		leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B, registry);
+		leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C, registry);
+		rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
+		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
+		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
+		imu = new PigeonIMUHardware(can_IMU, registry);
 	}
 
 	private void initArm()

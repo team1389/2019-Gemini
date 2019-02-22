@@ -1,7 +1,9 @@
 package com.team1389.robot;
 
+import com.team1389.hardware.inputs.software.AngleIn;
 import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.outputs.software.RangeOut;
+import com.team1389.hardware.outputs.software.AngleOut;
 import com.team1389.hardware.outputs.software.DigitalOut;
 import com.team1389.hardware.outputs.software.PercentOut;
 import com.team1389.hardware.value_types.Percent;
@@ -20,7 +22,7 @@ public class RobotSoftware extends RobotHardware
 	public RangeOut<Percent> arm;
 	public RangeOut<Percent> cargoIntake;
 	public DigitalIn haveBall;
-	public RangeOut<Percent> LDA, LDB, LDC, RDA, RDB, RDC;
+	public AngleIn angle;
 
 	public static RobotSoftware getInstance()
 	{
@@ -42,6 +44,7 @@ public class RobotSoftware extends RobotHardware
 		climber = climbPiston.getDigitalOut();
 		cargoIntake = armIntake.getVoltageController().getInverted();
 		haveBall = beamBreak.getSwitchInput();
+		angle = imu.getYawInput();
 
 	}
 

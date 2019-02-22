@@ -90,4 +90,5 @@ public class RobotMap
     protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
     protected final CAN can_PCM_1 = new CAN(1);
     protected final CAN can_PCM_2 = new CAN(2);
+    protected final CAN can_IMU = new CAN(12);
 }

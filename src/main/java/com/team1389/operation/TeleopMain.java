@@ -1,11 +1,10 @@
 package com.team1389.operation;
 
 import com.team1389.hardware.controls.ControlBoard;
+import com.team1389.robot.RobotConstants;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
-import com.team1389.system.drive.CheesyDriveSystem;
-import com.team1389.system.drive.CurvatureDriveSystem;
-import com.team1389.system.drive.TankDriveSystem;
+import com.team1389.system.drive.CurvatureDriveStraightSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
@@ -39,8 +38,9 @@ public class TeleopMain
 
 	private Subsystem setUpDrive()
 	{
-		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.xLeftDriveY(), controls.xRightDriveX(),
-				controls.xRightBumper());
+		return new CurvatureDriveStraightSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
+				controls.driveLeftBumper(), RobotConstants.TURN_SENSITIVITY, RobotConstants.SPIN_SENSITIVITY,
+				robot.angle, RobotConstants.PID.p, controls.driveRightBumper());
 	}
 
 	private Subsystem setUpShooter()
