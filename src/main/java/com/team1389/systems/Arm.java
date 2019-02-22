@@ -30,7 +30,6 @@ public class Arm extends Subsystem
     private State currentState;
 
     // output
-    private DigitalOut hatchOuttake;
     private DigitalOut cargoLauncher;
     private RangeOut<Percent> cargoIntake;
     private RangeOut<Percent> armVoltage;
@@ -40,9 +39,7 @@ public class Arm extends Subsystem
     private RangeIn<Position> armAngle;
 
     /**
-     * 
-     * @param hatchOuttake
-     *                                 controller for hatch detach mechanism
+     *
      * @param cargoLauncher
      *                                 controller for piston that hits ball into
      *                                 intake
@@ -57,10 +54,9 @@ public class Arm extends Subsystem
      * @param armAngle
      *                                 gives angle of the arm in degrees
      */
-    public Arm(DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake,
-            RangeOut<Percent> armVoltage, DigitalIn cargoIntakeBeamBreak, RangeIn<Position> armAngle)
+    public Arm(DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake, RangeOut<Percent> armVoltage,
+            DigitalIn cargoIntakeBeamBreak, RangeIn<Position> armAngle)
     {
-        this.hatchOuttake = hatchOuttake;
         this.cargoLauncher = cargoLauncher;
         this.cargoIntake = cargoIntake;
         this.armVoltage = armVoltage;
@@ -88,10 +84,8 @@ public class Arm extends Subsystem
 
     public enum State
     {
-        INTAKE_HATCH_FROM_GROUND(0, "Intake Hatch From Ground"), INTAKE_HATCH_FROM_FEEDER(90,
-                "Intake hatch from feeder"), INTAKE_CARGO_FROM_GROUND(0, "Intake Cargo"), STORE_CARGO(115,
-                        "Store Cargo"), OUTTAKE_CARGO(45,
-                                "Outtake Cargo"), OUTTAKE_HATCH(90, "Outtake Hatch"), CLIMBING(100, "Climbing");
+        INTAKE_CARGO_FROM_GROUND(0, "Intake Cargo"), STORE_CARGO(115, "Store Cargo"), OUTTAKE_CARGO(45,
+                "Outtake Cargo"), CLIMBING(100, "Climbing");
         // assumes 0 is when arm is parallel with the robot top
         private double angle;
         private String name;
@@ -110,24 +104,9 @@ public class Arm extends Subsystem
         reset();
         switch (desiredState)
         {
-        case INTAKE_HATCH_FROM_GROUND:
-            Command hatchFromGround = CommandUtil.combineSequential(extendHatchPistonsCommand(false),
-                    goToAngle(desiredState.angle), new WaitTimeCommand(2)).setName("move & ground intake hatch");
-            scheduler.schedule(hatchFromGround);
-            // auto schedules to outtake because that's only next option
-            scheduler.schedule(goToAngle(State.OUTTAKE_HATCH.angle));
-            break;
-        case INTAKE_HATCH_FROM_FEEDER:
-            Command hatchFromFeeder = CommandUtil.combineSequential(extendHatchPistonsCommand(false),
-                    goToAngle(desiredState.angle), new WaitTimeCommand(5)).setName("move & feeder intake hatch");
-            scheduler.schedule(hatchFromFeeder);
-            // auto schedules to outtake because that's only next option
-            scheduler.schedule(goToAngle(State.OUTTAKE_HATCH.angle));
-            break;
         case INTAKE_CARGO_FROM_GROUND:
-            Command cargoPickUp = CommandUtil.combineSequential(extendHatchPistonsCommand(false),
-                    extendCargoPistonsCommand(false), goToAngle(desiredState.angle), intakeCargoCommand())
-                    .setName("move and intake cargo");
+            Command cargoPickUp = CommandUtil.combineSequential(extendCargoPistonsCommand(false),
+                    goToAngle(desiredState.angle), intakeCargoCommand()).setName("move and intake cargo");
             scheduler.schedule(cargoPickUp);
             scheduler.schedule(goToAngle(State.STORE_CARGO.angle));
             break;
@@ -140,13 +119,6 @@ public class Arm extends Subsystem
             scheduler.schedule(outtakeCargo);
             scheduler.schedule(goToAngle(State.STORE_CARGO.angle));
 
-            break;
-        case OUTTAKE_HATCH:
-            Command outtakeHatch = CommandUtil
-                    .combineSequential(goToAngle(desiredState.angle), extendHatchPistonsCommand(true))
-                    .setName("move and outtake hatch");
-            scheduler.schedule(outtakeHatch);
-            scheduler.schedule(goToAngle(State.STORE_CARGO.angle));
             break;
         case CLIMBING:
             Command goToClimbing = goToAngle(desiredState.angle);
@@ -188,11 +160,6 @@ public class Arm extends Subsystem
     private Command goToAngle(double angle)
     {
         return controller.getPIDToCommand(angle, TOLERANCE_IN_DEGREES);
-    }
-
-    private Command extendHatchPistonsCommand(boolean extend)
-    {
-        return CommandUtil.createCommand(() -> hatchOuttake.set(extend)).setName("extend hatch piston");
     }
 
     private Command extendCargoPistonsCommand(boolean extend)

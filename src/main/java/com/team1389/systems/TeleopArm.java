@@ -14,7 +14,6 @@ import com.team1389.watch.Watchable;
 public class TeleopArm extends Subsystem
 {
     // output
-    private DigitalOut hatchOuttake;
     private DigitalOut cargoLauncher;
     private RangeOut<Percent> cargoIntake;
     private RangeOut<Percent> arm;
@@ -26,12 +25,9 @@ public class TeleopArm extends Subsystem
     // control
     private RangeIn<Percent> armAxis;
 
-    private DigitalIn intakeHatchGroundBtn;
-    private DigitalIn intakeHatchFeederBtn;
     private DigitalIn intakeCargoBtn;
     private DigitalIn prepForClimbBtn;
     private DigitalIn outtakeCargoBtn;
-    private DigitalIn outtakeHatchBtn;
     private DigitalIn storeCargoBtn;
 
     private DigitalIn toggleManualModeBtn;
@@ -45,8 +41,6 @@ public class TeleopArm extends Subsystem
 
     /**
      * 
-     * @param hatchOuttake
-     *                                 controller for hatch detach mechanism
      * @param cargoLauncher
      *                                 controller for piston that hits ball into
      *                                 intake
@@ -61,14 +55,6 @@ public class TeleopArm extends Subsystem
      *                                 gives angle of the arm in degrees
      * @param armAxis
      *                                 input for controlling arm
-     * @param outtakeHatchBtn
-     *                                 input for triggering outtaking hatch
-     * @param intakeHatchGroundBtn
-     *                                 input for triggering intaking hatch from
-     *                                 the ground
-     * @param intakeHatchFeederBtn
-     *                                 input for triggering intaking hatch from
-     *                                 the feeder
      * @param outtakeCargoBtn
      *                                 input for triggering cargo outtake
      * @param intakeCargoBtn
@@ -85,21 +71,16 @@ public class TeleopArm extends Subsystem
      *                                 toggle for whether or not to use the beam
      *                                 break in manual mode
      */
-    public TeleopArm(DigitalOut hatchOuttake, DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake,
-            RangeOut<Percent> arm, DigitalIn cargoIntakeBeamBreak, RangeIn<Position> armAngle, RangeIn<Percent> armAxis,
-            DigitalIn outtakeHatchBtn, DigitalIn intakeHatchGroundBtn, DigitalIn intakeHatchFeederBtn,
+    public TeleopArm(DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake, RangeOut<Percent> arm,
+            DigitalIn cargoIntakeBeamBreak, RangeIn<Position> armAngle, RangeIn<Percent> armAxis,
             DigitalIn outtakeCargoBtn, DigitalIn intakeCargoBtn, DigitalIn prepForClimbBtn, DigitalIn storeCargoBtn,
             DigitalIn toggleManualModeBtn, boolean useBeamBreakInManual)
     {
-        this.hatchOuttake = hatchOuttake;
         this.cargoLauncher = cargoLauncher;
         this.cargoIntake = cargoIntake;
         this.arm = arm;
         this.cargoIntakeBeamBreak = cargoIntakeBeamBreak;
         this.armAxis = armAxis;
-        this.outtakeHatchBtn = outtakeHatchBtn;
-        this.intakeHatchGroundBtn = intakeHatchGroundBtn;
-        this.intakeHatchFeederBtn = intakeHatchFeederBtn;
         this.outtakeCargoBtn = outtakeCargoBtn;
         this.intakeCargoBtn = intakeCargoBtn;
         this.prepForClimbBtn = prepForClimbBtn;
@@ -112,11 +93,7 @@ public class TeleopArm extends Subsystem
     @Override
     public void init()
     {
-        armSystem = new Arm(hatchOuttake, cargoLauncher, cargoIntake, arm, cargoIntakeBeamBreak, armAngle);
-        // manualArmSystem = new ManualArm(hatchOuttake, cargoLauncher,
-        // cargoIntake, arm, cargoIntakeBeamBreak, armAxis,
-        // outtakeHatchBtn, intakeCargoBtn, outtakeCargoBtn,
-        // useBeamBreakInManual);
+        armSystem = new Arm(cargoLauncher, cargoIntake, arm, cargoIntakeBeamBreak, armAngle);
 
         // stop all output when switching between modes
         currentlyInManual = new DigitalIn(() -> USE_MANUAL || toggleManualModeBtn.get()).addChangeListener((changed) ->
@@ -143,25 +120,13 @@ public class TeleopArm extends Subsystem
 
     private void advancedUpdate()
     {
-        if (intakeHatchGroundBtn.get())
-        {
-            armSystem.enterState(State.INTAKE_HATCH_FROM_GROUND);
-        }
-        else if (intakeHatchFeederBtn.get())
-        {
-            armSystem.enterState(State.INTAKE_HATCH_FROM_FEEDER);
-        }
-        else if (intakeCargoBtn.get())
+        if (intakeCargoBtn.get())
         {
             armSystem.enterState(State.INTAKE_CARGO_FROM_GROUND);
         }
         else if (outtakeCargoBtn.get())
         {
             armSystem.enterState(State.OUTTAKE_CARGO);
-        }
-        else if (outtakeHatchBtn.get())
-        {
-            armSystem.enterState(State.OUTTAKE_HATCH);
         }
         else if (storeCargoBtn.get())
         {
@@ -186,8 +151,8 @@ public class TeleopArm extends Subsystem
     }
 
     @Override
-    public AddList<Watchable> getSubWatchables(AddList<Watchable> arg0)
+    public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
-        return arg0.put(manualArmSystem, armSystem);
+        return stem.put(manualArmSystem, armSystem);
     }
 }
