@@ -19,7 +19,6 @@ public class Hatch extends Subsystem
     @Override
     public void init()
     {
-
     }
 
     @Override

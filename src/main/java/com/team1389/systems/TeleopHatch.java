@@ -8,26 +8,34 @@ import com.team1389.watch.Watchable;
 
 public class TeleopHatch extends Subsystem
 {
-    private DigitalIn extendHatchBtn;
-    private DigitalIn retractHatchBtn;
+    private DigitalIn hatchBtn;
 
     private Hatch hatch;
     private DigitalOut hatchPiston;
+    private boolean extended;
+
+    public TeleopHatch(DigitalOut hatchPiston, DigitalIn hatchBtn)
+    {
+        this.hatchPiston = hatchPiston;
+        this.hatchBtn = hatchBtn;
+    }
 
     @Override
     public void init()
     {
         hatch = new Hatch(hatchPiston);
+        extended = hatchBtn.get();
     }
 
     @Override
     public void update()
     {
-        if (extendHatchBtn.get())
+        extended = extended ^ hatchBtn.get();
+        if (extended)
         {
             hatch.extendHatchPiston();
         }
-        else if (retractHatchBtn.get())
+        else if (!extended)
         {
             hatch.retractHatchPiston();
         }
