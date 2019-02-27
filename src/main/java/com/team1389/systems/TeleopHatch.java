@@ -24,6 +24,7 @@ public class TeleopHatch extends Subsystem
     public void init()
     {
         hatch = new Hatch(hatchPiston);
+        hatch.init();
         extended = hatchBtn.get();
     }
 

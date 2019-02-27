@@ -94,7 +94,7 @@ public class TeleopArm extends Subsystem
     public void init()
     {
         armSystem = new Arm(cargoLauncher, cargoIntake, arm, cargoIntakeBeamBreak, armAngle);
-
+        armSystem.init();
         // stop all output when switching between modes
         currentlyInManual = new DigitalIn(() -> USE_MANUAL || toggleManualModeBtn.get()).addChangeListener((changed) ->
         {

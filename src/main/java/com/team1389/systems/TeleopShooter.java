@@ -73,6 +73,7 @@ public class TeleopShooter extends Subsystem
     public void init()
     {
         shooter = new Shooter(rightShooter, leftShooter);
+        shooter.init();
     }
 
     @Override
