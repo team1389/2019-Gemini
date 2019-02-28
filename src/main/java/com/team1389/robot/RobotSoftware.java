@@ -43,7 +43,7 @@ public class RobotSoftware extends RobotHardware
 		hatchOuttake = hatchPiston.getDigitalOut();
 		climber = climbPiston.getDigitalOut();
 		cargoIntake = armIntake.getVoltageController().getInverted();
-		haveBall = beamBreak.getSwitchInput();
+		haveBall = beamBreakA.getSwitchInput();
 		angle = imu.getYawInput();
 
 	}

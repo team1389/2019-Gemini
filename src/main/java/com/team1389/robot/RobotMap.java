@@ -76,7 +76,8 @@ public class RobotMap
     protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(2);
     protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(5);
 
-    protected final DIO dio_BEAM_BREAK = new DIO(9);
+    protected final DIO dio_BEAM_BREAK_A = new DIO(0);
+    protected final DIO dio_BEAM_BREAK_B = new DIO(1);
 
     // Climber
     protected final CAN can_CLIMB_MOTOR = new CAN(4);

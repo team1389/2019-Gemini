@@ -58,7 +58,8 @@ public class RobotHardware extends RobotLayout
 		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
 		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
 		cargoPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry);
-		beamBreak = new SwitchHardware(dio_BEAM_BREAK, registry);
+		beamBreakA = new SwitchHardware(dio_BEAM_BREAK_A, registry);
+		beamBreakB = new SwitchHardware(dio_BEAM_BREAK_B, registry);
 	}
 
 	private void initShooter()

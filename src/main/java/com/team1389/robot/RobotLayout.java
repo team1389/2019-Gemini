@@ -35,7 +35,8 @@ public class RobotLayout extends RobotMap
 	public CANVictorSPXHardware armLiftB;
 	public VictorHardware armIntake;
 	public DoubleSolenoidHardware cargoPiston;
-	public SwitchHardware beamBreak;
+	public SwitchHardware beamBreakA;
+	public SwitchHardware beamBreakB;
 
 	// Shooter
 	public DoubleSolenoidHardware leftShooter;
