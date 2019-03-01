@@ -58,8 +58,8 @@ public class RobotMap
     // Shooter
     protected final PCM pcm_LEFT_SHOOTER_A = new PCM(1);
     protected final PCM pcm_LEFT_SHOOTER_B = new PCM(6);
-    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(1); // TODO: 0
-    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(5); // TODO: 7
+    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(0);
+    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(7);
     // Arm
     protected final CAN can_ARM_LIFT_MOTOR_A = new CAN(3);
     protected final boolean inv_ARM_LIFT_MOTOR_A = false;
@@ -68,16 +68,13 @@ public class RobotMap
     protected final CAN can_ARM_LIFT_MOTOR_B = new CAN(1);
     protected final boolean inv_ARM_LIFT_MOTOR_B = false;
 
-    protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(0); // TODO: change back
-                                                           // to 8 for the
-                                                           // actual robot
+    protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(8);
     protected final boolean inv_ARM_INTAKE_MOTOR = false;
 
     protected final PCM pcm_HATCH = new PCM(3);
 
-    protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(7); // TODO: change to 1,
-                                                          // 5 in that order
-    protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(0);
+    protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(1);
+    protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(5);
 
     protected final DIO dio_BEAM_BREAK_A = new DIO(0);
     protected final DIO dio_BEAM_BREAK_B = new DIO(1);

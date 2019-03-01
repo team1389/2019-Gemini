@@ -35,15 +35,14 @@ public class RobotSoftware extends RobotHardware
 				leftDriveB.getVoltageController(), rightDriveB.getVoltageController(),
 				leftDriveC.getVoltageController(), rightDriveC.getVoltageController());
 
-		// rightShoot = rightShooter.getDigitalOut().getInverted();
-		// leftShoot = leftShooter.getDigitalOut().getInverted();
+		rightShoot = rightShooter.getDigitalOut().getInverted();
+		leftShoot = leftShooter.getDigitalOut().getInverted();
 		climbWheel = climbMotor.getVoltageController();
 		arm = armLiftA.getVoltageController().getWithAddedFollowers(armLiftB.getVoltageController());
-		cargoLauncher = cargoPiston.getDigitalOut(); // TODO:
-														// change to
-														// not
-														// inverted
-		// hatchOuttake = hatchPiston.getDigitalOut();
+		cargoLauncher = cargoPiston.getDigitalOut();
+		hatchOuttake = hatchPiston.getDigitalOut(); // TODO: See if this throws
+													// a null pointer on actual
+													// robot
 		climber = climbPiston.getDigitalOut();
 		cargoIntake = armIntake.getVoltageController().getInverted();
 		haveBall = beamBreakA.getSwitchInput().getInverted();

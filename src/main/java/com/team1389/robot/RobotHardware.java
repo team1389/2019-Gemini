@@ -36,7 +36,7 @@ public class RobotHardware extends RobotLayout
 		pdp = new PDPHardware(new CAN(0), registry);
 		initDriveTrain();
 		initArm();
-		// initShooter();
+		initShooter();
 		initCLimber();
 	}
 
@@ -57,11 +57,7 @@ public class RobotHardware extends RobotLayout
 				FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
 		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
 		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
-		cargoPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry); // TODO:
-																													// Change
-																													// to
-																													// pcm
-																													// 1
+		cargoPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry);
 		beamBreakA = new SwitchHardware(dio_BEAM_BREAK_A, registry);
 		beamBreakB = new SwitchHardware(dio_BEAM_BREAK_B, registry);
 	}
