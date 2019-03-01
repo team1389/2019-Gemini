@@ -1,5 +1,6 @@
 package com.team1389.systems;
 
+import com.team1389.auto.command.WaitTimeCommand;
 import com.team1389.command_framework.CommandUtil;
 import com.team1389.command_framework.command_base.Command;
 import com.team1389.hardware.outputs.software.DigitalOut;
@@ -10,10 +11,12 @@ import com.team1389.watch.Watchable;
 public class Hatch extends Subsystem
 {
     private DigitalOut hatchPiston;
+    private DigitalOut cargoPiston;
 
-    public Hatch(DigitalOut hatchPiston)
+    public Hatch(DigitalOut hatchPiston, DigitalOut cargoPiston)
     {
         this.hatchPiston = hatchPiston;
+        this.cargoPiston = cargoPiston;
     }
 
     @Override
@@ -39,25 +42,29 @@ public class Hatch extends Subsystem
         return "Teleop Hatch System";
     }
 
-    private Command extendHatchPistonCommand()
+    private Command acquireHatchCommand()
     {
-        return CommandUtil.createCommand(() -> hatchPiston.set(true));
+        return CommandUtil.combineSequential((CommandUtil.createCommand(() -> cargoPiston.set(true))),
+                (CommandUtil.createCommand(() -> hatchPiston.set(true))), new WaitTimeCommand(.5),
+                (CommandUtil.createCommand(() -> hatchPiston.set(false))));
     }
 
-    private Command retractHatchPistonCommand()
+    private Command scoreHatchCommand()
     {
-        return CommandUtil.createCommand(() -> hatchPiston.set(false));
+        return CommandUtil.combineSequential((CommandUtil.createCommand(() -> hatchPiston.set(true))),
+                new WaitTimeCommand(.5), (CommandUtil.createCommand(() -> cargoPiston.set(false))),
+                (CommandUtil.createCommand(() -> hatchPiston.set(false))));
     }
 
-    public void extendHatchPiston()
+    public void acquireHatch()
     {
         scheduler.cancelAll();
-        scheduler.schedule(extendHatchPistonCommand());
+        scheduler.schedule(acquireHatchCommand());
     }
 
-    public void retractHatchPiston()
+    public void scoreHatch()
     {
         scheduler.cancelAll();
-        scheduler.schedule(retractHatchPistonCommand());
+        scheduler.schedule(scoreHatchCommand());
     }
 }
