@@ -44,16 +44,16 @@ public class Hatch extends Subsystem
 
     private Command acquireHatchCommand()
     {
-        return CommandUtil.combineSequential((CommandUtil.createCommand(() -> cargoPiston.set(true))),
-                (CommandUtil.createCommand(() -> hatchPiston.set(true))), new WaitTimeCommand(.5),
-                (CommandUtil.createCommand(() -> hatchPiston.set(false))));
+        return CommandUtil.combineSequential((CommandUtil.createCommand(() -> hatchPiston.set(true))),
+                new WaitTimeCommand(.5), (CommandUtil.createCommand(() -> cargoPiston.set(true))),
+                new WaitTimeCommand(.5), (CommandUtil.createCommand(() -> hatchPiston.set(false))));
     }
 
     private Command scoreHatchCommand()
     {
         return CommandUtil.combineSequential((CommandUtil.createCommand(() -> hatchPiston.set(true))),
                 new WaitTimeCommand(.5), (CommandUtil.createCommand(() -> cargoPiston.set(false))),
-                (CommandUtil.createCommand(() -> hatchPiston.set(false))));
+                new WaitTimeCommand(1), (CommandUtil.createCommand(() -> hatchPiston.set(false))));
     }
 
     public void acquireHatch()
