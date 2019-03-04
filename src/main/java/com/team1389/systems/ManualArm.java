@@ -133,6 +133,7 @@ public class ManualArm extends Subsystem
         }
         else if (cargoIntakeBeamBreak.get() && cargoToRocket)
         {
+            cargoLauncher.set(false);
             cargoIntake.set(-1);
         }
         else if (cargoIntakeBeamBreak.get() && cargoToShooter)

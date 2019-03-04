@@ -56,8 +56,8 @@ public class TeleopMain
 
 	private Subsystem setUpArm()
 	{
-		return new ManualArm(robot.cargoLauncher, robot.cargoIntake, robot.arm, robot.haveBall,
-				controls.leftStickYAxis(), controls.aButton(), controls.yButton(), controls.xButton(), false);
+		return new ManualArm(robot.cargoHolder, robot.cargoIntake, robot.arm, robot.haveBall, controls.leftStickYAxis(),
+				controls.aButton(), controls.rightBumper(), controls.xButton(), false);
 	}
 
 	public void periodic()

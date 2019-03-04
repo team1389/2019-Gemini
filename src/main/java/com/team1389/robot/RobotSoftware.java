@@ -18,7 +18,7 @@ public class RobotSoftware extends RobotHardware
 	public DigitalOut climber;
 	public PercentOut climbWheel;
 	public DigitalOut hatchOuttake;
-	public DigitalOut cargoLauncher;
+	public DigitalOut cargoHolder;
 	public RangeOut<Percent> arm;
 	public RangeOut<Percent> cargoIntake;
 	public DigitalIn haveBall;
@@ -39,10 +39,8 @@ public class RobotSoftware extends RobotHardware
 		leftShoot = leftShooter.getDigitalOut().getInverted();
 		climbWheel = climbMotor.getVoltageController();
 		arm = armLiftA.getVoltageController().getWithAddedFollowers(armLiftB.getVoltageController());
-		cargoLauncher = cargoPiston.getDigitalOut();
-		hatchOuttake = hatchPiston.getDigitalOut(); // TODO: See if this throws
-													// a null pointer on actual
-													// robot
+		cargoHolder = cargoPiston.getDigitalOut().getInverted();
+		hatchOuttake = hatchPiston.getDigitalOut();
 		climber = climbPiston.getDigitalOut();
 		cargoIntake = armIntake.getVoltageController().getInverted();
 		haveBall = beamBreakA.getSwitchInput().getInverted();
