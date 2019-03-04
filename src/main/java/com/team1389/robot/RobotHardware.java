@@ -2,10 +2,13 @@ package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
+import com.team1389.hardware.inputs.hardware.PigeonIMUHardware;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
+import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.DoubleSolenoidHardware;
+import com.team1389.hardware.outputs.hardware.SolenoidHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.registry.port_types.CAN;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -31,7 +34,21 @@ public class RobotHardware extends RobotLayout
 		System.out.println("initializing hardware");
 		registry = new Registry();
 		pdp = new PDPHardware(new CAN(0), registry);
+		initHatch();
 		initArm();
+		initDriveTrain();
+
+	}
+
+	private void initDriveTrain()
+	{
+		leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A, registry);
+		leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B, registry);
+		leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C, registry);
+		rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
+		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
+		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
+		imu = new PigeonIMUHardware(can_IMU, registry);
 	}
 
 	private void initArm()
@@ -43,6 +60,12 @@ public class RobotHardware extends RobotLayout
 		cargoPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry);
 		beamBreakA = new SwitchHardware(dio_BEAM_BREAK_A, registry);
 		beamBreakB = new SwitchHardware(dio_BEAM_BREAK_B, registry);
+	}
+
+	private void initHatch()
+	{
+		hatchPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_HATCH_A, pcm_HATCH_B, registry);
+
 	}
 
 }

@@ -86,6 +86,10 @@ public class RobotMap
     protected final PCM pcm_CLIMBER_A = new PCM(1);
     protected final PCM pcm_CLIMBER_B = new PCM(6);
 
+    // Hatch
+    protected final PCM pcm_HATCH_A = new PCM(3);
+    protected final PCM pcm_HATCH_B = new PCM(4);
+
     // Miscellaneous
     protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
     protected final CAN can_PCM_1 = new CAN(1);
