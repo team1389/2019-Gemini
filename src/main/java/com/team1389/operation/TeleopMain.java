@@ -10,6 +10,7 @@ import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
 import com.team1389.systems.ManualArm;
 import com.team1389.systems.SimpleClimber;
+import com.team1389.systems.TeleopHatch;
 
 public class TeleopMain
 {
@@ -29,7 +30,8 @@ public class TeleopMain
 		Subsystem shooter = setUpShooter();
 		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
-		manager = new SystemManager(drive, shooter, climber, arm);
+		Subsystem hatch = setUpHatch();
+		manager = new SystemManager(drive, shooter, climber, arm, hatch);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
@@ -57,7 +59,12 @@ public class TeleopMain
 	private Subsystem setUpArm()
 	{
 		return new ManualArm(robot.cargoHolder, robot.cargoIntake, robot.arm, robot.haveBall, controls.leftStickYAxis(),
-				controls.aButton(), controls.rightBumper(), controls.xButton(), false);
+				controls.aButton(), controls.rightBumper(), controls.bButton(), false);
+	}
+
+	private Subsystem setUpHatch()
+	{
+		return new TeleopHatch(robot.hatchOuttake, robot.cargoHolder, controls.yButton());
 	}
 
 	public void periodic()

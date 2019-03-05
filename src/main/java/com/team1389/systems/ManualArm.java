@@ -125,7 +125,6 @@ public class ManualArm extends Subsystem
     {
         System.out.println("Beambreak status" + cargoIntakeBeamBreak.get());
 
-        // This might have trouble with piston retracting too slow
         if (!cargoIntakeBeamBreak.get() && intakingCargo)
         {
             cargoLauncher.set(true);
