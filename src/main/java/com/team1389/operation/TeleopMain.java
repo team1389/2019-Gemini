@@ -42,7 +42,7 @@ public class TeleopMain
 	{
 		return new CurvatureDriveStraightSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
 				controls.driveLeftBumper(), RobotConstants.TURN_SENSITIVITY, RobotConstants.SPIN_SENSITIVITY,
-				robot.angle, RobotConstants.PID.p, controls.driveRightBumper());
+				robot.angle, RobotConstants.LATERAL_PID_CONSTANTS.p, controls.driveRightBumper());
 	}
 
 	private Subsystem setUpShooter()
