@@ -43,16 +43,10 @@ public class Alignment extends Subsystem
 
     private DriveOut<Percent> drive;
 
-    private RangeIn<Position> leftDistance;
-    private RangeIn<Position> rightDistance;
     private RangeIn<Position> robotAngle;
 
     private final double VISION_ALIGNMENT_TOLERANCE = 50;
-    // private final PIDConstants VISION_ALIGN_PID_CONSTANTS = new
-    // PIDConstants(0.01, 0, 0);
-
     private final double TURN_TOLERANCE_IN_DEGREES = 5;
-    private final double STARTING_ANGLE_IN_DEGREES = 0;
 
     private SynchronousPIDController<Percent, Position> longitudinalControllerLeft;
     private SynchronousPIDController<Percent, Position> longitudinalControllerRight;
@@ -67,20 +61,14 @@ public class Alignment extends Subsystem
     /**
      * 
      * @param drive
-     * @param leftDistance
-     *                          distance reading for left side in inches
-     * @param rightDistance
-     *                          distance reading for right side in inches
+     *                       distance reading for right side in inches
      * @param robotAngle
-     *                          heading of the robot in degrees, wrapped on the
-     *                          range [0,360]
+     *                       heading of the robot in degrees, wrapped on the
+     *                       range [0,360]
      */
-    public Alignment(DriveOut<Percent> drive, RangeIn<Position> leftDistance, RangeIn<Position> rightDistance,
-            RangeIn<Position> robotAngle)
+    public Alignment(DriveOut<Percent> drive, RangeIn<Position> robotAngle)
     {
         this.drive = drive;
-        this.leftDistance = leftDistance;
-        this.rightDistance = rightDistance;
         this.robotAngle = robotAngle;
     }
 
@@ -91,10 +79,11 @@ public class Alignment extends Subsystem
         leftSideXEntry = table.getEntry(VISION_LEFT_SIDE_X_ID);
         rightSideXEntry = table.getEntry(VISION_RIGHT_SIDE_X_ID);
         toggleRunningSideEntry = table.getEntry(VISION_TOGGLE_RUNNING_SIDE_ID);
-        // note this is the side of vision that runs on startup
         currentState = Side.LEFT;
-        targetPositionLeft = new RangeIn<Position>(Position.class, () -> leftSideXEntry.getDouble(320), 0, 720);
-        targetPositionRight = new RangeIn<Position>(Position.class, () -> rightSideXEntry.getDouble(320), 0, 720);
+        targetPositionLeft = new RangeIn<Position>(Position.class, () -> leftSideXEntry.getDouble(CENTER_X_VAL), 0,
+                720);
+        targetPositionRight = new RangeIn<Position>(Position.class, () -> rightSideXEntry.getDouble(CENTER_X_VAL), 0,
+                720);
         lateralController = new SynchronousPIDController<>(RobotConstants.LATERAL_PID_CONSTANTS, robotAngle,
                 TurnAngleCommand.createTurnController(drive));
         longitudinalControllerLeft = new SynchronousPIDController<Percent, Position>(
@@ -145,21 +134,17 @@ public class Alignment extends Subsystem
                 CommandUtil.createCommand(() -> toggleRunningSideEntry.setBoolean(false))));
     }
 
-    public void centerOnTarget()
+    public Command centerOnTarget()
     {
         scheduler.cancelAll();
         if (currentState == Side.LEFT)
         {
-            scheduler.schedule(longitudinalControllerLeft.getPIDToCommand(320, VISION_ALIGNMENT_TOLERANCE));
+            return longitudinalControllerLeft.getPIDToCommand(320, VISION_ALIGNMENT_TOLERANCE);
         }
-        else
-        {
-            scheduler.schedule(longitudinalControllerRight.getPIDToCommand(320, VISION_ALIGNMENT_TOLERANCE));
-        }
-
+        return longitudinalControllerRight.getPIDToCommand(320, VISION_ALIGNMENT_TOLERANCE);
     }
 
-    public void alignAngle()
+    public Command alignAngle()
     {
         scheduler.cancelAll();
         double startingAngle = robotAngle.get();
@@ -172,13 +157,13 @@ public class Alignment extends Subsystem
         {
             targetAngle = 180;
         }
-        scheduler.schedule(lateralController.getPIDToCommand(targetAngle, TURN_TOLERANCE_IN_DEGREES));
+        return lateralController.getPIDToCommand(targetAngle, TURN_TOLERANCE_IN_DEGREES);
     }
 
     public void fullAlign()
     {
         scheduler.cancelAll();
-        alignAngle();
-        centerOnTarget();
+        scheduler.schedule(alignAngle());
+        scheduler.schedule(centerOnTarget());
     }
 }
