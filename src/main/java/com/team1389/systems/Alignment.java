@@ -6,7 +6,9 @@ import com.team1389.command_framework.CommandUtil;
 import com.team1389.command_framework.command_base.Command;
 import com.team1389.configuration.PIDConstants;
 import com.team1389.controllers.SynchronousPIDController;
+import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.inputs.software.RangeIn;
+import com.team1389.hardware.outputs.software.DigitalOut;
 import com.team1389.hardware.outputs.software.RangeOut;
 import com.team1389.hardware.value_types.Percent;
 import com.team1389.hardware.value_types.Position;
@@ -32,13 +34,11 @@ public class Alignment extends Subsystem
     private final String VISION_NETWORK_TABLE_ID = "vision";
     private final String VISION_LEFT_SIDE_X_ID = "LeftSideX";
     private final String VISION_RIGHT_SIDE_X_ID = "RightSideX";
-    private final String VISION_TOGGLE_RUNNING_SIDE_ID = "SwitchSides";
     private final String VISION_SIDE_STATE = "State";
 
     // NetworkTables Entries
     private NetworkTableEntry leftSideXEntry;
     private NetworkTableEntry rightSideXEntry;
-    private NetworkTableEntry toggleRunningSideEntry;
     private NetworkTableEntry visionState;
 
     private final int CENTER_X_VAL = 320;
@@ -59,6 +59,7 @@ public class Alignment extends Subsystem
     private RangeIn<Position> targetPositionRight;
 
     private Side currentState;
+    private DigitalIn synched;
 
     /**
      * 
@@ -80,7 +81,6 @@ public class Alignment extends Subsystem
         NetworkTable table = NetworkTableInstance.getDefault().getTable(VISION_NETWORK_TABLE_ID);
         leftSideXEntry = table.getEntry(VISION_LEFT_SIDE_X_ID);
         rightSideXEntry = table.getEntry(VISION_RIGHT_SIDE_X_ID);
-        toggleRunningSideEntry = table.getEntry(VISION_TOGGLE_RUNNING_SIDE_ID);
         visionState = table.getEntry(VISION_SIDE_STATE);
         currentState = Side.LEFT;
         targetPositionLeft = new RangeIn<Position>(Position.class, () -> leftSideXEntry.getDouble(CENTER_X_VAL), 0,
@@ -94,6 +94,7 @@ public class Alignment extends Subsystem
                 drive.left().getWithAddedFollowers(drive.right()));
         longitudinalControllerRight = new SynchronousPIDController<>(RobotConstants.LONGITUDINAL_PID_CONSTANTS,
                 targetPositionRight, drive.left().getWithAddedFollowers(drive.right()));
+        synched = new DigitalIn(() -> (currentState.getName().equals(visionState.getString(""))));
     }
 
     @Override
@@ -111,7 +112,7 @@ public class Alignment extends Subsystem
     @Override
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
-        return stem;
+        return stem.put(synched.getWatchable("Vision synched"));
     }
 
     public enum Side
