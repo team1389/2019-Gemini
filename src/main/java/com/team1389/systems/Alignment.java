@@ -33,11 +33,13 @@ public class Alignment extends Subsystem
     private final String VISION_LEFT_SIDE_X_ID = "LeftSideX";
     private final String VISION_RIGHT_SIDE_X_ID = "RightSideX";
     private final String VISION_TOGGLE_RUNNING_SIDE_ID = "SwitchSides";
+    private final String VISION_SIDE_STATE = "State";
 
     // NetworkTables Entries
     private NetworkTableEntry leftSideXEntry;
     private NetworkTableEntry rightSideXEntry;
     private NetworkTableEntry toggleRunningSideEntry;
+    private NetworkTableEntry visionState;
 
     private final int CENTER_X_VAL = 320;
 
@@ -79,6 +81,7 @@ public class Alignment extends Subsystem
         leftSideXEntry = table.getEntry(VISION_LEFT_SIDE_X_ID);
         rightSideXEntry = table.getEntry(VISION_RIGHT_SIDE_X_ID);
         toggleRunningSideEntry = table.getEntry(VISION_TOGGLE_RUNNING_SIDE_ID);
+        visionState = table.getEntry(VISION_SIDE_STATE);
         currentState = Side.LEFT;
         targetPositionLeft = new RangeIn<Position>(Position.class, () -> leftSideXEntry.getDouble(CENTER_X_VAL), 0,
                 720);
@@ -113,25 +116,33 @@ public class Alignment extends Subsystem
 
     public enum Side
     {
-        LEFT, RIGHT
+        LEFT, RIGHT;
+
+        public String getName()
+        {
+            if (this == LEFT)
+            {
+                return "left";
+            }
+            return "right";
+        }
     }
 
     public void setSide(Side desired)
     {
-        if (currentState != desired)
+        if (currentState != desired && desired.getName() != visionState.getName())
         {
             if (currentState == Side.LEFT)
             {
                 currentState = Side.RIGHT;
+                visionState.setString("right");
             }
             else if (currentState == Side.RIGHT)
             {
                 currentState = Side.LEFT;
+                visionState.setString("left");
             }
-            toggleRunningSideEntry.setBoolean(true);
         }
-        scheduler.schedule(CommandUtil.combineSequential(new WaitTimeCommand(.5),
-                CommandUtil.createCommand(() -> toggleRunningSideEntry.setBoolean(false))));
     }
 
     public Command centerOnTarget()
