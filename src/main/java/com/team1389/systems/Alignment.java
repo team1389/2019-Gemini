@@ -61,6 +61,8 @@ public class Alignment extends Subsystem
     private Side currentState;
     private DigitalIn synched;
 
+    private DigitalIn alignmentCommandsRunning;
+
     /**
      * 
      * @param drive
@@ -95,9 +97,10 @@ public class Alignment extends Subsystem
         longitudinalControllerRight = new SynchronousPIDController<>(RobotConstants.LONGITUDINAL_PID_CONSTANTS,
                 targetPositionRight, drive.left().getWithAddedFollowers(drive.right()));
         synched = new DigitalIn(() -> (currentState.getName().equals(visionState.getString(""))));
+        alignmentCommandsRunning = new DigitalIn(() -> scheduler.isFinished());
     }
 
-    @Override
+      @Override
     public void update()
     {
         scheduler.update();
@@ -113,6 +116,11 @@ public class Alignment extends Subsystem
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
         return stem.put(synched.getWatchable("Vision synched"));
+    }
+
+    public DigitalIn getAlignmentCommandsRunning()
+    {
+        return alignmentCommandsRunning;
     }
 
     public enum Side

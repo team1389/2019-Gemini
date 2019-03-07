@@ -4,6 +4,7 @@ import com.team1389.auto.command.WaitTimeCommand;
 import com.team1389.command_framework.CommandUtil;
 import com.team1389.command_framework.command_base.Command;
 import com.team1389.hardware.inputs.software.AngleIn;
+import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
 import com.team1389.hardware.value_types.Percent;
 import com.team1389.system.Subsystem;
@@ -62,6 +63,7 @@ public class Shooter extends Subsystem
     public void init()
     {
         aligner = new Alignment(drive, robotAngle);
+        aligner.init();
     }
 
     public void update()
@@ -135,5 +137,10 @@ public class Shooter extends Subsystem
     {
         scheduler.cancelAll();
         scheduler.schedule(shootLeftFarCommand());
+    }
+
+    public DigitalIn getAlignmentCommandsRunning()
+    {
+       return aligner.getAlignmentCommandsRunning();
     }
 }
