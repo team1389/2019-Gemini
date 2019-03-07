@@ -6,6 +6,7 @@ import com.team1389.hardware.inputs.software.PercentIn;
 import com.team1389.hardware.inputs.software.RangeIn;
 import com.team1389.system.Subsystem;
 import com.team1389.system.drive.CurvatureDriveStraightSystem;
+import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.system.drive.DriveOut;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
@@ -16,10 +17,10 @@ public class ModifiedStraightCurvatureDrive extends Subsystem
     DigitalIn alignmentRunning;
 
     public ModifiedStraightCurvatureDrive(DriveOut drive, PercentIn throttle, PercentIn wheel,
-            DigitalIn quickTurnButton, double turnSensitivity, double spinSensitivity,AngleIn angle, double kP, DigitalIn driveStraightButton,
+            DigitalIn quickTurnButton, double turnSensitivity, double spinSensitivity, AngleIn angle, double kP, DigitalIn driveStraightButton,
             DigitalIn alignmentRunning)
     {
-        driveStraight = new CurvatureDriveStraightSystem(drive, throttle, wheel, quickTurnButton,turnSensitivity, spinSensitivity, angle, kP,
+        driveStraight = new CurvatureDriveStraightSystem(drive, throttle, wheel, quickTurnButton, turnSensitivity, spinSensitivity, angle, kP,
                 driveStraightButton);
         this.alignmentRunning = alignmentRunning;
     }
@@ -37,10 +38,10 @@ public class ModifiedStraightCurvatureDrive extends Subsystem
     }
 
     @Override
-    public AddList<Watchable> getSubWatchables(AddList<Watchable> arg0)
+    public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
         //add this back
-        return arg0;
+        return stem.put(driveStraight);
     }
 
 
