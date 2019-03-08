@@ -1,6 +1,7 @@
 package com.team1389.operation;
 
 import com.team1389.hardware.controls.ControlBoard;
+import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.robot.RobotConstants;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
@@ -10,8 +11,10 @@ import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
 import com.team1389.systems.ManualArm;
+import com.team1389.systems.Shooter;
 import com.team1389.systems.SimpleClimber;
 import com.team1389.systems.TeleopHatch;
+import com.team1389.systems.ModifiedStraightCurvatureDrive;
 
 public class TeleopMain
 {
@@ -27,8 +30,8 @@ public class TeleopMain
 	public void init()
 	{
 		controls = ControlBoard.getInstance();
-		Subsystem drive = setUpDrive();
-		Subsystem shooter = setUpShooter();
+		TeleopShooter shooter = setUpShooter();
+		Subsystem drive = setUpDrive(shooter.getAlignmentCommandsRunning());
 		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
 		Subsystem hatch = setUpHatch();
@@ -39,8 +42,9 @@ public class TeleopMain
 		watcher.outputToDashboard();
 	}
 
-	private Subsystem setUpDrive()
+	private Subsystem setUpDrive(DigitalIn alignmentCommandsRunning)
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
 				controls.driveRightBumper());
@@ -54,9 +58,18 @@ public class TeleopMain
 				controls.driveLeftBumper(), RobotConstants.TURN_SENSITIVITY, RobotConstants.SPIN_SENSITIVITY,
 				robot.angle, RobotConstants.LATERAL_PID_CONSTANTS.p, controls.driveRightBumper());
 >>>>>>> alignment
+=======
+
+		// (DriveOut drive, PercentIn throttle, PercentIn wheel,
+
+		return new ModifiedStraightCurvatureDrive(robot.drive.getAsTank(), controls.driveLeftY(),
+				controls.driveRightX(), controls.driveLeftBumper(), RobotConstants.TURN_SENSITIVITY,
+				RobotConstants.SPIN_SENSITIVITY, robot.angle, RobotConstants.LATERAL_PID_CONSTANTS.p,
+				controls.driveRightBumper(), alignmentCommandsRunning);
+>>>>>>> alignment
 	}
 
-	private Subsystem setUpShooter()
+	private TeleopShooter setUpShooter()
 	{
 		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
 				controls.driveAButton(), controls.driveXButton());

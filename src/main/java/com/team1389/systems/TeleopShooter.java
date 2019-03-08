@@ -99,4 +99,8 @@ public class TeleopShooter extends Subsystem
         shooter.update();
     }
 
+    public DigitalIn getAlignmentCommandsRunning()
+    {
+        return shooter.getAlignmentCommandsRunning();
+    }
 }
