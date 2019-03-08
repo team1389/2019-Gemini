@@ -3,20 +3,27 @@ package com.team1389.systems;
 import com.team1389.auto.command.WaitTimeCommand;
 import com.team1389.command_framework.CommandUtil;
 import com.team1389.command_framework.command_base.Command;
+import com.team1389.hardware.inputs.software.AngleIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
+import com.team1389.hardware.value_types.Percent;
 import com.team1389.system.Subsystem;
+import com.team1389.system.drive.DriveOut;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 
 public class Shooter extends Subsystem
 {
-
+    // Input
+    private AngleIn robotAngle;
     // Output
     private DigitalOut leftShooter;
     private DigitalOut rightShooter;
+    private DriveOut<Percent> drive;
     // Constants
     private final double SHORT_SHOT_WAIT_TIME = .5; // TODO: tune these
     private final double LONG_SHOT_WAIT_TIME = 2;
+
+    private Alignment aligner;
 
     /**
      * @param rightShooter
@@ -33,6 +40,14 @@ public class Shooter extends Subsystem
         this.leftShooter = leftShooter;
     }
 
+    public Shooter(DigitalOut rightShooter, DigitalOut leftShooter, DriveOut<Percent> drive, AngleIn robotAngle)
+    {
+        this.rightShooter = rightShooter;
+        this.leftShooter = leftShooter;
+        this.drive = drive;
+        this.robotAngle = robotAngle;
+    }
+
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
         return stem.put(scheduler);
@@ -46,7 +61,7 @@ public class Shooter extends Subsystem
 
     public void init()
     {
-
+        aligner = new Alignment(drive, robotAngle);
     }
 
     public void update()
