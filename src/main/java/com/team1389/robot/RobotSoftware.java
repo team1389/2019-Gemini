@@ -24,6 +24,7 @@ public class RobotSoftware extends RobotHardware
 	public RangeOut<Percent> cargoIntake;
 	public DigitalIn haveBall;
 	public AngleIn angle;
+	public DigitalIn currentlyAligning;
 
 	public static RobotSoftware getInstance()
 	{
@@ -47,6 +48,7 @@ public class RobotSoftware extends RobotHardware
 		cargoIntake = armIntake.getVoltageController().getInverted();
 		haveBall = beamBreakB.getSwitchInput().getInverted();
 		angle = imu.getYawInput();
+		currentlyAligning = new DigitalIn(() -> false);
 
 	}
 

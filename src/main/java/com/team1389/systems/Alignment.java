@@ -198,4 +198,9 @@ public class Alignment extends Subsystem
         scheduler.schedule(alignAngle());
         scheduler.schedule(centerOnTarget());
     }
+
+    public boolean currentlyAligning()
+    {
+        return alignmentCommandsRunning.get();
+    }
 }
