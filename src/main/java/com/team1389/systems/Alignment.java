@@ -35,11 +35,13 @@ public class Alignment extends Subsystem
     private final String VISION_LEFT_SIDE_X_ID = "LeftSideX";
     private final String VISION_RIGHT_SIDE_X_ID = "RightSideX";
     private final String VISION_SIDE_STATE = "State";
+    private final String VISION_TO_SWITCH = "";
 
     // NetworkTables Entries
     private NetworkTableEntry leftSideXEntry;
     private NetworkTableEntry rightSideXEntry;
     private NetworkTableEntry visionState;
+    private NetworkTableEntry toSwitch;
 
     private final int CENTER_X_VAL = 320;
 
@@ -84,6 +86,7 @@ public class Alignment extends Subsystem
         leftSideXEntry = table.getEntry(VISION_LEFT_SIDE_X_ID);
         rightSideXEntry = table.getEntry(VISION_RIGHT_SIDE_X_ID);
         visionState = table.getEntry(VISION_SIDE_STATE);
+        toSwitch = table.getEntry(VISION_TO_SWITCH);
         currentState = Side.LEFT;
         targetPositionLeft = new RangeIn<Position>(Position.class, () -> leftSideXEntry.getDouble(CENTER_X_VAL), 0,
                 720);
@@ -95,13 +98,13 @@ public class Alignment extends Subsystem
                 RobotConstants.LONGITUDINAL_PID_CONSTANTS, targetPositionLeft,
                 drive.left().getWithAddedFollowers(drive.right()));
         longitudinalControllerRight = new SynchronousPIDController<Percent, Position>(
-                RobotConstants.LONGITUDINAL_PID_CONSTANTS, targetPositionRight, 
+                RobotConstants.LONGITUDINAL_PID_CONSTANTS, targetPositionRight,
                 drive.left().getWithAddedFollowers(drive.right()));
         synced = new DigitalIn(() -> (currentState.getName().equals(visionState.getString(""))));
         alignmentCommandsRunning = new DigitalIn(() -> scheduler.isFinished());
     }
 
-      @Override
+    @Override
     public void update()
     {
         scheduler.update();
@@ -145,12 +148,12 @@ public class Alignment extends Subsystem
             if (currentState == Side.LEFT)
             {
                 currentState = Side.RIGHT;
-                visionState.setString("right");
+                toSwitch.setString("right");
             }
             else if (currentState == Side.RIGHT)
             {
                 currentState = Side.LEFT;
-                visionState.setString("left");
+                toSwitch.setString("left");
             }
         }
     }
@@ -158,6 +161,10 @@ public class Alignment extends Subsystem
     public Command centerOnTarget()
     {
         scheduler.cancelAll();
+        if (visionState.getString("").equals(toSwitch.getString(".")))
+        {
+            return new WaitTimeCommand(.01);
+        }
         if (currentState == Side.LEFT)
         {
             return longitudinalControllerLeft.getPIDToCommand(320, VISION_ALIGNMENT_TOLERANCE);
@@ -168,6 +175,10 @@ public class Alignment extends Subsystem
     public Command alignAngle()
     {
         scheduler.cancelAll();
+        if (visionState.getString("").equals(toSwitch.getString(".")))
+        {
+            return new WaitTimeCommand(.01);
+        }
         double startingAngle = robotAngle.get();
         double targetAngle;
         if (startingAngle < 90 && startingAngle > -90)
