@@ -5,6 +5,7 @@ import com.team1389.robot.RobotConstants;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
 import com.team1389.system.drive.CurvatureDriveStraightSystem;
+import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
@@ -31,7 +32,7 @@ public class TeleopMain
 		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
 		Subsystem hatch = setUpHatch();
-		manager = new SystemManager(drive, shooter, climber, arm, hatch);
+		manager = new SystemManager(drive, shooter, climber, arm);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
@@ -40,9 +41,13 @@ public class TeleopMain
 
 	private Subsystem setUpDrive()
 	{
-		return new CurvatureDriveStraightSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
-				controls.driveLeftBumper(), RobotConstants.TURN_SENSITIVITY, RobotConstants.SPIN_SENSITIVITY,
-				robot.angle, RobotConstants.PID.p, controls.driveRightBumper());
+		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
+				controls.driveRightBumper());
+		// return new CurvatureDriveStraightSystem(robot.drive.getAsTank(),
+		// controls.driveLeftY(), controls.driveRightX(),
+		// controls.driveLeftBumper(), RobotConstants.TURN_SENSITIVITY,
+		// RobotConstants.SPIN_SENSITIVITY,
+		// robot.angle, RobotConstants.PID.p, controls.driveRightBumper());
 	}
 
 	private Subsystem setUpShooter()
@@ -53,18 +58,20 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.rightStickYAxis());
+		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.leftBumper(),
+				controls.leftStickYAxis());
 	}
 
 	private Subsystem setUpArm()
 	{
-		return new ManualArm(robot.cargoHolder, robot.cargoIntake, robot.arm, robot.haveBall, controls.leftStickYAxis(),
-				controls.aButton(), controls.rightBumper(), controls.bButton(), false);
+		return new ManualArm(robot.cargoIntake, robot.arm, robot.hatchExtension.getDigitalOut(), robot.haveBall,
+				controls.rightStickYAxis(), controls.aButton(), controls.rightBumper(), controls.bButton(), true);
 	}
 
 	private Subsystem setUpHatch()
 	{
-		return new TeleopHatch(robot.hatchOuttake, robot.cargoHolder, controls.yButton());
+		return new TeleopHatch(robot.hatchIntakeStream, robot.hatchExtensionStream, robot.hatchOuttakeStream,
+				controls.yButton());
 	}
 
 	public void periodic()

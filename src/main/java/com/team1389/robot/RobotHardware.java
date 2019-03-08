@@ -38,6 +38,7 @@ public class RobotHardware extends RobotLayout
 		initArm();
 		initShooter();
 		initCLimber();
+		initHatch();
 	}
 
 	private void initDriveTrain()
@@ -57,7 +58,6 @@ public class RobotHardware extends RobotLayout
 				FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
 		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
 		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
-		cargoPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CARGO_OUTTAKE_A, pcm_CARGO_OUTTAKE_B, registry);
 		beamBreakA = new SwitchHardware(dio_BEAM_BREAK_A, registry);
 		beamBreakB = new SwitchHardware(dio_BEAM_BREAK_B, registry);
 	}
@@ -70,13 +70,15 @@ public class RobotHardware extends RobotLayout
 
 	private void initCLimber()
 	{
-		climbPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
+		climbPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
 		climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
 	}
 
 	private void initHatch()
 	{
-		hatchPiston = new SolenoidHardware(can_PCM_1, pcm_HATCH, registry);
+		hatchExtension = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_EXTENDED_A, pcm_HATCH_EXTENDED_B, registry);
+		hatchIntake = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_INTAKE_A, pcm_HATCH_INTAKE_B, registry);
+		hatchOuttake = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
 	}
 
 }

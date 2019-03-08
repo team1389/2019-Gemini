@@ -1,5 +1,8 @@
 package com.team1389.systems;
 
+import com.team1389.auto.command.WaitTimeCommand;
+import com.team1389.command_framework.CommandUtil;
+import com.team1389.command_framework.command_base.Command;
 import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.hardware.inputs.software.RangeIn;
 import com.team1389.hardware.outputs.software.DigitalOut;
@@ -16,9 +19,9 @@ public class ManualArm extends Subsystem
 {
 
     // output
-    private DigitalOut cargoLauncher;
     private RangeOut<Percent> cargoIntake;
     private RangeOut<Percent> arm;
+    private DigitalOut cargoPiston;
 
     // sensors
     private DigitalIn cargoIntakeBeamBreak;
@@ -57,11 +60,10 @@ public class ManualArm extends Subsystem
      *                                 toggle for whether or not to use the beam
      *                                 break
      */
-    public ManualArm(DigitalOut cargoLauncher, RangeOut<Percent> cargoIntake, RangeOut<Percent> arm,
+    public ManualArm(RangeOut<Percent> cargoIntake, RangeOut<Percent> arm, DigitalOut cargoPiston,
             DigitalIn cargoIntakeBeamBreak, RangeIn<Percent> armAxis, DigitalIn intakeCargoBtn,
             DigitalIn cargoToRocketBtn, DigitalIn cargoToShooterBtn, boolean useBeamBreak)
     {
-        this.cargoLauncher = cargoLauncher;
         this.cargoIntake = cargoIntake;
         this.arm = arm;
         this.cargoIntakeBeamBreak = cargoIntakeBeamBreak;
@@ -70,6 +72,7 @@ public class ManualArm extends Subsystem
         this.cargoToRocketBtn = cargoToRocketBtn;
         this.cargoToShooterBtn = cargoToShooterBtn;
         this.useBeamBreak = useBeamBreak;
+        this.cargoPiston = cargoPiston;
     }
 
     @Override
@@ -89,13 +92,14 @@ public class ManualArm extends Subsystem
     @Override
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
-        return stem.put(cargoLauncher.getWatchable("launch piston manual"),
-                cargoIntakeBeamBreak.getWatchable("cargo intaken"), cargoIntake.getWatchable("cargo intake wheels"));
+        return stem.put(cargoIntakeBeamBreak.getWatchable("cargo intaken"),
+                cargoIntake.getWatchable("cargo intake wheels"));
     }
 
     @Override
     public void update()
     {
+        scheduler.update();
         System.out.println("beambreak " + cargoIntakeBeamBreak.get());
         arm.set(armAxis.get());
         intakingCargo = intakeCargoBtn.get() ^ intakingCargo;
@@ -123,22 +127,26 @@ public class ManualArm extends Subsystem
      */
     private void updateCargoWithBeamBreak()
     {
+        System.out.println("intaking" + intakingCargo);
         System.out.println("Beambreak status" + cargoIntakeBeamBreak.get());
+        if (cargoIntakeBeamBreak.get())
+        {
+            intakingCargo = false;
+        }
 
         if (!cargoIntakeBeamBreak.get() && intakingCargo)
         {
-            cargoLauncher.set(true);
-            cargoIntake.set(.5);
+            cargoPiston.set(true);
+            cargoIntake.set(1);
         }
         else if (cargoIntakeBeamBreak.get() && cargoToRocket)
         {
-            cargoLauncher.set(false);
+            cargoPiston.set(true);
             cargoIntake.set(-1);
         }
         else if (cargoIntakeBeamBreak.get() && cargoToShooter)
         {
-            cargoLauncher.set(false);
-            cargoIntake.set(.2);
+            scheduler.schedule(cargoToShooterr());
         }
         else
         {
@@ -146,12 +154,18 @@ public class ManualArm extends Subsystem
         }
     }
 
+    private Command cargoToShooterr()
+    {
+        return CommandUtil.combineSequential((CommandUtil.createCommand(() -> cargoPiston.set(false))),
+                (CommandUtil.createCommand(() -> cargoIntake.set(.5))), new WaitTimeCommand(.1),
+                (CommandUtil.createCommand(() -> cargoIntake.set(.5))));
+    }
+
     private void updateCargoWithoutBeamBreak()
     {
 
         if (intakingCargo)
         {
-            cargoLauncher.set(true);
             cargoIntake.set(1);
         }
         else if (cargoToRocket)
@@ -160,7 +174,7 @@ public class ManualArm extends Subsystem
         }
         else if (cargoToShooter)
         {
-            cargoLauncher.set(false);
+            cargoIntake.set(.2);
         }
         else
         {

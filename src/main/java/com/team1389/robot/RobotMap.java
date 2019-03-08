@@ -35,7 +35,7 @@ public class RobotMap
     protected final boolean inv_LEFT_DRIVE_MOTOR_A = false;
     protected final boolean sinv_LEFT_DRIVE_MOTOR_A = false;
 
-    protected final CAN can_LEFT_DRIVE_MOTOR_B = new CAN(7);
+    protected final CAN can_LEFT_DRIVE_MOTOR_B = new CAN(6);
     protected final boolean inv_LEFT_DRIVE_MOTOR_B = false;
     protected final boolean sinv_LEFT_DRIVE_MOTOR_B = false;
 
@@ -51,44 +51,45 @@ public class RobotMap
     protected final boolean inv_RIGHT_DRIVE_MOTOR_B = true;
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_B = true;
 
-    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(6);
+    protected final CAN can_RIGHT_DRIVE_MOTOR_C = new CAN(12);
     protected final boolean inv_RIGHT_DRIVE_MOTOR_C = true;
-    protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = false;
+    protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = true;
 
     // Shooter
-    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(1);
-    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(6);
-    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(0);
-    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(7);
+    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(0);
+    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(7);
+    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(1);
+    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(6);
     // Arm
     protected final CAN can_ARM_LIFT_MOTOR_A = new CAN(3);
     protected final boolean inv_ARM_LIFT_MOTOR_A = false;
     protected final boolean sinv_ARM_LIFT_MOTOR_A = false;
 
-    protected final CAN can_ARM_LIFT_MOTOR_B = new CAN(1);
+    protected final CAN can_ARM_LIFT_MOTOR_B = new CAN(5);
     protected final boolean inv_ARM_LIFT_MOTOR_B = false;
 
-    protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(8);
+    protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(9);
     protected final boolean inv_ARM_INTAKE_MOTOR = false;
 
-    protected final PCM pcm_HATCH = new PCM(3);
+    protected final PCM pcm_HATCH_EXTENDED_A = new PCM(0);
+    protected final PCM pcm_HATCH_EXTENDED_B = new PCM(7);
+    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(3);
+    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(4);
+    protected final PCM pcm_HATCH_INTAKE_A = new PCM(2);
+    protected final PCM pcm_HATCH_INTAKE_B = new PCM(5);
 
-    protected final PCM pcm_CARGO_OUTTAKE_A = new PCM(1);
-    protected final PCM pcm_CARGO_OUTTAKE_B = new PCM(5);
-
-    protected final DIO dio_BEAM_BREAK_A = new DIO(0);
-    protected final DIO dio_BEAM_BREAK_B = new DIO(1);
+    protected final DIO dio_BEAM_BREAK_A = new DIO(7);
+    protected final DIO dio_BEAM_BREAK_B = new DIO(8);
 
     // Climber
     protected final CAN can_CLIMB_MOTOR = new CAN(4);
     protected final boolean inv_CLIMB_MOTOR = false;
 
-    protected final PCM pcm_CLIMBER_A = new PCM(1);
-    protected final PCM pcm_CLIMBER_B = new PCM(6);
+    protected final PCM pcm_CLIMBER_A = new PCM(4);
+    protected final PCM pcm_CLIMBER_B = new PCM(3);
 
     // Miscellaneous
-    protected final SPIPort spi_GyroPort = new SPIPort(SPI.Port.kOnboardCS0);
     protected final CAN can_PCM_1 = new CAN(1);
     protected final CAN can_PCM_2 = new CAN(2);
-    protected final CAN can_IMU = new CAN(12);
+    protected final CAN can_IMU = new CAN(7);
 }

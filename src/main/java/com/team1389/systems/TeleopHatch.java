@@ -13,20 +13,22 @@ public class TeleopHatch extends Subsystem
     private Hatch hatch;
     private DigitalOut hatchPiston;
     private DigitalOut cargoPiston;
+    private DigitalOut outtakePiston;
     private boolean extended;
     private boolean haveHatch;
 
-    public TeleopHatch(DigitalOut hatchPiston, DigitalOut cargoPiston, DigitalIn hatchBtn)
+    public TeleopHatch(DigitalOut hatchPiston, DigitalOut cargoPiston, DigitalOut outtakePiston, DigitalIn hatchBtn)
     {
         this.hatchPiston = hatchPiston;
         this.cargoPiston = cargoPiston;
         this.hatchBtn = hatchBtn;
+        this.outtakePiston = outtakePiston;
     }
 
     @Override
     public void init()
     {
-        hatch = new Hatch(hatchPiston, cargoPiston);
+        hatch = new Hatch(hatchPiston, cargoPiston, outtakePiston);
         hatch.init();
         extended = false;
         haveHatch = false;
@@ -40,7 +42,6 @@ public class TeleopHatch extends Subsystem
         System.out.println("extended" + extended);
         if (extended && !haveHatch)
         {
-            System.out.println("first condition");
             hatch.acquireHatch();
             haveHatch = true;
         }

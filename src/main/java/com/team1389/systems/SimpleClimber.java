@@ -20,6 +20,7 @@ public class SimpleClimber extends Subsystem
     // Sensors
     // Controls
     private DigitalIn liftBtn;
+    private DigitalIn retractBtn;
     private PercentIn forwardPwr;
 
     /**
@@ -37,12 +38,14 @@ public class SimpleClimber extends Subsystem
      *                         Extends and retracts piston
      */
 
-    public SimpleClimber(DigitalOut liftPiston, PercentOut wheelVoltage, DigitalIn liftBtn, PercentIn forwardPwr)
+    public SimpleClimber(DigitalOut liftPiston, PercentOut wheelVoltage, DigitalIn liftBtn, DigitalIn retractBtn,
+            PercentIn forwardPwr)
     {
         this.liftPiston = liftPiston;
         this.wheelVoltage = wheelVoltage;
         this.forwardPwr = forwardPwr;
         this.liftBtn = liftBtn;
+        this.retractBtn = retractBtn;
     }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
@@ -76,6 +79,10 @@ public class SimpleClimber extends Subsystem
         if (forwardPwr.get() != 0)
         {
             wheelVoltage.set(forwardPwr.get());
+        }
+        if (retractBtn.get())
+        {
+            liftPiston.set(false);
         }
     }
 }

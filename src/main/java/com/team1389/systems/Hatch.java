@@ -12,11 +12,13 @@ public class Hatch extends Subsystem
 {
     private DigitalOut hatchPiston;
     private DigitalOut cargoPiston;
+    private DigitalOut outtakePiston;
 
-    public Hatch(DigitalOut hatchPiston, DigitalOut cargoPiston)
+    public Hatch(DigitalOut hatchPiston, DigitalOut cargoPiston, DigitalOut outtakePiston)
     {
         this.hatchPiston = hatchPiston;
         this.cargoPiston = cargoPiston;
+        this.outtakePiston = outtakePiston;
     }
 
     @Override
@@ -52,8 +54,10 @@ public class Hatch extends Subsystem
     private Command scoreHatchCommand()
     {
         return CommandUtil.combineSequential((CommandUtil.createCommand(() -> hatchPiston.set(true))),
-                new WaitTimeCommand(.5), (CommandUtil.createCommand(() -> cargoPiston.set(false))),
-                new WaitTimeCommand(1), (CommandUtil.createCommand(() -> hatchPiston.set(false))));
+                new WaitTimeCommand(.125), (CommandUtil.createCommand(() -> outtakePiston.set(true))),
+                new WaitTimeCommand(.25), (CommandUtil.createCommand(() -> cargoPiston.set(false))),
+                new WaitTimeCommand(.125), (CommandUtil.createCommand(() -> hatchPiston.set(false))),
+                new WaitTimeCommand(.125), (CommandUtil.createCommand(() -> outtakePiston.set(false))));
     }
 
     public void acquireHatch()

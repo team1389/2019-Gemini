@@ -17,8 +17,9 @@ public class RobotSoftware extends RobotHardware
 	public DigitalOut leftShoot;
 	public DigitalOut climber;
 	public PercentOut climbWheel;
-	public DigitalOut hatchOuttake;
-	public DigitalOut cargoHolder;
+	public DigitalOut hatchOuttakeStream;
+	public DigitalOut hatchIntakeStream;
+	public DigitalOut hatchExtensionStream;
 	public RangeOut<Percent> arm;
 	public RangeOut<Percent> cargoIntake;
 	public DigitalIn haveBall;
@@ -39,11 +40,12 @@ public class RobotSoftware extends RobotHardware
 		leftShoot = leftShooter.getDigitalOut().getInverted();
 		climbWheel = climbMotor.getVoltageController();
 		arm = armLiftA.getVoltageController().getWithAddedFollowers(armLiftB.getVoltageController());
-		cargoHolder = cargoPiston.getDigitalOut().getInverted();
-		hatchOuttake = hatchPiston.getDigitalOut();
-		climber = climbPiston.getDigitalOut();
+		hatchOuttakeStream = hatchOuttake.getDigitalOut();
+		hatchIntakeStream = hatchIntake.getDigitalOut();
+		hatchExtensionStream = hatchExtension.getDigitalOut();
+		climber = climbPiston.getDigitalOut().getInverted();
 		cargoIntake = armIntake.getVoltageController().getInverted();
-		haveBall = beamBreakA.getSwitchInput().getInverted();
+		haveBall = beamBreakB.getSwitchInput().getInverted();
 		angle = imu.getYawInput();
 
 	}
