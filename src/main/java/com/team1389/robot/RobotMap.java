@@ -1,5 +1,6 @@
 package com.team1389.robot;
 
+import com.team1389.hardware.registry.port_types.Analog;
 import com.team1389.hardware.registry.port_types.CAN;
 import com.team1389.hardware.registry.port_types.DIO;
 import com.team1389.hardware.registry.port_types.PCM;
@@ -92,4 +93,6 @@ public class RobotMap
     protected final CAN can_PCM_1 = new CAN(1);
     protected final CAN can_PCM_2 = new CAN(2);
     protected final CAN can_IMU = new CAN(7);
+    protected final Analog analog_LEFT_DISTANCE = new Analog(5);
+    protected final Analog analog_RIGHT_DISTANCE = new Analog(6);
 }

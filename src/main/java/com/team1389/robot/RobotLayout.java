@@ -5,6 +5,7 @@ import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
+import com.team1389.hardware.inputs.hardware.AnalogDistanceHardware;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
 import com.team1389.hardware.inputs.hardware.PigeonIMUHardware;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
@@ -53,4 +54,6 @@ public class RobotLayout extends RobotMap
 
 	// Miscallenous
 	public PDPHardware pdp;
+	public AnalogDistanceHardware leftDistance;
+	public AnalogDistanceHardware rightDistance;
 }
