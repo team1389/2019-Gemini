@@ -6,6 +6,7 @@ import com.team1389.system.Subsystem;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 import com.team1389.systems.Shooter;
+import com.team1389.systems.Alignment.Side;
 
 public class TeleopShooter extends Subsystem
 {
@@ -14,6 +15,8 @@ public class TeleopShooter extends Subsystem
     private DigitalIn shootRightFarButton;
     private DigitalIn shootLeftCloseButton;
     private DigitalIn shootLeftFarButton;
+    private DigitalIn switchLeftButton;
+    private DigitalIn switchRightButton;
     // Output
     private DigitalOut rightShooter;
     private DigitalOut leftShooter;
@@ -50,7 +53,8 @@ public class TeleopShooter extends Subsystem
      */
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, DigitalIn shootRightCloseButton,
-            DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton)
+            DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton,
+            DigitalIn switchLeftButton, DigitalIn switchRightButton)
     {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
@@ -58,6 +62,8 @@ public class TeleopShooter extends Subsystem
         this.shootLeftFarButton = shootLeftFarButton;
         this.shootRightCloseButton = shootRightCloseButton;
         this.shootRightFarButton = shootRightFarButton;
+        this.switchLeftButton = switchLeftButton;
+        this.switchRightButton = switchRightButton;
     }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
@@ -79,6 +85,14 @@ public class TeleopShooter extends Subsystem
     @Override
     public void update()
     {
+        if (switchRightButton.get())
+        {
+            shooter.aligner.setSide(Side.RIGHT);
+        }
+        if (switchLeftButton.get())
+        {
+            shooter.aligner.setSide(Side.LEFT);
+        }
         if (shootRightCloseButton.get())
         {
             shooter.shootRightClose();

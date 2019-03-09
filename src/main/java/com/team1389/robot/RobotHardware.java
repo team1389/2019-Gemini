@@ -1,9 +1,11 @@
 package com.team1389.robot;
 
 import com.team1389.hardware.registry.Registry;
+import com.team1389.hardware.inputs.hardware.AnalogDistanceHardware;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
 import com.team1389.hardware.inputs.hardware.PigeonIMUHardware;
 import com.team1389.hardware.inputs.hardware.SwitchHardware;
+import com.team1389.hardware.inputs.hardware.AnalogDistanceHardware.SensorType;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
@@ -66,6 +68,8 @@ public class RobotHardware extends RobotLayout
 	{
 		leftShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_LEFT_SHOOTER_A, pcm_LEFT_SHOOTER_B, registry);
 		rightShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_RIGHT_SHOOTER_A, pcm_RIGHT_SHOOTER_B, registry);
+		leftDistance = new AnalogDistanceHardware(SensorType.SHARP_GP2Y0A21YK0F, analog_LEFT_DISTANCE, registry);
+		rightDistance = new AnalogDistanceHardware(SensorType.SHARP_GP2Y0A21YK0F, analog_RIGHT_DISTANCE, registry);
 	}
 
 	private void initCLimber()

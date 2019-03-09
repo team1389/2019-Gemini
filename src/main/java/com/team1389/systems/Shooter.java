@@ -24,7 +24,7 @@ public class Shooter extends Subsystem
     private final double SHORT_SHOT_WAIT_TIME = .5; // TODO: tune these
     private final double LONG_SHOT_WAIT_TIME = 2;
 
-    private Alignment aligner;
+    public Alignment aligner;
 
     /**
      * @param rightShooter
@@ -68,6 +68,7 @@ public class Shooter extends Subsystem
 
     public void update()
     {
+        aligner.update();
         scheduler.update();
     }
 
@@ -141,6 +142,6 @@ public class Shooter extends Subsystem
 
     public DigitalIn getAlignmentCommandsRunning()
     {
-       return aligner.getAlignmentCommandsRunning();
+        return aligner.getAlignmentCommandsRunning();
     }
 }

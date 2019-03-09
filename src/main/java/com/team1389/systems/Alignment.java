@@ -34,14 +34,14 @@ public class Alignment extends Subsystem
     private final String VISION_NETWORK_TABLE_ID = "vision";
     private final String VISION_LEFT_SIDE_X_ID = "LeftSideX";
     private final String VISION_RIGHT_SIDE_X_ID = "RightSideX";
-    private final String VISION_SIDE_STATE = "State";
-    private final String VISION_TO_SWITCH = "";
+    private final String VISION_SIDE_STATE = "VisionState";
+    private final String VISION_TO_SWITCH = "ToSwitch";
 
     // NetworkTables Entries
-    private NetworkTableEntry leftSideXEntry;
-    private NetworkTableEntry rightSideXEntry;
-    private NetworkTableEntry visionState;
-    private NetworkTableEntry toSwitch;
+    private NetworkTableEntry LeftSideXEntry;
+    private NetworkTableEntry RightSideXEntry;
+    private NetworkTableEntry VisionState;
+    private NetworkTableEntry ToSwitch;
 
     private final int CENTER_X_VAL = 320;
 
@@ -83,14 +83,14 @@ public class Alignment extends Subsystem
     public void init()
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable(VISION_NETWORK_TABLE_ID);
-        leftSideXEntry = table.getEntry(VISION_LEFT_SIDE_X_ID);
-        rightSideXEntry = table.getEntry(VISION_RIGHT_SIDE_X_ID);
-        visionState = table.getEntry(VISION_SIDE_STATE);
-        toSwitch = table.getEntry(VISION_TO_SWITCH);
+        LeftSideXEntry = table.getEntry(VISION_LEFT_SIDE_X_ID);
+        RightSideXEntry = table.getEntry(VISION_RIGHT_SIDE_X_ID);
+        VisionState = table.getEntry(VISION_SIDE_STATE);
+        ToSwitch = table.getEntry(VISION_TO_SWITCH);
         currentState = Side.LEFT;
-        targetPositionLeft = new RangeIn<Position>(Position.class, () -> leftSideXEntry.getDouble(CENTER_X_VAL), 0,
+        targetPositionLeft = new RangeIn<Position>(Position.class, () -> LeftSideXEntry.getDouble(CENTER_X_VAL), 0,
                 720);
-        targetPositionRight = new RangeIn<Position>(Position.class, () -> rightSideXEntry.getDouble(CENTER_X_VAL), 0,
+        targetPositionRight = new RangeIn<Position>(Position.class, () -> RightSideXEntry.getDouble(CENTER_X_VAL), 0,
                 720);
         lateralController = new SynchronousPIDController<>(RobotConstants.LATERAL_PID_CONSTANTS, robotAngle,
                 TurnAngleCommand.createTurnController(drive));
@@ -100,8 +100,8 @@ public class Alignment extends Subsystem
         longitudinalControllerRight = new SynchronousPIDController<Percent, Position>(
                 RobotConstants.LONGITUDINAL_PID_CONSTANTS, targetPositionRight,
                 drive.left().getWithAddedFollowers(drive.right()));
-        synced = new DigitalIn(() -> (currentState.getName().equals(visionState.getString(""))));
-        alignmentCommandsRunning = new DigitalIn(() -> scheduler.isFinished());
+        synced = new DigitalIn(() -> (currentState.getName().equals(VisionState.getString(""))));
+        alignmentCommandsRunning = new DigitalIn(() -> !scheduler.isFinished());
     }
 
     @Override
@@ -143,17 +143,17 @@ public class Alignment extends Subsystem
 
     public void setSide(Side desired)
     {
-        if (currentState != desired && desired.getName() != visionState.getName())
+        if (currentState != desired && desired.getName() != VisionState.getName())
         {
             if (currentState == Side.LEFT)
             {
                 currentState = Side.RIGHT;
-                toSwitch.setString("right");
+                ToSwitch.setString("right");
             }
             else if (currentState == Side.RIGHT)
             {
                 currentState = Side.LEFT;
-                toSwitch.setString("left");
+                ToSwitch.setString("left");
             }
         }
     }
@@ -161,7 +161,7 @@ public class Alignment extends Subsystem
     public Command centerOnTarget()
     {
         scheduler.cancelAll();
-        if (visionState.getString("").equals(toSwitch.getString(".")))
+        if (VisionState.getString("").equals(ToSwitch.getString(".")))
         {
             return new WaitTimeCommand(.01);
         }
@@ -175,7 +175,7 @@ public class Alignment extends Subsystem
     public Command alignAngle()
     {
         scheduler.cancelAll();
-        if (visionState.getString("").equals(toSwitch.getString(".")))
+        if (VisionState.getString("").equals(ToSwitch.getString(".")))
         {
             return new WaitTimeCommand(.01);
         }
