@@ -24,8 +24,6 @@ public class Shooter extends Subsystem
     private final double SHORT_SHOT_WAIT_TIME = .5; // TODO: tune these
     private final double LONG_SHOT_WAIT_TIME = 2;
 
-    private Alignment aligner;
-
     /**
      * @param rightShooter
      *                         Piston for shooting ball to the right
@@ -41,12 +39,11 @@ public class Shooter extends Subsystem
         this.leftShooter = leftShooter;
     }
 
-    public Shooter(DigitalOut rightShooter, DigitalOut leftShooter, DriveOut<Percent> drive, AngleIn robotAngle)
+    public Shooter(DigitalOut rightShooter, DigitalOut leftShooter, DriveOut<Percent> drive)
     {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
         this.drive = drive;
-        this.robotAngle = robotAngle;
     }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
@@ -62,8 +59,6 @@ public class Shooter extends Subsystem
 
     public void init()
     {
-        aligner = new Alignment(drive, robotAngle);
-        aligner.init();
     }
 
     public void update()
@@ -139,8 +134,4 @@ public class Shooter extends Subsystem
         scheduler.schedule(shootLeftFarCommand());
     }
 
-    public DigitalIn getAlignmentCommandsRunning()
-    {
-       return aligner.getAlignmentCommandsRunning();
-    }
 }

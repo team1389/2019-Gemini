@@ -57,10 +57,10 @@ public class RobotMap
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = true;
 
     // Shooter
-    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(0);
-    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(7);
-    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(1);
-    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(6);
+    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(1);
+    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(6);
+    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(0);
+    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(7);
     // Arm
     protected final CAN can_ARM_LIFT_MOTOR_A = new CAN(3);
     protected final boolean inv_ARM_LIFT_MOTOR_A = false;
