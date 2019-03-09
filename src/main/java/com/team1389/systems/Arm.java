@@ -154,7 +154,8 @@ public class Arm extends Subsystem
     @Override
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
     {
-        return stem.put(new StringInfo("arm state", () -> currentState.name), scheduler);
+        return stem.put(new StringInfo("arm state", () -> currentState.name), scheduler,
+                cargoIntakeBeamBreak.getWatchable("Arm Beambreak"));
     }
 
     private Command goToAngle(double angle)

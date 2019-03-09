@@ -31,7 +31,7 @@ public class TeleopMain
 		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
 		Subsystem hatch = setUpHatch();
-		manager = new SystemManager(drive, shooter, climber, arm);
+		manager = new SystemManager(drive, shooter, arm, hatch);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
@@ -53,13 +53,13 @@ public class TeleopMain
 	private Subsystem setUpClimber()
 	{
 		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.leftBumper(),
-				controls.leftStickYAxis());
+				controls.rightStickYAxis());
 	}
 
 	private Subsystem setUpArm()
 	{
 		return new ManualArm(robot.cargoIntake, robot.arm, robot.hatchExtension.getDigitalOut(), robot.haveBall,
-				controls.rightStickYAxis(), controls.aButton(), controls.rightBumper(), controls.bButton(), true);
+				controls.leftStickYAxis(), controls.aButton(), controls.rightBumper(), controls.bButton(), true);
 	}
 
 	private Subsystem setUpHatch()
