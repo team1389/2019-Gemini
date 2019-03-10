@@ -4,6 +4,7 @@ import com.team1389.hardware.registry.Registry;
 import com.team1389.hardware.outputs.hardware.CANTalonHardware;
 import com.team1389.hardware.outputs.hardware.CANSparkMaxHardware;
 import com.team1389.hardware.outputs.hardware.CANVictorSPXHardware;
+import com.team1389.hardware.outputs.hardware.CompressorHardware;
 import com.team1389.hardware.outputs.hardware.VictorHardware;
 import com.team1389.hardware.inputs.hardware.AnalogDistanceHardware;
 import com.team1389.hardware.inputs.hardware.PDPHardware;
@@ -42,6 +43,7 @@ public class RobotLayout extends RobotMap
 	// Shooter
 	public DoubleSolenoidHardware leftShooter;
 	public DoubleSolenoidHardware rightShooter;
+	public CompressorHardware compressor;
 
 	// Climber
 	public DoubleSolenoidHardware climbPiston;

@@ -2,6 +2,7 @@ package com.team1389.robot;
 
 import com.team1389.hardware.inputs.software.AngleIn;
 import com.team1389.hardware.inputs.software.DigitalIn;
+import com.team1389.hardware.inputs.software.RangeIn;
 import com.team1389.hardware.outputs.software.RangeOut;
 import com.team1389.hardware.outputs.software.AngleOut;
 import com.team1389.hardware.outputs.software.DigitalOut;
@@ -25,6 +26,9 @@ public class RobotSoftware extends RobotHardware
 	public DigitalIn haveBall;
 	public AngleIn angle;
 	public DigitalIn currentlyAligning;
+	public DigitalOut runCompressor;
+	public RangeIn leftDistanceStream;
+	public RangeIn rightDistanceStream;
 
 	public static RobotSoftware getInstance()
 	{
@@ -49,6 +53,13 @@ public class RobotSoftware extends RobotHardware
 		haveBall = beamBreakB.getSwitchInput().getInverted();
 		angle = imu.getYawInput();
 		currentlyAligning = new DigitalIn(() -> false);
+
+		leftDistanceStream = leftDistance.getPositionInInches()
+				.getMapped(position -> position * Math.sin(Math.toRadians(80)));
+		rightDistanceStream = rightDistance.getPositionInInches()
+				.getMapped(position -> position * Math.sin(Math.toRadians(80)));
+
+		runCompressor = compressor.toggleCompressor();
 
 	}
 

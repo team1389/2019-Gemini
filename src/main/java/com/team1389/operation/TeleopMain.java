@@ -7,6 +7,7 @@ import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
+import com.team1389.systems.CancelCurvatureDrive;
 import com.team1389.systems.ManualArm;
 import com.team1389.systems.SimpleClimber;
 import com.team1389.systems.TeleopHatch;
@@ -31,21 +32,29 @@ public class TeleopMain
 		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
 		Subsystem hatch = setUpHatch();
-		manager = new SystemManager(drive, shooter, arm, hatch);
+		manager = new SystemManager(drive, shooter, climber);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
 		watcher.outputToDashboard();
+		// robot.runCompressor.set(false);
 	}
 
 	private Subsystem setUpDrive()
 	{
-		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
-				controls.driveRightBumper());
+		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY().getScaled(.5),
+				controls.driveRightX().getScaled(.5), controls.driveRightBumper());
+	}
+
+	private Subsystem setUpCancelDrive()
+	{
+		return new CancelCurvatureDrive(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
+				controls.driveRightBumper(), robot.runCompressor, controls.driveLeftBumper());
 	}
 
 	private TeleopShooter setUpShooter()
 	{
+		// r close, r far, l close, l far
 		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
 				controls.driveAButton(), controls.driveXButton());
 	}
@@ -59,7 +68,8 @@ public class TeleopMain
 	private Subsystem setUpArm()
 	{
 		return new ManualArm(robot.cargoIntake, robot.arm, robot.hatchExtension.getDigitalOut(), robot.haveBall,
-				controls.leftStickYAxis(), controls.aButton(), controls.rightBumper(), controls.bButton(), true);
+				controls.leftStickYAxis().getScaled(.5), controls.aButton(), controls.rightBumper(), controls.bButton(),
+				true);
 	}
 
 	private Subsystem setUpHatch()
