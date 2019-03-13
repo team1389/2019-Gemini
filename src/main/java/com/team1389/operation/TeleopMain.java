@@ -7,7 +7,7 @@ import com.team1389.system.drive.CurvatureDriveSystem;
 import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
-import com.team1389.systems.CancelCurvatureDrive;
+import com.team1389.systems.ControlCompressorCurvatureDrive;
 import com.team1389.systems.ManualArm;
 import com.team1389.systems.SimpleClimber;
 import com.team1389.systems.TeleopHatch;
@@ -42,14 +42,16 @@ public class TeleopMain
 
 	private Subsystem setUpDrive()
 	{
-		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY().getScaled(.5),
-				controls.driveRightX().getScaled(.5), controls.driveRightBumper());
+		// TODO: test drive on full speed; worked well on half speed
+		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
+				controls.driveRightBumper());
 	}
 
 	private Subsystem setUpCancelDrive()
 	{
-		return new CancelCurvatureDrive(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
-				controls.driveRightBumper(), robot.runCompressor, controls.driveLeftBumper());
+		// TODO: thorough testing of this system
+		return new ControlCompressorCurvatureDrive(robot.drive.getAsTank(), controls.driveLeftY(),
+				controls.driveRightX(), controls.driveRightBumper(), robot.runCompressor, controls.driveLeftBumper());
 	}
 
 	private TeleopShooter setUpShooter()

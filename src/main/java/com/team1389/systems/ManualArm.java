@@ -127,8 +127,6 @@ public class ManualArm extends Subsystem
      */
     private void updateCargoWithBeamBreak()
     {
-        System.out.println("intaking" + intakingCargo);
-        System.out.println("Beambreak status" + cargoIntakeBeamBreak.get());
         if (cargoIntakeBeamBreak.get())
         {
             intakingCargo = false;
@@ -146,7 +144,7 @@ public class ManualArm extends Subsystem
         }
         else if (cargoIntakeBeamBreak.get() && cargoToShooter)
         {
-            scheduler.schedule(cargoToShooterr());
+            scheduler.schedule(cargoToShooterCommand());
         }
         else
         {
@@ -154,7 +152,7 @@ public class ManualArm extends Subsystem
         }
     }
 
-    private Command cargoToShooterr()
+    private Command cargoToShooterCommand()
     {
         return CommandUtil.combineSequential((CommandUtil.createCommand(() -> cargoPiston.set(false))),
                 (CommandUtil.createCommand(() -> cargoIntake.set(.5))), new WaitTimeCommand(.1),

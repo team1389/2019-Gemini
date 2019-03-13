@@ -12,7 +12,7 @@ import com.team1389.system.drive.DriveOut;
 import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 
-public class CancelCurvatureDrive extends Subsystem
+public class ControlCompressorCurvatureDrive extends Subsystem
 {
     private final double DRIVING_STRAIGHT_DEADZONE = .3;
     private CurvatureDriveSystem driveSystem;
@@ -21,8 +21,8 @@ public class CancelCurvatureDrive extends Subsystem
     private DigitalIn noCompressorButton;
     private boolean compressorRunning;
 
-    public CancelCurvatureDrive(DriveOut<Percent> drive, PercentIn throttle, PercentIn wheel, DigitalIn quickTurnButton,
-            DigitalOut toggleCompressorRunning, DigitalIn noCompressorButton)
+    public ControlCompressorCurvatureDrive(DriveOut<Percent> drive, PercentIn throttle, PercentIn wheel,
+            DigitalIn quickTurnButton, DigitalOut toggleCompressorRunning, DigitalIn noCompressorButton)
     {
         this.wheel = wheel;
         driveSystem = new CurvatureDriveSystem(drive, throttle, wheel, quickTurnButton);

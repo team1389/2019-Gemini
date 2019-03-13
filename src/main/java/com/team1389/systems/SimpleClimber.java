@@ -76,13 +76,10 @@ public class SimpleClimber extends Subsystem
         {
             liftPiston.set(true);
         }
-        if (forwardPwr.get() != 0)
-        {
-            wheelVoltage.set(forwardPwr.get());
-        }
         if (retractBtn.get())
         {
             liftPiston.set(false);
         }
+        wheelVoltage.set(forwardPwr.get());
     }
 }
