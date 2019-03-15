@@ -31,11 +31,13 @@ public class ManualArm extends Subsystem
     private DigitalIn intakeCargoBtn;
     private DigitalIn cargoToRocketBtn;
     private DigitalIn cargoToShooterBtn;
+    private DigitalIn intakeSlowBtn;
 
     private boolean useBeamBreak;
     private boolean intakingCargo;
     private boolean cargoToRocket;
     private boolean cargoToShooter;
+    private boolean slowIntake;
 
     /**
      * 
@@ -62,7 +64,7 @@ public class ManualArm extends Subsystem
      */
     public ManualArm(RangeOut<Percent> cargoIntake, RangeOut<Percent> arm, DigitalOut cargoPiston,
             DigitalIn cargoIntakeBeamBreak, RangeIn<Percent> armAxis, DigitalIn intakeCargoBtn,
-            DigitalIn cargoToRocketBtn, DigitalIn cargoToShooterBtn, boolean useBeamBreak)
+            DigitalIn cargoToRocketBtn, DigitalIn cargoToShooterBtn, DigitalIn intakeSlowBtn, boolean useBeamBreak)
     {
         this.cargoIntake = cargoIntake;
         this.arm = arm;
@@ -73,6 +75,7 @@ public class ManualArm extends Subsystem
         this.cargoToShooterBtn = cargoToShooterBtn;
         this.useBeamBreak = useBeamBreak;
         this.cargoPiston = cargoPiston;
+        this.intakeSlowBtn = intakeSlowBtn;
     }
 
     @Override
@@ -81,6 +84,7 @@ public class ManualArm extends Subsystem
         intakingCargo = false;
         cargoToRocket = false;
         cargoToShooter = false;
+        slowIntake = false;
     }
 
     @Override
@@ -100,11 +104,12 @@ public class ManualArm extends Subsystem
     public void update()
     {
         scheduler.update();
-        System.out.println("beambreak " + cargoIntakeBeamBreak.get());
         arm.set(armAxis.get());
         intakingCargo = intakeCargoBtn.get() ^ intakingCargo;
         cargoToRocket = cargoToRocketBtn.get() ^ cargoToRocket;
         cargoToShooter = cargoToShooterBtn.get() ^ cargoToShooter;
+        slowIntake = intakeSlowBtn.get() ^ slowIntake;
+
         if (useBeamBreak)
         {
             updateCargoWithBeamBreak();
@@ -132,12 +137,16 @@ public class ManualArm extends Subsystem
             intakingCargo = false;
         }
 
-        if (!cargoIntakeBeamBreak.get() && intakingCargo)
+        if (slowIntake)
+        {
+            cargoIntake.set(.4);
+        }
+        else if (!cargoIntakeBeamBreak.get() && intakingCargo)
         {
             cargoPiston.set(true);
-            cargoIntake.set(1);
+            cargoIntake.set(.5);
         }
-        else if (cargoIntakeBeamBreak.get() && cargoToRocket)
+        else if (cargoToRocket)
         {
             cargoPiston.set(true);
             cargoIntake.set(-1);

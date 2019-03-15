@@ -32,7 +32,7 @@ public class TeleopMain
 		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
 		Subsystem hatch = setUpHatch();
-		manager = new SystemManager(drive, shooter, climber);
+		manager = new SystemManager(drive, shooter, climber, arm, hatch);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
@@ -43,8 +43,8 @@ public class TeleopMain
 	private Subsystem setUpDrive()
 	{
 		// TODO: test drive on full speed; worked well on half speed
-		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY(), controls.driveRightX(),
-				controls.driveRightBumper());
+		return new CurvatureDriveSystem(robot.drive.getAsTank(), controls.driveLeftY().getScaled(.6),
+				controls.driveRightX().getScaled(.6), controls.driveRightBumper());
 	}
 
 	private Subsystem setUpCancelDrive()
@@ -63,15 +63,15 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new SimpleClimber(robot.climber, robot.climbWheel, controls.xButton(), controls.leftBumper(),
+		return new SimpleClimber(robot.climber, robot.climbWheel, controls.rightBumper(), controls.leftBumper(),
 				controls.rightStickYAxis());
 	}
 
 	private Subsystem setUpArm()
 	{
 		return new ManualArm(robot.cargoIntake, robot.arm, robot.hatchExtension.getDigitalOut(), robot.haveBall,
-				controls.leftStickYAxis().getScaled(.5), controls.aButton(), controls.rightBumper(), controls.bButton(),
-				true);
+				controls.leftStickYAxis().getScaled(.5), controls.aButton(), controls.upDPad(), controls.bButton(),
+				controls.xButton(), true);
 	}
 
 	private Subsystem setUpHatch()

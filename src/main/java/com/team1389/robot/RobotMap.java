@@ -70,12 +70,12 @@ public class RobotMap
     protected final boolean inv_ARM_LIFT_MOTOR_B = false;
 
     protected final PWM pwm_ARM_INTAKE_MOTOR = new PWM(9);
-    protected final boolean inv_ARM_INTAKE_MOTOR = false;
+    protected final boolean inv_ARM_INTAKE_MOTOR = true;
 
     protected final PCM pcm_HATCH_EXTENDED_A = new PCM(0);
     protected final PCM pcm_HATCH_EXTENDED_B = new PCM(7);
-    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(3);
-    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(4);
+    protected final PCM pcm_HATCH_OUTTAKE_A = new PCM(4);
+    protected final PCM pcm_HATCH_OUTTAKE_B = new PCM(3);
     protected final PCM pcm_HATCH_INTAKE_A = new PCM(2);
     protected final PCM pcm_HATCH_INTAKE_B = new PCM(5);
 
