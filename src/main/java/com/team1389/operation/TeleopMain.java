@@ -8,6 +8,7 @@ import com.team1389.watch.Watcher;
 import com.team1389.system.Subsystem;
 import com.team1389.systems.TeleopShooter;
 import com.team1389.systems.ControlCompressorCurvatureDrive;
+import com.team1389.systems.Dampener;
 import com.team1389.systems.ManualArm;
 import com.team1389.systems.SimpleClimber;
 import com.team1389.systems.TeleopHatch;
@@ -29,10 +30,9 @@ public class TeleopMain
 		controls = ControlBoard.getInstance();
 		Subsystem drive = setUpDrive();
 		shooter = setUpShooter();
-		Subsystem arm = setUpArm();
 		Subsystem climber = setUpClimber();
-		Subsystem hatch = setUpHatch();
-		manager = new SystemManager(drive, shooter, climber, arm, hatch);
+		Subsystem damp = setUpDampener();
+		manager = new SystemManager(drive, shooter, climber, damp);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();
@@ -63,15 +63,8 @@ public class TeleopMain
 
 	private Subsystem setUpClimber()
 	{
-		return new SimpleClimber(robot.climber, robot.climbWheel, controls.rightBumper(), controls.leftBumper(),
-				controls.rightStickYAxis());
-	}
-
-	private Subsystem setUpArm()
-	{
-		return new ManualArm(robot.cargoIntake, robot.arm, robot.hatchExtension.getDigitalOut(), robot.haveBall,
-				controls.leftStickYAxis().getScaled(.5), controls.aButton(), controls.upDPad(), controls.bButton(),
-				controls.xButton(), true);
+		return new SimpleClimber(robot.climber, robot.frontClimbStream, robot.climbWheel, controls.leftBumper(),
+				controls.rightBumper(), controls.rightStickYAxis());
 	}
 
 	private Subsystem setUpHatch()
@@ -84,4 +77,14 @@ public class TeleopMain
 	{
 		manager.update();
 	}
+
+	private Subsystem setUpDampener()
+	{
+		return new Dampener(robot.leftSideDampStream, robot.rightSideDampStream, controls.aButton());
+	}
+
+	// public void disabledPeriodic()
+	// {
+	// System.out.println("bb" + robot.haveBall.get());
+	// }
 }

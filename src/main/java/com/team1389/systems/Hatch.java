@@ -24,6 +24,9 @@ public class Hatch extends Subsystem
     @Override
     public void init()
     {
+        hatchPiston.set(false);
+        cargoPiston.set(false);
+        outtakePiston.set(false);
     }
 
     @Override

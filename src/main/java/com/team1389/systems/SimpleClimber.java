@@ -16,12 +16,16 @@ public class SimpleClimber extends Subsystem
 {
     // Output
     private PercentOut wheelVoltage;
-    private DigitalOut liftPiston;
+    private DigitalOut liftPistonBack;
+    private DigitalOut liftPistonFront;
     // Sensors
     // Controls
-    private DigitalIn liftBtn;
-    private DigitalIn retractBtn;
+    private DigitalIn liftBackBtn;
+    private DigitalIn liftFrontBtn;
     private PercentIn forwardPwr;
+
+    private boolean back;
+    private boolean front;
 
     /**
      * @param liftPiston
@@ -38,14 +42,15 @@ public class SimpleClimber extends Subsystem
      *                         Extends and retracts piston
      */
 
-    public SimpleClimber(DigitalOut liftPiston, PercentOut wheelVoltage, DigitalIn liftBtn, DigitalIn retractBtn,
-            PercentIn forwardPwr)
+    public SimpleClimber(DigitalOut liftPistonBack, DigitalOut liftPistonFront, PercentOut wheelVoltage,
+            DigitalIn liftBackBtn, DigitalIn liftFrontBtn, PercentIn forwardPwr)
     {
-        this.liftPiston = liftPiston;
+        this.liftPistonBack = liftPistonBack;
+        this.liftPistonFront = liftPistonFront;
         this.wheelVoltage = wheelVoltage;
         this.forwardPwr = forwardPwr;
-        this.liftBtn = liftBtn;
-        this.retractBtn = retractBtn;
+        this.liftFrontBtn = liftFrontBtn;
+        this.liftBackBtn = liftBackBtn;
     }
 
     public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
@@ -61,25 +66,29 @@ public class SimpleClimber extends Subsystem
 
     public void init()
     {
-
+        back = false;
+        front = false;
     }
 
     public void update()
     {
-        climb();
+        back = liftBackBtn.get() ^ back;
+        front = liftFrontBtn.get() ^ front;
+        if (back)
+        {
+            liftPistonBack.set(true);
+        }
+        if (front)
+        {
+            liftPistonFront.set(true);
+        }
+        if (!front && !back)
+        {
+            liftPistonBack.set(false);
+            liftPistonFront.set(false);
+        }
+        wheelVoltage.set(forwardPwr.get());
         scheduler.update();
     }
 
-    public void climb()
-    {
-        if (liftBtn.get())
-        {
-            liftPiston.set(true);
-        }
-        if (retractBtn.get())
-        {
-            liftPiston.set(false);
-        }
-        wheelVoltage.set(forwardPwr.get());
-    }
 }

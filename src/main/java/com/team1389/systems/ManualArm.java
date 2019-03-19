@@ -85,6 +85,7 @@ public class ManualArm extends Subsystem
         cargoToRocket = false;
         cargoToShooter = false;
         slowIntake = false;
+        cargoPiston.set(false);
     }
 
     @Override
@@ -103,6 +104,7 @@ public class ManualArm extends Subsystem
     @Override
     public void update()
     {
+        System.out.println("beambreak " + cargoIntakeBeamBreak.get());
         scheduler.update();
         arm.set(armAxis.get());
         intakingCargo = intakeCargoBtn.get() ^ intakingCargo;
@@ -153,7 +155,8 @@ public class ManualArm extends Subsystem
         }
         else if (cargoIntakeBeamBreak.get() && cargoToShooter)
         {
-            scheduler.schedule(cargoToShooterCommand());
+            cargoPiston.set(false);
+            cargoIntake.set(.8);
         }
         else
         {
@@ -165,7 +168,7 @@ public class ManualArm extends Subsystem
     {
         return CommandUtil.combineSequential((CommandUtil.createCommand(() -> cargoPiston.set(false))),
                 (CommandUtil.createCommand(() -> cargoIntake.set(.5))), new WaitTimeCommand(.1),
-                (CommandUtil.createCommand(() -> cargoIntake.set(.5))));
+                (CommandUtil.createCommand(() -> cargoIntake.set(0))));
     }
 
     private void updateCargoWithoutBeamBreak()
@@ -173,15 +176,18 @@ public class ManualArm extends Subsystem
 
         if (intakingCargo)
         {
-            cargoIntake.set(1);
+            cargoIntake.set(.5);
+            cargoPiston.set(true);
         }
         else if (cargoToRocket)
         {
-            cargoIntake.set(-.5);
+            cargoIntake.set(-1);
+            cargoPiston.set(true);
         }
         else if (cargoToShooter)
         {
             cargoIntake.set(.2);
+            cargoPiston.set(false);
         }
         else
         {

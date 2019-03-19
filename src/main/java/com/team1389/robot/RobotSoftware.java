@@ -29,6 +29,9 @@ public class RobotSoftware extends RobotHardware
 	public DigitalOut runCompressor;
 	public RangeIn leftDistanceStream;
 	public RangeIn rightDistanceStream;
+	public DigitalOut leftSideDampStream;
+	public DigitalOut rightSideDampStream;
+	public DigitalOut frontClimbStream;
 
 	public static RobotSoftware getInstance()
 	{
@@ -44,15 +47,10 @@ public class RobotSoftware extends RobotHardware
 		rightShoot = rightShooter.getDigitalOut().getInverted();
 		leftShoot = leftShooter.getDigitalOut().getInverted();
 		climbWheel = climbMotor.getVoltageController();
-		arm = armLiftA.getVoltageController().getWithAddedFollowers(armLiftB.getVoltageController());
-		hatchOuttakeStream = hatchOuttake.getDigitalOut();
-		hatchIntakeStream = hatchIntake.getDigitalOut();
-		hatchExtensionStream = hatchExtension.getDigitalOut();
+		leftSideDampStream = leftDamp.getDigitalOut();
+		rightSideDampStream = rightDamp.getDigitalOut();
+		frontClimbStream = climbFrontPiston.getDigitalOut().getInverted();
 		climber = climbPiston.getDigitalOut().getInverted();
-		cargoIntake = armIntake.getVoltageController().getInverted();
-		haveBall = beamBreakB.getSwitchInput().getInverted();
-		angle = imu.getYawInput();
-		currentlyAligning = new DigitalIn(() -> false);
 
 		leftDistanceStream = leftDistance.getPositionInInches()
 				.getMapped(position -> position * Math.sin(Math.toRadians(80)));

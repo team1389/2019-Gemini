@@ -37,10 +37,8 @@ public class RobotHardware extends RobotLayout
 		registry = new Registry();
 		pdp = new PDPHardware(new CAN(0), registry);
 		initDriveTrain();
-		initArm();
 		initShooter();
 		initCLimber();
-		initHatch();
 		initDistanceSensors();
 	}
 
@@ -70,6 +68,8 @@ public class RobotHardware extends RobotLayout
 	{
 		leftShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_LEFT_SHOOTER_A, pcm_LEFT_SHOOTER_B, registry);
 		rightShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_RIGHT_SHOOTER_A, pcm_RIGHT_SHOOTER_B, registry);
+		leftDamp = new DoubleSolenoidHardware(can_PCM_1, pcm_LEFT_DAMP_A, pcm_LEFT_DAMP_B, registry);
+		rightDamp = new DoubleSolenoidHardware(can_PCM_1, pcm_RIGHT_DAMP_A, pcm_RIGHT_DAMP_B, registry);
 		compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, new Registry());
 	}
 
@@ -77,13 +77,13 @@ public class RobotHardware extends RobotLayout
 	{
 		climbPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
 		climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
+		climbFrontPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_FRONT_CLIMB_A, pcm_FRONT_CLIMB_B, registry);
+
 	}
 
 	private void initHatch()
 	{
-		hatchExtension = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_EXTENDED_A, pcm_HATCH_EXTENDED_B, registry);
-		hatchIntake = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_INTAKE_A, pcm_HATCH_INTAKE_B, registry);
-		hatchOuttake = new DoubleSolenoidHardware(can_PCM_1, pcm_HATCH_OUTTAKE_A, pcm_HATCH_OUTTAKE_B, registry);
+
 	}
 
 	private void initDistanceSensors()

@@ -50,9 +50,9 @@ public class RobotLayout extends RobotMap
 	public CANVictorSPXHardware climbMotor;
 
 	// Hatch
-	public DoubleSolenoidHardware hatchIntake;
-	public DoubleSolenoidHardware hatchExtension;
-	public DoubleSolenoidHardware hatchOuttake;
+	public DoubleSolenoidHardware leftDamp;
+	public DoubleSolenoidHardware rightDamp;
+	public DoubleSolenoidHardware climbFrontPiston;
 
 	// Miscallenous
 	public PDPHardware pdp;
