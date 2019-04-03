@@ -57,8 +57,8 @@ public class TeleopMain
 	private TeleopShooter setUpShooter()
 	{
 		// r close, r far, l close, l far
-		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
-				controls.driveAButton(), controls.driveXButton());
+		return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.bButton(), controls.yButton(),
+				controls.aButton(), controls.xButton());
 	}
 
 	private Subsystem setUpClimber()

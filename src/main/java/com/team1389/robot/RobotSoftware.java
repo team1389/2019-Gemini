@@ -13,6 +13,8 @@ import com.team1389.system.drive.SixDriveOut;
 public class RobotSoftware extends RobotHardware
 {
 	private static RobotSoftware INSTANCE = new RobotSoftware();
+	private final double DRIVETRAIN_SCALE_FACTOR = 0.25;
+
 	public SixDriveOut<Percent> drive;
 	public DigitalOut rightShoot;
 	public DigitalOut leftShoot;
@@ -40,9 +42,12 @@ public class RobotSoftware extends RobotHardware
 
 	public RobotSoftware()
 	{
-		drive = new SixDriveOut<>(leftDriveA.getVoltageController(), rightDriveA.getVoltageController(),
-				leftDriveB.getVoltageController(), rightDriveB.getVoltageController(),
-				leftDriveC.getVoltageController(), rightDriveC.getVoltageController());
+		drive = new SixDriveOut<>(leftDriveA.getVoltageController().getScaled(DRIVETRAIN_SCALE_FACTOR),
+				rightDriveA.getVoltageController().getScaled(DRIVETRAIN_SCALE_FACTOR),
+				leftDriveB.getVoltageController().getScaled(DRIVETRAIN_SCALE_FACTOR),
+				rightDriveB.getVoltageController().getScaled(DRIVETRAIN_SCALE_FACTOR),
+				leftDriveC.getVoltageController().getScaled(DRIVETRAIN_SCALE_FACTOR),
+				rightDriveC.getVoltageController().getScaled(DRIVETRAIN_SCALE_FACTOR));
 
 		rightShoot = rightShooter.getDigitalOut().getInverted();
 		leftShoot = leftShooter.getDigitalOut().getInverted();
@@ -57,7 +62,7 @@ public class RobotSoftware extends RobotHardware
 		rightDistanceStream = rightDistance.getPositionInInches()
 				.getMapped(position -> position * Math.sin(Math.toRadians(80)));
 
-		runCompressor = compressor.toggleCompressor();
+		runCompressor = compressor.toggleCompressorRunning();
 
 	}
 
