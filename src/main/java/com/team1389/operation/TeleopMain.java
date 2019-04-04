@@ -32,7 +32,7 @@ public class TeleopMain
 		shooter = setUpShooter();
 		Subsystem climber = setUpClimber();
 		Subsystem damp = setUpDampener();
-		manager = new SystemManager(drive, shooter, climber, damp);
+		manager = new SystemManager(drive, shooter);
 		manager.init();
 		Watcher watcher = new Watcher();
 		watcher.watch();

@@ -13,7 +13,7 @@ import com.team1389.system.drive.SixDriveOut;
 public class RobotSoftware extends RobotHardware
 {
 	private static RobotSoftware INSTANCE = new RobotSoftware();
-	private final double DRIVETRAIN_SCALE_FACTOR = 0.25;
+	private final double DRIVETRAIN_SCALE_FACTOR = 0.5;
 
 	public SixDriveOut<Percent> drive;
 	public DigitalOut rightShoot;

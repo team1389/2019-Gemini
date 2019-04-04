@@ -113,24 +113,28 @@ public class Shooter extends Subsystem
     public void shootRightClose()
     {
         scheduler.cancelAll();
+        leftShooter.set(false);
         scheduler.schedule(shootRightCloseCommand());
     }
 
     public void shootRightFar()
     {
         scheduler.cancelAll();
+        leftShooter.set(false);
         scheduler.schedule(shootRightFarCommand());
     }
 
     public void shootLeftClose()
     {
         scheduler.cancelAll();
+        rightShooter.set(false);
         scheduler.schedule(shootLeftCloseCommand());
     }
 
     public void shootLeftFar()
     {
         scheduler.cancelAll();
+        rightShooter.set(false);
         scheduler.schedule(shootLeftFarCommand());
     }
 
