@@ -7,8 +7,7 @@ import com.team1389.util.list.AddList;
 import com.team1389.watch.Watchable;
 import com.team1389.systems.Shooter;
 
-public class TeleopShooter extends Subsystem
-{
+public class TeleopShooter extends Subsystem {
     // Controls
     private DigitalIn shootRightCloseButton;
     private DigitalIn shootRightFarButton;
@@ -21,37 +20,23 @@ public class TeleopShooter extends Subsystem
     private Shooter shooter;
 
     /**
-     * @param shootRightCloseButton
-     *                                  Input for shooting the ball to the
-     *                                  closer target on the right
-     * 
-     * @param shootRightFarButton
-     *                                  Input for shooting the ball to the
-     *                                  farther target on the right
-     * 
-     * @param shootLeftCloseButton
-     *                                  Input for shooting the ball to the
-     *                                  closer target on the left
-     * 
-     * @param shootLeftFarButton
-     *                                  Input for shooting the ball to the
-     *                                  farther target on the left
-     * 
-     * @param hasCargo
-     *                                  Detects whether there is a ball in the
-     *                                  shooter or not
-     * 
-     * @param rightShooter
-     *                                  Controller for shooting ball to the
-     *                                  right
-     * 
-     * @param leftShooter
-     *                                  Controller for shooting ball to the left
+     * @param shootRightCloseButton Input for shooting the ball to the
+     *                              closer target on the right
+     * @param shootRightFarButton   Input for shooting the ball to the
+     *                              farther target on the right
+     * @param shootLeftCloseButton  Input for shooting the ball to the
+     *                              closer target on the left
+     * @param shootLeftFarButton    Input for shooting the ball to the
+     *                              farther target on the left
+     * @param hasCargo              Detects whether there is a ball in the
+     *                              shooter or not
+     * @param rightShooter          Controller for shooting ball to the
+     *                              right
+     * @param leftShooter           Controller for shooting ball to the left
      */
 
     public TeleopShooter(DigitalOut rightShooter, DigitalOut leftShooter, DigitalIn shootRightCloseButton,
-            DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton)
-    {
+                         DigitalIn shootRightFarButton, DigitalIn shootLeftCloseButton, DigitalIn shootLeftFarButton) {
         this.rightShooter = rightShooter;
         this.leftShooter = leftShooter;
         this.shootLeftCloseButton = shootLeftCloseButton;
@@ -60,39 +45,35 @@ public class TeleopShooter extends Subsystem
         this.shootRightFarButton = shootRightFarButton;
     }
 
-    public AddList<Watchable> getSubWatchables(AddList<Watchable> stem)
-    {
+    public AddList<Watchable> getSubWatchables(AddList<Watchable> stem) {
         return stem.put(shooter);
     }
 
-    public String getName()
-    {
+    public String getName() {
         return "Teleop Shooter";
     }
 
-    public void init()
-    {
+    public void init() {
         shooter = new Shooter(rightShooter, leftShooter);
         shooter.init();
     }
 
     @Override
-    public void update()
-    {
-        if (shootRightCloseButton.get())
-        {
+    public void update() {
+        if (shootRightCloseButton.get()) {
+            System.out.println("shoot right close");
             shooter.shootRightClose();
         }
-        if (shootRightFarButton.get())
-        {
+        if (shootRightFarButton.get()) {
+            System.out.println("shoot right far");
             shooter.shootRightFar();
         }
-        if (shootLeftCloseButton.get())
-        {
+        if (shootLeftCloseButton.get()) {
+            System.out.println("shoot left close");
             shooter.shootLeftClose();
         }
-        if (shootLeftFarButton.get())
-        {
+        if (shootLeftFarButton.get()) {
+            System.out.println("shoot left far");
             shooter.shootLeftFar();
         }
 

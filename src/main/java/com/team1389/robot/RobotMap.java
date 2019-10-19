@@ -29,8 +29,7 @@ import edu.wpi.first.wpilibj.SPI;
  * <em>inv_ASSOCIATED_IO_IDENTIFIER</em> for outputs and
  * <em>sinv_ASSOCIATED_IO_IDENTIFIER</em> for inputs.
  */
-public class RobotMap
-{
+public class RobotMap {
     // Drive Train
     protected final CAN can_LEFT_DRIVE_MOTOR_A = new CAN(11);
     protected final boolean inv_LEFT_DRIVE_MOTOR_A = false;
@@ -57,10 +56,11 @@ public class RobotMap
     protected final boolean sinv_RIGHT_DRIVE_MOTOR_C = true;
 
     // Shooter
-    protected final PCM pcm_LEFT_SHOOTER_A = new PCM(1);
-    protected final PCM pcm_LEFT_SHOOTER_B = new PCM(6);
-    protected final PCM pcm_RIGHT_SHOOTER_A = new PCM(0);
-    protected final PCM pcm_RIGHT_SHOOTER_B = new PCM(7);
+
+    protected final PCM pcm_LEFT_SHOOTER_FORWARD = new PCM(6);
+    protected final PCM pcm_LEFT_SHOOTER_REVERSE = new PCM(1);
+    protected final PCM pcm_RIGHT_SHOOTER_FORWARD = new PCM(7);
+    protected final PCM pcm_RIGHT_SHOOTER_REVERSE = new PCM(0);
     // Arm
     protected final CAN can_ARM_LIFT_MOTOR_A = new CAN(3);
     protected final boolean inv_ARM_LIFT_MOTOR_A = false;
@@ -87,8 +87,8 @@ public class RobotMap
     protected final CAN can_CLIMB_MOTOR = new CAN(4);
     protected final boolean inv_CLIMB_MOTOR = false;
 
-    protected final PCM pcm_CLIMBER_A = new PCM(4);
-    protected final PCM pcm_CLIMBER_B = new PCM(3);
+    protected final PCM pcm_CLIMBER_FORWARD = new PCM(3);
+    protected final PCM pcm_CLIMBER_REVERSE = new PCM(4);
 
     // Miscellaneous
     protected final CAN can_PCM_1 = new CAN(1);

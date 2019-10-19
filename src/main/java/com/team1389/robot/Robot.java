@@ -14,72 +14,59 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends TimedRobot
-{
-	RobotSoftware robot;
-	TeleopMain teleOperator;
-	Watcher watcher;
-	Compressor compressor;
+public class Robot extends TimedRobot {
+    RobotSoftware robot;
+    Watcher watcher;
+    Compressor compressor;
+    TeleopMain teleop;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	@Override
-	public void robotInit()
-	{
-		CameraServer.getInstance().startAutomaticCapture();
-		CameraServer.getInstance().startAutomaticCapture();
-		robot = RobotSoftware.getInstance();
-		teleOperator = new TeleopMain(robot);
-		watcher = new Watcher(robot.leftDistanceStream.getWatchable("left dist"),
-				robot.rightDistanceStream.getWatchable("right dist"));
-		watcher.outputToDashboard();
-		// compressor = new Compressor(robot.CAN_COMPRESSOR_PORT.index());
-	}
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
+    @Override
+    public void robotInit() {
+        robot = RobotSoftware.getInstance();
+        watcher = new Watcher(robot.leftDistanceStream.getWatchable("left dist"),
+                robot.rightDistanceStream.getWatchable("right dist"));
+        watcher.outputToDashboard();
+        robot.runCompressor.set(true);
+        teleop = new TeleopMain(robot);
+    }
 
-	@Override
-	public void autonomousInit()
-	{
-		teleOperator.init();
+    @Override
+    public void autonomousInit() {
 
-	}
+    }
 
-	@Override
-	public void autonomousPeriodic()
-	{
-		teleOperator.periodic();
-		Watcher.update();
-	}
+    @Override
+    public void autonomousPeriodic() {
+        Watcher.update();
+    }
 
-	@Override
-	public void teleopInit()
-	{
-		teleOperator.init();
-	}
+    @Override
+    public void teleopInit() {
+        teleop.init();
+    }
 
-	/**
-	 * This function is called periodically during operator control
-	 */
-	@Override
-	public void teleopPeriodic()
-	{
-		// System.out.println(robot.compressor.getCurrent().get());
-		teleOperator.periodic();
-		Watcher.update();
+    /**
+     * This function is called periodically during operator control
+     */
+    @Override
+    public void teleopPeriodic() {
+        teleop.periodic();
+        Watcher.update();
 
-	}
+    }
 
-	@Override
-	public void disabledInit()
-	{
+    @Override
+    public void disabledInit() {
 
-	}
+    }
 
-	@Override
-	public void disabledPeriodic()
-	{
-		Watcher.update();
-		// teleOperator.disabledPeriodic();
-	}
+    @Override
+    public void disabledPeriodic() {
+        Watcher.update();
+        // teleOperator.disabledPeriodic();
+    }
 }

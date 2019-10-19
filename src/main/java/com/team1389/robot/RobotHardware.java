@@ -18,80 +18,72 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 /**
  * responsible for initializing and storing hardware objects defined in
  * {@link RobotLayout}
- * 
+ *
  * @author amind
  * @see RobotLayout
  * @see RobotMap
  */
-public class RobotHardware extends RobotLayout
-{
+public class RobotHardware extends RobotLayout {
 
-	/**
-	 * Initializes robot hardware by subsystem. <br>
-	 * note: use this method as an index to show hardware initializations that
-	 * occur, and to find the init code for a particular system's hardware
-	 */
-	protected RobotHardware()
-	{
-		System.out.println("initializing hardware");
-		registry = new Registry();
-		pdp = new PDPHardware(new CAN(0), registry);
-		initDriveTrain();
-		initShooter();
-		initCLimber();
-		initDistanceSensors();
-	}
+    /**
+     * Initializes robot hardware by subsystem. <br>
+     * note: use this method as an index to show hardware initializations that
+     * occur, and to find the init code for a particular system's hardware
+     */
+    protected RobotHardware() {
+        System.out.println("initializing hardware");
+        registry = new Registry();
+        pdp = new PDPHardware(new CAN(0), registry);
+        initDriveTrain();
+        initShooter();
+        initCLimber();
+        initDistanceSensors();
+    }
 
-	private void initDriveTrain()
-	{
-		leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A, registry);
-		leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B, registry);
-		leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C, registry);
-		rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
-		rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
-		rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
-		imu = new PigeonIMUHardware(can_IMU, registry);
-		compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, registry);
-	}
+    private void initDriveTrain() {
+        leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A, registry);
+        leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B, registry);
+        leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C, registry);
+        rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
+        rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
+        rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
+        imu = new PigeonIMUHardware(can_IMU, registry);
+        compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, registry);
+    }
 
-	private void initArm()
-	{
-		armLiftA = new CANTalonHardware(inv_ARM_LIFT_MOTOR_A, sinv_ARM_LIFT_MOTOR_A,
-				FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
-		armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
-		armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
-		beamBreakA = new SwitchHardware(dio_BEAM_BREAK_A, registry);
-		beamBreakB = new SwitchHardware(dio_BEAM_BREAK_B, registry);
-	}
+    private void initArm() {
+        armLiftA = new CANTalonHardware(inv_ARM_LIFT_MOTOR_A, sinv_ARM_LIFT_MOTOR_A,
+                FeedbackDevice.CTRE_MagEncoder_Absolute, 1024, can_ARM_LIFT_MOTOR_A, registry);
+        armLiftB = new CANVictorSPXHardware(inv_ARM_LIFT_MOTOR_B, can_ARM_LIFT_MOTOR_B, registry);
+        armIntake = new VictorHardware(inv_ARM_INTAKE_MOTOR, pwm_ARM_INTAKE_MOTOR, registry);
+        beamBreakA = new SwitchHardware(dio_BEAM_BREAK_A, registry);
+        beamBreakB = new SwitchHardware(dio_BEAM_BREAK_B, registry);
+    }
 
-	private void initShooter()
-	{
-		leftShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_LEFT_SHOOTER_A, pcm_LEFT_SHOOTER_B, registry);
-		rightShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_RIGHT_SHOOTER_A, pcm_RIGHT_SHOOTER_B, registry);
-		leftDamp = new DoubleSolenoidHardware(can_PCM_1, pcm_LEFT_DAMP_A, pcm_LEFT_DAMP_B, registry);
-		rightDamp = new DoubleSolenoidHardware(can_PCM_1, pcm_RIGHT_DAMP_A, pcm_RIGHT_DAMP_B, registry);
-		compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, new Registry());
-	}
+    private void initShooter() {
+        leftShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_LEFT_SHOOTER_FORWARD, pcm_LEFT_SHOOTER_REVERSE, registry);
+        rightShooter = new DoubleSolenoidHardware(can_PCM_2, pcm_RIGHT_SHOOTER_FORWARD, pcm_RIGHT_SHOOTER_REVERSE, registry);
+        leftDamp = new DoubleSolenoidHardware(can_PCM_1, pcm_LEFT_DAMP_A, pcm_LEFT_DAMP_B, registry);
+        rightDamp = new DoubleSolenoidHardware(can_PCM_1, pcm_RIGHT_DAMP_A, pcm_RIGHT_DAMP_B, registry);
+        compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, new Registry());
+    }
 
-	private void initCLimber()
-	{
-		climbPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CLIMBER_A, pcm_CLIMBER_B, registry);
-		climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
-		climbFrontPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_FRONT_CLIMB_A, pcm_FRONT_CLIMB_B, registry);
+    private void initCLimber() {
+        climbPiston = new DoubleSolenoidHardware(can_PCM_2, pcm_CLIMBER_FORWARD, pcm_CLIMBER_REVERSE, registry);
+        climbMotor = new CANVictorSPXHardware(inv_CLIMB_MOTOR, can_CLIMB_MOTOR, registry);
+        climbFrontPiston = new DoubleSolenoidHardware(can_PCM_1, pcm_FRONT_CLIMB_A, pcm_FRONT_CLIMB_B, registry);
 
-	}
+    }
 
-	private void initHatch()
-	{
+    private void initHatch() {
 
-	}
+    }
 
-	private void initDistanceSensors()
-	{
-		leftDistance = new AnalogDistanceHardware(AnalogDistanceHardware.SensorType.SHARP_GP2Y0A21YK0F,
-				analog_LEFT_DISTANCE, registry);
-		rightDistance = new AnalogDistanceHardware(AnalogDistanceHardware.SensorType.SHARP_GP2Y0A21YK0F,
-				analog_RIGHT_DISTANCE, registry);
-	}
+    private void initDistanceSensors() {
+        leftDistance = new AnalogDistanceHardware(AnalogDistanceHardware.SensorType.SHARP_GP2Y0A21YK0F,
+                analog_LEFT_DISTANCE, registry);
+        rightDistance = new AnalogDistanceHardware(AnalogDistanceHardware.SensorType.SHARP_GP2Y0A21YK0F,
+                analog_RIGHT_DISTANCE, registry);
+    }
 
 }
