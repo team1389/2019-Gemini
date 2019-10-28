@@ -47,7 +47,6 @@ public class RobotHardware extends RobotLayout {
         rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
         rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
         rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
-        imu = new PigeonIMUHardware(can_IMU, registry);
         compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, registry);
     }
 

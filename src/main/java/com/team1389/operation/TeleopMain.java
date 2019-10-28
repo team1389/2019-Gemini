@@ -29,18 +29,17 @@ public class TeleopMain {
         shooter = setUpShooter();
         Subsystem climber = setUpClimber();
         Subsystem damp = setUpDampener();
-        manager = new SystemManager(drive, shooter, climber, damp);
+        manager = new SystemManager(drive, climber, shooter, damp);
         manager.init();
         Watcher watcher = new Watcher();
         watcher.watch();
         watcher.outputToDashboard();
-        // robot.runCompressor.set(f\alse);
     }
 
     private Subsystem setUpDrive() {
         // TODO: test drive on full speed; worked well on half speed
-        return new CurvatureDriveSystem(robot.drive, controls.driveLeftY().getScaled(.6),
-                controls.driveRightX().getScaled(.6), controls.driveRightBumper());
+        return new CurvatureDriveSystem(robot.drive, controls.driveLeftY(),
+                controls.driveRightX(), controls.driveRightBumper());
     }
 
     private Subsystem setUpCancelDrive() {
@@ -51,9 +50,9 @@ public class TeleopMain {
 
 
     private TeleopShooter setUpShooter() {
-        // r close(b), r far(y), l close(a), l far(x)
-        return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.driveBButton(), controls.driveYButton(),
-                controls.driveAButton(), controls.driveXButton());
+        // r close(b),  r far(y), l close(a), l far(x)
+        return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.bButton(), controls.yButton(),
+                controls.aButton(), controls.xButton());
     }
 
     private Subsystem setUpClimber() {

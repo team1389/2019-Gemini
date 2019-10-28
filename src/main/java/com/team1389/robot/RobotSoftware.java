@@ -35,7 +35,13 @@ public class RobotSoftware extends RobotHardware {
     public DigitalOut rightSideDampStream;
     public DigitalOut frontClimbStream;
 
+    public DigitalIn compressorToggle;
+
+
     public RobotSoftware() {
+
+        compressorToggle = ControlBoard.getInstance().leftBumper();
+
         leftA = leftDriveA.getVoltageController();
         leftB = leftDriveB.getVoltageController();
         leftC = leftDriveC.getVoltageController();

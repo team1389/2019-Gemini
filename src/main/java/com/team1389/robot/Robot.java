@@ -1,5 +1,8 @@
 package com.team1389.robot;
 
+import com.team1389.auto.AutoModeExecuter;
+import com.team1389.autonomous.DriveStraightClosedLoop;
+import com.team1389.hardware.controls.ControlBoard;
 import com.team1389.operation.TeleopMain;
 import com.team1389.watch.Watcher;
 
@@ -19,7 +22,8 @@ public class Robot extends TimedRobot {
     Watcher watcher;
     Compressor compressor;
     TeleopMain teleop;
-
+    boolean toggleCompressor;
+    AutoModeExecuter executer;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -32,16 +36,20 @@ public class Robot extends TimedRobot {
         watcher.outputToDashboard();
         robot.runCompressor.set(true);
         teleop = new TeleopMain(robot);
+        toggleCompressor = true;
     }
 
     @Override
     public void autonomousInit() {
-
+        executer = new AutoModeExecuter();
+        executer.setAutoMode(new DriveStraightClosedLoop(robot.drive));
+        executer.run();
     }
 
     @Override
     public void autonomousPeriodic() {
-        Watcher.update();
+        //NOTE: This doesn't run because our executer just stalls the thread.
+        //TODO: Is this an issue if our wait time is too long?
     }
 
     @Override
@@ -56,7 +64,8 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         teleop.periodic();
         Watcher.update();
-
+        toggleCompressor = toggleCompressor ^ robot.compressorToggle.get();
+        robot.runCompressor.set(toggleCompressor);
     }
 
     @Override
