@@ -31,30 +31,31 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = RobotSoftware.getInstance();
+        CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture(1);
         watcher = new Watcher(robot.leftDistanceStream.getWatchable("left dist"),
                 robot.rightDistanceStream.getWatchable("right dist"));
         watcher.outputToDashboard();
-        robot.runCompressor.set(true);
+        robot.runCompressor.set(false);
         teleop = new TeleopMain(robot);
         toggleCompressor = true;
+        teleop.init();
     }
 
     @Override
     public void autonomousInit() {
-        executer = new AutoModeExecuter();
-        executer.setAutoMode(new DriveStraightClosedLoop(robot.drive));
-        executer.run();
+
     }
 
     @Override
     public void autonomousPeriodic() {
-        //NOTE: This doesn't run because our executer just stalls the thread.
-        //TODO: Is this an issue if our wait time is too long?
+        teleop.periodic();
+
     }
 
     @Override
     public void teleopInit() {
-        teleop.init();
+
     }
 
     /**
@@ -63,9 +64,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         teleop.periodic();
-        Watcher.update();
         toggleCompressor = toggleCompressor ^ robot.compressorToggle.get();
         robot.runCompressor.set(toggleCompressor);
+        Watcher.update();
+
     }
 
     @Override

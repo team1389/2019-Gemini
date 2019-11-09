@@ -42,11 +42,17 @@ public class RobotHardware extends RobotLayout {
 
     private void initDriveTrain() {
         leftDriveA = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_A, can_LEFT_DRIVE_MOTOR_A, registry);
+        leftDriveA.setCurrentLimit(40);
         leftDriveB = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_B, can_LEFT_DRIVE_MOTOR_B, registry);
+        leftDriveB.setCurrentLimit(40);
         leftDriveC = new CANSparkMaxHardware(inv_LEFT_DRIVE_MOTOR_C, can_LEFT_DRIVE_MOTOR_C, registry);
+        leftDriveC.setCurrentLimit(40);
         rightDriveA = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_A, can_RIGHT_DRIVE_MOTOR_A, registry);
+        rightDriveA.setCurrentLimit(40);
         rightDriveB = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_B, can_RIGHT_DRIVE_MOTOR_B, registry);
+        rightDriveB.setCurrentLimit(40);
         rightDriveC = new CANSparkMaxHardware(inv_RIGHT_DRIVE_MOTOR_C, can_RIGHT_DRIVE_MOTOR_C, registry);
+        rightDriveC.setCurrentLimit(40);
         compressor = new CompressorHardware(CAN_COMPRESSOR_PORT, registry);
     }
 

@@ -1,6 +1,7 @@
 package com.team1389.operation;
 
 import com.team1389.hardware.controls.ControlBoard;
+import com.team1389.hardware.inputs.software.DigitalIn;
 import com.team1389.robot.RobotSoftware;
 import com.team1389.system.SystemManager;
 import com.team1389.system.drive.CurvatureDriveSystem;
@@ -27,9 +28,8 @@ public class TeleopMain {
         controls = ControlBoard.getInstance();
         Subsystem drive = setUpDrive();
         shooter = setUpShooter();
-        Subsystem climber = setUpClimber();
         Subsystem damp = setUpDampener();
-        manager = new SystemManager(drive, climber, shooter, damp);
+        manager = new SystemManager(drive, shooter, damp);
         manager.init();
         Watcher watcher = new Watcher();
         watcher.watch();
@@ -51,8 +51,8 @@ public class TeleopMain {
 
     private TeleopShooter setUpShooter() {
         // r close(b),  r far(y), l close(a), l far(x)
-        return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.bButton(), controls.yButton(),
-                controls.aButton(), controls.xButton());
+        return new TeleopShooter(robot.rightShoot, robot.leftShoot, controls.bButton(), new DigitalIn(() -> false),
+                controls.aButton(), new DigitalIn(() -> false));
     }
 
     private Subsystem setUpClimber() {
@@ -70,7 +70,7 @@ public class TeleopMain {
     }
 
     private Subsystem setUpDampener() {
-        return new Dampener(robot.leftSideDampStream, robot.rightSideDampStream, controls.aButton());
+        return new Dampener(robot.leftSideDampStream, robot.rightSideDampStream, controls.xButton());
     }
 
     // public void disabledPeriodic()

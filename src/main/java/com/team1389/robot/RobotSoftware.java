@@ -40,7 +40,7 @@ public class RobotSoftware extends RobotHardware {
 
     public RobotSoftware() {
 
-        compressorToggle = ControlBoard.getInstance().leftBumper();
+        compressorToggle = ControlBoard.getInstance().rightBumper();
 
         leftA = leftDriveA.getVoltageController();
         leftB = leftDriveB.getVoltageController();
